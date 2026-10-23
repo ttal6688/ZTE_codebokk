@@ -1,15 +1,18 @@
 function audit=run_dual_stream_minimal(varargin)
 % UPA single-polarization 1/2-stream pairs. No second spatial beam is introduced.
 root=fileparts(mfilename('fullpath'));dep=fullfile(root,'6.位置反馈方案');addpath(root,dep,fullfile(dep,'lib'));maxNumCompThreads(1);
-p=inputParser;addParameter(p,'SampleIds',1:32);addParameter(p,'OutputDir',fullfile(root,'results','dual_stream_minimal32'));parse(p,varargin{:});opt=p.Results;
+p=inputParser;addParameter(p,'SampleIds',1:32);addParameter(p,'OutputDir',fullfile(root,'results','dual_stream_minimal32'));
+addParameter(p,'AntennaCount',1024);addParameter(p,'APCount',8);addParameter(p,'ObservationSNR',30);addParameter(p,'RicianK',10);
+addParameter(p,'ChannelModels',{'LOS','MIX'});parse(p,varargin{:});opt=p.Results;
 sampleIds=opt.SampleIds;assert(all(ismember(sampleIds,1:400))&&numel(unique(sampleIds))==numel(sampleIds));out=char(opt.OutputDir);
 assert(~exist(fullfile(out,'dual_stream_trials.csv'),'file'),'Use a new output directory');if ~exist(out,'dir'),mkdir(out);end
-[net0,sim,bank]=upa.load_inputs();net=sstr.configure_upa(net0,1024);active=net.active_order(1:8);B=8;N=1024;
+[net0,sim,bank]=upa.load_inputs();N=opt.AntennaCount;B=opt.APCount;net=sstr.configure_upa(net0,N);active=net.active_order(1:B);
+assert(ismember(N,[64 256 1024])&&ismember(B,5:10)&&all(ismember(opt.ChannelModels,{'LOS','MIX'})));
 rho=10^(sim.reference_data_SNR_dB/10)/sim.reference_power;rows=cell(0,1);started=tic;
-for model={'LOS','MIX'}
+for model=opt.ChannelModels
  channel=model{1};
  for sid=sampleIds
-  sample=sstr.make_sample(net,sim,bank,sid,10,channel);[Htrue,Hobs]=sstr.observe_sample(sample,active,30);
+  sample=sstr.make_sample(net,sim,bank,sid,opt.RicianK,channel);[Htrue,Hobs]=sstr.observe_sample(sample,active,opt.ObservationSNR);
   [~,sv,V]=svd(Htrue,'econ');sv=diag(sv);truthratio=sv(2)^2/sv(1)^2;UE=sstr.ue_designs(net,Hobs,active);
   for branch={'CPU','UE'}
    panel=branch{1};
@@ -34,7 +37,7 @@ for model={'LOS','MIX'}
     rows{end-1}.feedback_wire=single.feedback_wire;rows{end}.subspace_second_mode_ratio=subratio;rows{end-1}.subspace_second_mode_ratio=subratio;
    end
   end
-  fprintf('Dual minimal %s sample %d, %.1f s\n',channel,sid,toc(started));
+  if mod(sid,25)==0||sid==sampleIds(end),fprintf('Dual %s N%d B%d SNR%g K%g sample %d, %.1f s\n',channel,N,B,opt.ObservationSNR,opt.RicianK,sid,toc(started));end
  end
 end
 T=struct2table(vertcat(rows{:}));writetable(T,fullfile(out,'dual_stream_trials.csv'));
@@ -48,8 +51,8 @@ A=renamevars(A(:,[keys {'throughput_Mbps','feedback_bits'}]),{'throughput_Mbps',
 D=renamevars(D(:,[keys {'throughput_Mbps','feedback_bits','second_mode_ratio'}]),{'throughput_Mbps','feedback_bits'},{'dual_Mbps','dual_bits'});
 P=innerjoin(A,D,'Keys',keys);P.delta_Mbps=P.dual_Mbps-P.single_Mbps;P.extra_bits=P.dual_bits-P.single_bits;
 writetable(P,fullfile(out,'single_dual_pairs.csv'));
-contract=struct('version','UPA_SINGLEPOL_DUAL_MINIMAL_V1','sample_ids',sampleIds,'N',N,'B',B,'observation_SNR_dB',30,'K_dB',10, ...
- 'channel_models',{{'LOS','MIX'}},'bandwidth_Hz',400e6,'rho_data',rho, ...
+contract=struct('version','UPA_SINGLEPOL_DUAL_CASE_V2','sample_ids',sampleIds,'N',N,'B',B,'observation_SNR_dB',opt.ObservationSNR,'K_dB',opt.RicianK, ...
+ 'channel_models',{opt.ChannelModels},'bandwidth_Hz',400e6,'rho_data',rho, ...
  'shared_F',true,'second_stream','new per-AP relative phases only, no new spatial beam', ...
  'power','C=[c1 c2]/sqrt(2B), each AP total1/B','phase_optimizer','residual+DFT-ramp seeds,3sweeps,UE4bit,CPU64grid+24golden', ...
  'CPU_inputs','public geometry+spatial bits; no observed/truth channel','UE_inputs','observed CSI+decoded shared F', ...
@@ -69,7 +72,7 @@ write_json(fullfile(out,'audit.json'),audit);disp(audit);
    maxpower=max(abs(power-1/B));assert(maxpower<1e-10&&abs(norm(W,'fro')^2-1)<1e-10);
   end
   row=struct('branch',panel,'channel_model',channel,'sample_id',sid,'method',method,'stream_count',ns,'csi',csi, ...
-   'B',B,'antenna_count',N,'UPA_side',32,'array','UPA','throughput_Mbps',400*metric.SE, ...
+   'B',B,'antenna_count',N,'UPA_side',sqrt(N),'array','UPA','observation_SNR_dB',opt.ObservationSNR,'Rician_K_dB',opt.RicianK,'throughput_Mbps',400*metric.SE, ...
    'joint_throughput_Mbps',400*metric.joint_SE,'spectral_efficiency',metric.SE,'joint_SE',metric.joint_SE, ...
    'SINR',jsonencode(metric.SINR),'singular_values',jsonencode(metric.singular_values), ...
    'second_mode_ratio',metric.second_mode_ratio,'subspace_second_mode_ratio',NaN,'true_channel_second_mode_ratio',truthratio, ...

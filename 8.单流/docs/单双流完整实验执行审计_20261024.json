@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "report": "UPA单流400位置正式实验报告",
+      "figures": 22,
+      "all_published_figures_included": true,
+      "pages": 25,
+      "native_equations": 0
+    },
+    {
+      "report": "UPA单极化双流400位置完整实验报告",
+      "figures": 58,
+      "all_published_figures_included": true,
+      "pages": 59,
+      "native_equations": 4
+    }
+  ],
+  "source_and_input_hashes": 85,
+  "total_report_figures": 80,
+  "frozen_inputs_and_numerical_algorithm_modules_unchanged": true,
+  "single_data_unchanged": true,
+  "maintenance_branch": "feat/upa-single-dual-complete-20261024",
+  "full_independent_audit": "results/dual_stream_full400/independent_full_audit.json",
+  "visual_QA": "All 25 single-stream and 59 dual-stream Word pages rendered through Microsoft Word and Poppler and visually inspected; no clipping or missing glyphs"
+}

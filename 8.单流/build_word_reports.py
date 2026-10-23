@@ -3,6 +3,7 @@ import re,json
 from docx import Document
 from docx.shared import Inches,Pt,RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 ROOT=Path(__file__).resolve().parent.parent/'8.单流'
@@ -72,18 +73,25 @@ def build(md):
             n=len(block[0]);
             if doc.paragraphs and doc.paragraphs[-1].text:doc.paragraphs[-1].paragraph_format.keep_with_next=True
             table=doc.add_table(rows=0,cols=n);table.style='Table Grid';table.autofit=False
+            borders=OxmlElement('w:tblBorders')
+            for edge in ['top','left','bottom','right','insideH','insideV']:
+                border=OxmlElement('w:'+edge);border.set(qn('w:val'),'single');border.set(qn('w:sz'),'4');border.set(qn('w:color'),'D9D9D9');borders.append(border)
+            table._tbl.tblPr.append(borders)
             widths=([1.6,5.2] if n==2 else ([1.65]+[(6.8-1.65)/(n-1)]*(n-1)))
             for rowidx,values in enumerate(block):
                 cells=table.add_row().cells
                 for j,(cell,text) in enumerate(zip(cells,values)):
                     cell.width=Inches(widths[j]);cell.text=text
+                    cell.vertical_alignment=WD_CELL_VERTICAL_ALIGNMENT.CENTER
                     tcPr=cell._tc.get_or_add_tcPr();margins=OxmlElement('w:tcMar')
+                    if rowidx==0:
+                        shading=OxmlElement('w:shd');shading.set(qn('w:fill'),'E8EFF6');tcPr.append(shading)
                     for edge,v in [('top','50'),('bottom','50'),('left','80'),('right','80')]:
                         x=OxmlElement('w:'+edge);x.set(qn('w:w'),v);x.set(qn('w:type'),'dxa');margins.append(x)
                     tcPr.append(margins)
                     for p in cell.paragraphs:
                         p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=1.05
-                        p.paragraph_format.keep_with_next=(rowidx<len(block)-1)
+                        p.paragraph_format.keep_with_next=(rowidx==0 or (len(block)<=8 and rowidx<len(block)-1))
                         if j>0 and n>2:p.alignment=WD_ALIGN_PARAGRAPH.CENTER
                         for run in p.runs:run.font.size=Pt(10.5);run.bold=(rowidx==0)
                 cant=OxmlElement('w:cantSplit');table.rows[-1]._tr.get_or_add_trPr().append(cant)
@@ -95,7 +103,7 @@ def build(md):
         if match:
             image=(md.parent/match.group(2)).resolve();assert image.exists()
             p=doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.paragraph_format.keep_with_next=True
-            p.add_run().add_picture(str(image),width=Inches(6.0))
+            p.add_run().add_picture(str(image),width=Inches(5.3))
             caption=doc.add_paragraph(match.group(1));caption.alignment=WD_ALIGN_PARAGRAPH.CENTER
             caption.paragraph_format.space_after=Pt(9)
             for run in caption.runs:run.font.size=Pt(10)
@@ -108,5 +116,6 @@ def build(md):
     dest=md.with_suffix('.docx');doc.save(dest);return dest
 
 if __name__=='__main__':
-    for name in ['UPA单流400位置正式实验报告.md','UPA单极化双流扩展验证报告.md']:
+    import sys
+    for name in sys.argv[1:] or ['UPA单流400位置正式实验报告.md','UPA单极化双流扩展验证报告.md']:
         print(build(DOCS/name))

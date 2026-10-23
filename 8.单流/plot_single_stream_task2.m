@@ -1,5 +1,6 @@
 function plot_single_stream_task2(resultDir)
 % Central single/dual plotting: CPU / UE separated, Chinese labels, no titles.
+if exist(fullfile(resultDir,'cases'),'dir')&&exist(fullfile(resultDir,'dual_stream_summary.csv'),'file'),plot_full_dual(resultDir);return;end
 if exist(fullfile(resultDir,'dual_stream_trials.csv'),'file'),plot_dual(resultDir);return;end
 if ~exist(fullfile(resultDir,'single_stream_trials.csv'),'file'),gunzip(fullfile(resultDir,'single_stream_trials.csv.gz'),resultDir);end
 T=readtable(fullfile(resultDir,'single_stream_trials.csv'),'TextType','string');
@@ -46,6 +47,51 @@ for branch=["CPU" "UE"]
   yline(ax,0,':','HandleVisibility','off');format(ax,'观测 SNR（dB）','完美CSI减观测CSI吞吐量（Mbps）');
   legend(ax,'Location','best','FontSize',12);saveplot(f,out,'UE_同算法CSI配对收益');
  end
+end
+
+end
+function plot_full_dual(resultDir)
+S=readtable(fullfile(resultDir,'dual_stream_summary.csv'),'TextType','string');
+if ~exist(fullfile(resultDir,'single_dual_pairs.csv'),'file'),gunzip(fullfile(resultDir,'single_dual_pairs.csv.gz'),resultDir);end
+P=readtable(fullfile(resultDir,'single_dual_pairs.csv'),'TextType','string');
+for branch=["CPU" "UE"]
+ out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
+ if branch=="CPU",methods=["HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
+ for model=["LOS" "MIX"]
+  tb=S(S.branch==branch&S.channel_model==model,:);pb=P(P.branch==branch&P.channel_model==model,:);
+  for curve=["SNR" "天线数" "AP数" "莱斯因子"]
+   if curve=="SNR",xtext='观测 SNR（dB）';elseif curve=="天线数",xtext='每AP UPA阵元数';elseif curve=="AP数",xtext='协作AP数';else,xtext='莱斯因子 K（dB）';end
+   for metric=["双流吞吐量" "单双流增量" "第二模式功率比"]
+    f=newfigure;ax=axes(f);hold(ax,'on');list=methods;if metric=="双流吞吐量",list=["IDEAL_SVD" methods];end
+    for method=list
+     if metric=="双流吞吐量"
+      z=tb(tb.curve==curve&tb.method==method&tb.stream_count==2,:);[x,order]=sort(z.x_value);y=z.mean_throughput_Mbps(order);yt='双流平均吞吐量（Mbps）';
+     elseif metric=="单双流增量"
+      z=pb(pb.curve==curve&pb.method==method,:);[g,zx]=findgroups(z.x_value);y=splitapply(@mean,z.delta_Mbps,g);[x,order]=sort(zx);y=y(order);yt='双流减单流平均吞吐量（Mbps）';
+     else
+      z=tb(tb.curve==curve&tb.method==method&tb.stream_count==2,:);[x,order]=sort(z.x_value);y=z.mean_second_mode_ratio(order);yt='接收第二模式与第一模式功率比均值';
+     end
+     name=label(method);if method=="IDEAL_SVD",name='等功率双流SVD参考';end
+     plot(ax,x,y,'-o','LineWidth',2,'Color',color(method),'DisplayName',name);
+    end
+    if metric=="单双流增量",yline(ax,0,':','HandleVisibility','off');end
+    format(ax,xtext,yt);legend(ax,'Location','best','FontSize',12);saveplot(f,out,char(branch+"_"+model+"_"+metric+"_"+curve));
+   end
+  end
+  default=tb(tb.curve=="SNR"&tb.x_value==30,:);pd=pb(pb.curve=="SNR"&pb.x_value==30,:);
+  names=[methods "IDEAL_SVD"];values=zeros(numel(names),2);labels=cell(1,numel(names));
+  for j=1:numel(names)
+   for ns=1:2,values(j,ns)=default.mean_throughput_Mbps(default.method==names(j)&default.stream_count==ns);end
+   labels{j}=label(names(j));if names(j)=="IDEAL_SVD",labels{j}='SVD参考';end
+  end
+  f=newfigure;ax=axes(f);bar(ax,values);xticks(ax,1:numel(names));xticklabels(ax,labels);xtickangle(ax,20);format(ax,'反馈方法','默认配置平均吞吐量（Mbps）');set(ax,'FontSize',13);legend(ax,{'单流','双流等功率'},'Location','best');saveplot(f,out,char(branch+"_"+model+"_默认单双流"));
+  f=newfigure;ax=axes(f);hold(ax,'on');
+  for method=methods,z=sort(pd.delta_Mbps(pd.method==method));plot(ax,z,(1:numel(z))/numel(z),'LineWidth',2,'Color',color(method),'DisplayName',label(method));end
+  format(ax,'默认配置双流减单流吞吐量（Mbps）','累计概率');ylim(ax,[0 1]);legend(ax,'Location','best','FontSize',12);saveplot(f,out,char(branch+"_"+model+"_默认增量CDF"));
+ end
+ f=newfigure;ax=axes(f);hold(ax,'on');
+ for method=methods,z=S(S.branch==branch&S.channel_model=="MIX"&S.curve=="AP数"&S.method==method& S.stream_count==2,:);[x,order]=sort(z.x_value);plot(ax,x,z.mean_feedback_bits(order),'-o','LineWidth',2,'Color',color(method),'DisplayName',label(method));end
+ format(ax,'协作AP数','双流每次更新反馈有效载荷（bit）');legend(ax,'Location','best','FontSize',12);saveplot(f,out,char(branch+"_双流反馈量_AP数"));
 end
 end
 function draw(T,branch,curve,field,ytext,out,stem,geo)

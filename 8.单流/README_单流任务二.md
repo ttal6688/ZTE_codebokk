@@ -74,4 +74,30 @@ plot_precoding_results('results/my_dual32');
 python audit_dual_stream.py results/dual_stream_minimal32
 ```
 
-当前完整CSV在本地保留，GitHub的单流明细为csv.gz。Python审计自动读取压缩文件；MATLAB统一绘图入口可先解压。检查点不作为新增独立数据发布。双流尚未做完整参数扫描。
+当前完整CSV在本地保留，GitHub的单流明细为csv.gz。Python审计自动读取压缩文件；MATLAB统一绘图入口可先解压。检查点不作为新增独立数据发布。
+
+## 单极化双流完整扫描
+
+run_dual_stream_task2复用上述单配置实现，400位置、LOS与MIX、观测SNR20至40 dB、UPA 64/256/1024阵元、AP 5至10、K 0至20 dB。16组参数配置对应19个曲线标签，完整明细按配置分组无损压缩，CPU与UE分开出图。
+
+```matlab
+addpath('8.单流');
+experimentDir=fullfile(pwd,'8.单流','results','new_dual400');
+run_dual_stream_task2('OutputDir',experimentDir);
+plot_precoding_results(experimentDir);
+```
+
+```text
+python audit_dual_stream_full.py results/new_dual400 --stage cases
+```
+
+```matlab
+verify_dual_stream_replay(experimentDir);
+```
+
+```text
+python audit_dual_stream_full.py results/new_dual400 --stage summary
+python package_dual_stream_results.py results/new_dual400
+```
+
+结果与复现细节见[完整双流报告](docs/UPA单极化双流400位置完整实验报告.md)和[数据说明](results/dual_stream_full400/README.md)。第二流算法与最小验证一致，非正收益逐条保存；每个MIX单流基线与上一轮400位置单流按位置和配置核对。
