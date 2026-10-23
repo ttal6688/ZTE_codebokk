@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "base_commit": "2e735bde49ac23633983f02de85e326174f87ccf",
+  "scope": "documentation and historical directory organization only",
+  "archived_original_files": 163,
+  "archive_original_blob_ids_preserved": true,
+  "new_local_markdown_links_verified": 63,
+  "trials": 98800,
+  "summary_groups": 247,
+  "samples_per_group": 400,
+  "records_by_branch": {
+    "CPU": 45600,
+    "UE": 53200
+  },
+  "summary_recomputed_max_error": {
+    "mean_position_error_m": 3.9968028886505635e-15,
+    "mean_throughput_Mbps": 5.4569682106375694e-12,
+    "mean_feedback_bits": 0.0
+  },
+  "runner_plotter_and_archived_results_unchanged": true,
+  "reran_simulation": false,
+  "current_implementation": "single polarization single stream ULA",
+  "UPA_implemented": false,
+  "reference_AP_count": 3,
+  "AP_phase_bits": 4,
+  "Docomo_beta_bits": 2,
+  "unresolved_issues": [
+    "UPA adaptation",
+    "independent coordinate bit-allocation message decoding",
+    "POS uses quantized HAQSE localization instead of continuous HAQSE localization"
+  ]
+}
