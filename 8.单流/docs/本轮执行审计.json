@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "branch": "feat/upa-docomo-full400-dualstream-20261023",
+  "main_reference": "perfect-CSI direct SVD",
+  "bandwidth": "400 MHz direct scaling",
+  "docomo_special_checks": 48,
+  "protocol_checks": 701,
+  "preserved_UPA_POS_checks": 42,
+  "dual_checks": 54,
+  "single_positions": 400,
+  "single_records": 98800,
+  "single_summary_groups": 247,
+  "single_finite_payloads_independently_reconstructed": 83600,
+  "dual_positions": 32,
+  "dual_records": 1408,
+  "dual_implementable_pairs": 576,
+  "dual_positive_pairs": 576,
+  "dual_finite_records_independently_reconstructed": 1152,
+  "dual_scope": "default32x32 B8 SNR30 LOS/MIX only; not full parameter scan",
+  "reports": {
+    "UPA单流400位置正式实验报告": {
+      "pages": 5,
+      "native_equations": 0,
+      "all_page_PNGs_visually_reviewed": true,
+      "title_borders": 0,
+      "sha256": "4c08c64a31a1be5c060c8f506df67479263c504afb6b06bf66cd59cc476572a7"
+    },
+    "UPA单极化双流扩展验证报告": {
+      "pages": 6,
+      "native_equations": 4,
+      "all_page_PNGs_visually_reviewed": true,
+      "title_borders": 0,
+      "sha256": "469774ac6283e9ba9e2b232a1e51a16f3e37f54ca5f5e391bcc13c6ffb4cfeeb"
+    }
+  },
+  "document_rendering": "Bundled render_docx attempted, LibreOffice absent; Microsoft Word COM export and Poppler PNG visual QA used",
+  "historical_data_unchanged": true,
+  "frozen_dependencies_unchanged": true,
+  "experiment_start_date": "2026-10-23",
+  "completion_local_date": "2026-10-24",
+  "report_date_note": "Report date is experiment start date"
+}

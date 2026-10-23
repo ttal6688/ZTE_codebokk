@@ -1,6 +1,8 @@
 # UPA单流运行与实验口径
 
-当前协议SSTR_V2，所有可实施预编码均由实际打包的整数比特串恢复。方法名、模式、活动AP顺序、码本和量化配置是双方预先共享的配置；统计反馈有效载荷，不含传输头、FEC、字节填充。JSON只是便于检查，JSON文本长度不是反馈bit数。
+当前最终口径及本轮推进安排见[实验口径与推进顺序](docs/当前实验口径与推进顺序.md)。主参考为真实信道直接SVD；同算法CSI配对仅为补充诊断。
+
+当前反馈整数协议SSTR_V2，正式运行版本UPA_SINGLE_PROTOCOL_V3，所有可实施预编码均由实际打包的整数比特串恢复。方法名、模式、活动AP顺序、码本和量化配置是双方预先共享的配置；统计反馈有效载荷，不含传输头、FEC、字节填充。JSON只是便于检查，JSON文本长度不是反馈bit数。
 
 ## 运行
 
@@ -14,11 +16,13 @@ run_single_stream_task2('Mode','smoke','OutputDir','results/my_V2_smoke','MakeFi
 
 `verify`默认位置399、400，四组UPA/AP设置，每组分别测试LOS和MIX；`smoke`默认位置1至4，12个参数标签，默认MIX。可使用`Samples`指定从1开始的样本数，使用`ChannelModels`, `{'LOS','MIX'}`指定模型。已有CSV的输出目录会被拒绝，以保护历史数据。`verify_single_stream_protocol`只写检查JSON，可先写入同一空结果目录。
 
-完整400位置入口已保留，本轮未运行：
+完整400位置扫描已完成，默认关闭补充CSI配对；复现请使用新目录：
 
 ```matlab
-run_single_stream_task2('Mode','full','OutputDir','results/my_V2_full400');
+run_single_stream_task2('Mode','full','IncludeCSIPairs',false,'OutputDir','results/my_full400');
 ```
+
+完整结果见[正式单流报告](docs/UPA单流400位置正式实验报告.md)。同算法CSI配对由IncludeCSIPairs控制：验证/流程模式默认开启，full模式默认关闭。
 
 完整扫描为观测SNR20:5:40 dB、每AP阵元数64/256/1024、AP数5:10、莱斯因子0:5:20 dB，共19个参数标签。默认32×32、B=8、观测SNR30 dB、K=10 dB；各扫描的默认点会重复，用于各自画图，不当作额外独立样本。
 
@@ -47,10 +51,27 @@ Type-II使用直接索引编码，没有利用正交组关系压缩索引；表�
 
 ## 输出解释
 
-每个案例保存CPU六行：SVD、两个UE基线参考、三个CPU几何方法；UE十三行：SVD、六个观测CSI方法、六个同算法完美CSI方法。`role`明确区分CPU_METHOD、UE_REFERENCE、UE_METHOD、UPPER_BOUND。主图只使用观测CSI和SVD；完美CSI单独通过`paired_CSI.csv`比较。
+开启补充CSI配对时，每个案例保存CPU六行：SVD、两个UE基线参考、三个CPU几何方法；UE十三行：SVD、六个观测CSI方法、六个同算法完美CSI方法。`role`明确区分CPU_METHOD、UE_REFERENCE、UE_METHOD、UPPER_BOUND。关闭配对时总共13行，UE只有SVD与六种观测CSI方法。主图只使用观测CSI和SVD；补充完美CSI单独通过`paired_CSI.csv`比较。
 
 CSV保存完整消息、比特串、AP系数、预编码检查量、量化前/解码后坐标及越界标志，并记录接收功率、频谱效率、400 MHz换算速率。`cpu_estimation_dimension`已移除，改为分项信息量、模型尺寸和计时。
 
 `reference_observation_complex_count`是UE生成参考AP几何消息所需的原始观测规模，不是CPU获得的信道；对UE方案它是全部AP观测的子集，不与`full_observation_complex_count`相加。模型尺寸只记录CPU实际构造的4×BN模型。`decoder_time_s`只计CPU解码接口；UE的`shared_frontend_time_s`是同一算法族共享的前端时间，重复列出，不代表每种算法独立运行复杂度，也不用于性能排名。
 
 400 MHz仅作窄带SE换算；观测SNR控制CSI噪声，数据链路rho另由公共参考功率和10 dB参考SNR确定。理想SVD放松每AP等功率限制。完美CSI配对不保证每个样本速率上升，因为当前投影、码本和量化规则并非速率全局最优。
+
+
+## 单极化双流最小验证
+
+```matlab
+verify_dual_stream('results/my_dual_unit');
+run_dual_stream_minimal('OutputDir','results/my_dual32');
+plot_precoding_results('results/my_dual32');
+```
+
+默认32个预定位置、LOS与MIX、32×32/B=8/观测30 dB。共享原单流空间消息和第一相位，UE再追加28 bit第二相位；CPU由模型独立计算、不增加bit。双流矩阵C为B×2，两流每AP合计功率1/B。Docomo保留其单流结构，额外相位属于统一双流扩展，非论文原始多列DFT子集复现。
+
+```text
+python audit_dual_stream.py results/dual_stream_minimal32
+```
+
+当前完整CSV在本地保留，GitHub的单流明细为csv.gz。Python审计自动读取压缩文件；MATLAB统一绘图入口可先解压。检查点不作为新增独立数据发布。双流尚未做完整参数扫描。

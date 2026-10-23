@@ -1,5 +1,7 @@
 function plot_single_stream_task2(resultDir)
-% Central V2 plotting: CPU / UE separated, Chinese labels, no figure titles.
+% Central single/dual plotting: CPU / UE separated, Chinese labels, no titles.
+if exist(fullfile(resultDir,'dual_stream_trials.csv'),'file'),plot_dual(resultDir);return;end
+if ~exist(fullfile(resultDir,'single_stream_trials.csv'),'file'),gunzip(fullfile(resultDir,'single_stream_trials.csv.gz'),resultDir);end
 T=readtable(fullfile(resultDir,'single_stream_trials.csv'),'TextType','string');
 assert(ismember('csi',T.Properties.VariableNames),'V2 results required');
 % Both models remain in CSV. Main smoke/full figures use MIX, never pool LOS/MIX.
@@ -33,7 +35,7 @@ for branch=["CPU" "UE"]
  end
  format(ax,'真实 x 坐标（m）','坐标分配（bit）');ylim(ax,[0 16]);legend(ax,'Location','best');
  saveplot(f,out,[char(branch) '_固定坐标bit分配']);writetable(p,fullfile(out,'固定坐标bit分配.csv'));
- if branch=="UE"
+ if branch=="UE" && any(all.csi=="PERFECT")
   P=readtable(fullfile(resultDir,'paired_CSI.csv'),'TextType','string');
   if any(P.channel_model=="MIX"),P=P(P.channel_model=="MIX",:);end
   f=newfigure;ax=axes(f);hold(ax,'on');
@@ -85,8 +87,47 @@ end
 end
 function text=label(m)
 switch m
- case "IDEAL_SVD",text='理想SVD上界';case "TYPE_I",text='Type-I';case "TYPE_II",text='Type-II';
+ case "IDEAL_SVD",text='理想SVD上界';case "TYPE_I",text='项目Type-I（含共相位）';case "TYPE_II",text='Type-II';
  case "DOCOMO_NFLOS",text='Docomo结构适配';case "HAQSE_R3",text='HAQSE（R=3）';
  case "DFT_INDEX_R3",text='DFT索引（R=3）';otherwise,text='位置反馈（R=3）';
+end
+end
+
+function plot_dual(resultDir)
+T=readtable(fullfile(resultDir,'dual_stream_trials.csv'),'TextType','string');
+P=readtable(fullfile(resultDir,'single_dual_pairs.csv'),'TextType','string');
+for branch=["CPU" "UE"]
+ out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
+ if branch=="CPU",methods=["HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
+ for model=["LOS" "MIX"]
+  tb=T(T.branch==branch&T.channel_model==model,:);pb=P(P.branch==branch&P.channel_model==model,:);
+  names=[methods "IDEAL_SVD"];values=zeros(numel(names),2);labels=cell(1,numel(names));
+  for j=1:numel(names)
+   for ns=1:2,values(j,ns)=mean(tb.throughput_Mbps(tb.method==names(j)&tb.stream_count==ns));end
+   labels{j}=label(names(j));if names(j)=="IDEAL_SVD",labels{j}='SVD参考';end
+  end
+  f=newfigure;ax=axes(f);bar(ax,values);xticks(ax,1:numel(names));xticklabels(ax,labels);xtickangle(ax,20);
+  format(ax,'反馈方法','平均吞吐量（Mbps）');legend(ax,{'单流','双流等功率'},'Location','best');
+  set(ax,'FontSize',13);saveplot(f,out,[char(branch) '_' char(model) '_单双流吞吐量']);
+  for field=["delta_Mbps" "second_mode_ratio"]
+   f=newfigure;ax=axes(f);hold(ax,'on');
+   for method=methods
+    z=sort(pb.(field)(pb.method==method));
+    plot(ax,z,(1:numel(z))/numel(z),'-','LineWidth',2,'Color',color(method),'DisplayName',label(method));
+   end
+   if field=="delta_Mbps",xtext='双流减单流吞吐量（Mbps）';stem='速率增量CDF';else,xtext='接收第二模式与第一模式功率比';stem='第二模式CDF';end
+   format(ax,xtext,'累计概率');legend(ax,'Location','best','FontSize',12);ylim(ax,[0 1]);
+   saveplot(f,out,[char(branch) '_' char(model) '_' stem]);
+  end
+ end
+ f=newfigure;ax=axes(f);values=zeros(numel(methods),2);labels=cell(1,numel(methods));
+ tb=T(T.branch==branch&T.channel_model=="MIX",:);
+ for j=1:numel(methods)
+  for ns=1:2,values(j,ns)=mean(tb.feedback_bits(tb.method==methods(j)&tb.stream_count==ns));end
+  labels{j}=label(methods(j));
+ end
+ bar(ax,values);xticks(ax,1:numel(methods));xticklabels(ax,labels);xtickangle(ax,20);
+ format(ax,'反馈方法','每次更新反馈有效载荷（bit）');set(ax,'FontSize',13);
+ legend(ax,{'单流','双流'},'Location','best');saveplot(f,out,[char(branch) '_单双流反馈量']);
 end
 end

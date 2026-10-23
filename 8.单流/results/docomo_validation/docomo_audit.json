@@ -1,0 +1,1 @@
+{"status":"passed","checks":48,"random_cases":9,"physical_LOS_MIX_cases":6,"maximum_message_replay_error":0,"minimum_objective_step":0,"fixed_beam_exhaustive_B":4,"exhaustive_candidates_per_case":256,"paper_source":"Li Hou Chen PIMRC2024, IV25-27 and V QPSK","scope":"structural adaptation; no claim of globally optimal joint beams or full paper reproduction"}

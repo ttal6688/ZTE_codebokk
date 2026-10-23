@@ -19,7 +19,7 @@ if ismember(method,{'TYPE_I','TYPE_II','DOCOMO_NFLOS'})
   else,d.F(:,b)=pair;end
  end
 elseif strcmp(method,'POS_R3')
- p=posfb.decode(net,space,active,posfb.config(net));d.F=p.F;d.position=p.position;d.coordinate_bits=space.coordinate_bits;
+ p=posfb.decode(net,space,active,sstr.position_config(net));d.F=p.F;d.position=p.position;d.coordinate_bits=space.coordinate_bits;
 elseif ismember(method,{'HAQSE_R3','DFT_INDEX_R3'})
  p=upa.predict_directions(net,space,active);d.F=p.F;d.position=p.position;d.condition=p.localization.condition;
 else,error('sstr:Method','Unknown spatial method');end

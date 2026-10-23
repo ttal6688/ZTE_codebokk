@@ -2,7 +2,7 @@ function [pred,diagnostic]=messages_from_estimates(net,raw,codes,active,refs,qfr
 % UE: split continuous geometry before encoding the direction-feedback branch.
 assert(isequal(size(raw),[2 numel(refs)])&&isequal(size(codes),size(raw)));
 [pcontinuous,loc]=upa.localize(net,refs,raw);
-cfg=posfb.config(net);
+cfg=sstr.position_config(net);
 assert(cfg.main_bits==36&&isequal(cfg.main_allocation,[13;14;9]));
 [position_message,enc]=posfb.encode(pcontinuous,refs,cfg,36);
 % CPU decoding sees only this integer message and public configuration.

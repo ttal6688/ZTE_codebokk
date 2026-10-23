@@ -80,7 +80,7 @@ def spatial(method,s,B,side):
         F=beams(idx)
     return F,p,ny,nz
 
-def cpu_phase(p,F,B,ny,nz):
+def geometry_matrix(p,F,B,ny,nz):
     side=int(np.sqrt(F.shape[0]));local=np.array([np.zeros(len(ny)),(ny-(side-1)/2)*D,(nz-(side-1)/2)*D])
     offsets=np.array([np.arange(-1.5,2)*D,np.zeros(4),np.zeros(4)])
     blocks=[]
@@ -88,7 +88,10 @@ def cpu_phase(p,F,B,ny,nz):
         ap=APS[apid-1];delta=np.ravel(ap['position_m'])-p;r=np.linalg.norm(delta);q=delta/r
         ql=np.array(ap['R_local_to_global']).T@q
         blocks.append(np.exp(-1j*K*r)/r*np.exp(1j*K*offsets.T@q)[:,None]*np.exp(-1j*K*ql@local)[None,:])
-    H=np.concatenate(blocks,axis=1);eig,U=np.linalg.eigh(H@H.conj().T)
+    return np.concatenate(blocks,axis=1)
+
+def cpu_phase(p,F,B,ny,nz):
+    H=geometry_matrix(p,F,B,ny,nz);eig,U=np.linalg.eigh(H@H.conj().T)
     v=H.conj().T@U[:,-1]/np.sqrt(eig[-1]);a=np.array([np.vdot(F[:,b],v[b*len(ny):(b+1)*len(ny)]) for b in range(B)])
     return np.exp(1j*(np.angle(a)-np.angle(a[0])))
 
@@ -97,9 +100,10 @@ def signature(w):
     return np.c_[z.real,z.imag]
 
 def audit(out):
-    c=json.loads((out/'experiment_contract.json').read_text(encoding='utf-8'))
-    t=pd.read_csv(out/'single_stream_trials.csv',dtype={'feedback_wire':'string'})
-    assert len(t)==19*len(c['sample_ids'])*len(c['settings'])*len(c['channel_models'])
+    c=json.loads((out/'experiment_contract.json').read_text(encoding='utf-8'));c['sample_ids']=np.atleast_1d(c['sample_ids']).tolist()
+    source=out/'single_stream_trials.csv';source=source if source.exists() else out/'single_stream_trials.csv.gz'
+    t=pd.read_csv(source,dtype={'feedback_wire':'string'})
+    assert len(t)==c.get('rows_per_case',19)*len(c['sample_ids'])*len(c['settings'])*len(c['channel_models'])
     assert set(t.sample_id)==set(c['sample_ids']) and set(t.channel_model)==set(c['channel_models'])
     assert t.array.eq('UPA').all() and (t.UPA_side**2==t.antenna_count).all()
     assert 'cpu_estimation_dimension' not in t.columns
@@ -151,8 +155,8 @@ def audit(out):
     keys=['channel_model','curve','x_value','B','antenna_count','observation_SNR_dB','Rician_K_dB','sample_id','method']
     ue=t[t.branch.eq('UE') & ~t.csi.eq('IDEAL')];a=ue[ue.csi.eq('OBSERVED')];b=ue[ue.csi.eq('PERFECT')]
     paired=a.merge(b,on=keys,suffixes=('_observed','_perfect'),validate='one_to_one')
-    assert len(paired)==len(a)==len(b) and (paired.feedback_bits_observed==paired.feedback_bits_perfect).all()
-    csv=pd.read_csv(out/'paired_CSI.csv');m=paired.merge(csv,on=keys,validate='one_to_one');assert len(m)==len(a)
+    assert (len(b)==0 or len(paired)==len(a)==len(b)) and (paired.feedback_bits_observed==paired.feedback_bits_perfect).all()
+    csv=pd.read_csv(out/'paired_CSI.csv');m=paired.merge(csv,on=keys,validate='one_to_one');assert len(m)==len(b)
     assert np.allclose(m.delta_Mbps,m.throughput_Mbps_perfect-m.throughput_Mbps_observed)
     # CPU/UE must use exactly the same decoded spatial payload for observed CSI.
     geo=t[t.method.isin(['HAQSE_R3','DFT_INDEX_R3','POS_R3']) & t.csi.eq('OBSERVED')]

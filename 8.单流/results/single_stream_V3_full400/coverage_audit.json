@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "curve_labels": 19,
+  "distinct_physical_configurations": 16,
+  "samples_per_group": 400,
+  "summary_groups": 247,
+  "records": 98800,
+  "labeled_cases": 7600,
+  "distinct_physical_cases": 6400,
+  "all_sample_ids_retained": true
+}

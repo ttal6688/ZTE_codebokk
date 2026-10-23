@@ -4,27 +4,39 @@ root=fileparts(mfilename('fullpath'));dep=fullfile(root,'6.位置反馈方案');
 addpath(root,dep,fullfile(dep,'lib'));maxNumCompThreads(1);
 p=inputParser;addParameter(p,'Mode','smoke',@(x)ismember(x,{'smoke','verify','full'}));
 addParameter(p,'OutputDir','');addParameter(p,'Samples',[],@(x)isempty(x)||(isscalar(x)&&x>=1&&x<=400));
-addParameter(p,'MakeFigures',true,@islogical);addParameter(p,'ChannelModels',{});parse(p,varargin{:});opt=p.Results;
+addParameter(p,'MakeFigures',true,@islogical);addParameter(p,'ChannelModels',{});addParameter(p,'IncludeCSIPairs',[]);parse(p,varargin{:});opt=p.Results;
 [net0,sim,bank]=upa.load_inputs();sim.bandwidth_Hz=400e6;
 sim.rho_data=10^(sim.reference_data_SNR_dB/10)/sim.reference_power;assert(sim.UE_phase_bits==4&&sim.frequency_bits_per_dimension==14);
 if isempty(opt.OutputDir),out=fullfile(root,'results',['single_stream_UPA_V2_' opt.Mode]);else,out=char(opt.OutputDir);end
-assert(~exist(fullfile(out,'single_stream_trials.csv'),'file'),'sstr:ExistingResults','Use a new OutputDir');
+assert(~exist(fullfile(out,'single_stream_trials.csv'),'file')&&~exist(fullfile(out,'single_stream_trials.csv.gz'),'file'),'sstr:ExistingResults','Use a new OutputDir');
 if ~exist(out,'dir'),mkdir(out);end
 if isempty(opt.Samples)
  if strcmp(opt.Mode,'full'),sampleIds=1:400;elseif strcmp(opt.Mode,'verify'),sampleIds=[399 400];else,sampleIds=1:4;end
 else,sampleIds=1:round(opt.Samples);end
 models=opt.ChannelModels;if isempty(models),if strcmp(opt.Mode,'verify'),models={'LOS','MIX'};else,models={'MIX'};end,end
 assert(iscell(models)&&all(ismember(models,{'LOS','MIX'})));
+includePairs=opt.IncludeCSIPairs;if isempty(includePairs),includePairs=~strcmp(opt.Mode,'full');end
+assert(islogical(includePairs)&&isscalar(includePairs));
 settings=make_settings(opt.Mode);rows=cell(0,1);started=tic;replays=0;maxReplay=0;
 for si=1:numel(settings)
- q=settings(si);net=sstr.configure_upa(net0,q.Nant);active=net.active_order(1:q.B);
+ q=settings(si);
+ if si>1
+  prev=find([settings(1:si-1).Nant]==q.Nant&[settings(1:si-1).B]==q.B&[settings(1:si-1).SNRdB]==q.SNRdB&[settings(1:si-1).KdB]==q.KdB,1);
+  if ~isempty(prev)
+   checkpoint=read_checkpoint(fullfile(out,sprintf('checkpoint_%02d.csv',prev)));
+   checkpoint.curve=repmat({q.curve},height(checkpoint),1);checkpoint.x_value(:)=q.xvalue;
+   writetable(checkpoint,fullfile(out,sprintf('checkpoint_%02d.csv',si)));
+   fprintf('UPA V3: cached default %d/%d from %d\n',si,numel(settings),prev);continue;
+  end
+ end
+ net=sstr.configure_upa(net0,q.Nant);active=net.active_order(1:q.B);
  for mi=1:numel(models)
   model=models{mi};
   for sid=sampleIds
-   sample=make_sample(net,sim,bank,sid,q.KdB,model);[Htrue,Hobs]=observe_sample(sample,active,q.SNRdB);
+   sample=sstr.make_sample(net,sim,bank,sid,q.KdB,model);[Htrue,Hobs]=sstr.observe_sample(sample,active,q.SNRdB);
    [~,s2,vtrue]=upa.principal(Htrue);ideal=struct('w',vtrue,'s2',s2);
-   [observed,rc,err]=ue_designs(net,Hobs,active);replays=replays+rc;maxReplay=max(maxReplay,err);
-   [perfect,rc,err]=ue_designs(net,Htrue,active);replays=replays+rc;maxReplay=max(maxReplay,err);
+   [observed,rc,err]=sstr.ue_designs(net,Hobs,active);replays=replays+rc;maxReplay=max(maxReplay,err);
+   perfect={};if includePairs,[perfect,rc,err]=sstr.ue_designs(net,Htrue,active);replays=replays+rc;maxReplay=max(maxReplay,err);end
    % CPU has only decoded spatial payload + public geometry. Hobs is not passed.
    cpu=cell(1,3);
    for j=1:3
@@ -39,22 +51,24 @@ for si=1:numel(settings)
      for j=1:3,rows{end+1}=record(cpu{j},'OBSERVED',name,'CPU_METHOD');end %#ok<AGROW>
     else
      for j=1:6,rows{end+1}=record(observed{j},'OBSERVED',name,'UE_METHOD');end %#ok<AGROW>
-     for j=1:6,rows{end+1}=record(perfect{j},'PERFECT',name,'UE_METHOD');end %#ok<AGROW>
+     if includePairs,for j=1:6,rows{end+1}=record(perfect{j},'PERFECT',name,'UE_METHOD');end,end %#ok<AGROW>
     end
    end
   end
  end
- fprintf('UPA V2: %s %d/%d, %.1f s\n',q.curve,si,numel(settings),toc(started));
+ checkpoint=struct2table(vertcat(rows{:}));writetable(checkpoint,fullfile(out,sprintf('checkpoint_%02d.csv',si)));rows=cell(0,1);
+ fprintf('UPA V3: %s %d/%d, %.1f s\n',q.curve,si,numel(settings),toc(started));
 end
-T=struct2table(vertcat(rows{:}));writetable(T,fullfile(out,'single_stream_trials.csv'));
+parts=cell(1,numel(settings));for j=1:numel(settings),parts{j}=read_checkpoint(fullfile(out,sprintf('checkpoint_%02d.csv',j)));end
+T=vertcat(parts{:});writetable(T,fullfile(out,'single_stream_trials.csv'));
 S=summarize(T);writetable(S,fullfile(out,'single_stream_summary.csv'));
 P=paired_csi(T);writetable(P,fullfile(out,'paired_CSI.csv'));
-contract=struct('version','UPA_SINGLE_PROTOCOL_V2','task','UPA单极化单流', ...
+contract=struct('version','UPA_SINGLE_PROTOCOL_V3','task','UPA单极化单流','include_CSI_pairs',includePairs,'rows_per_case',13+6*includePairs, ...
  'baseline_selection','joint right singular mode; Type-II same orthogonal group, amplitude3/relativephase2', ...
  'phase_rule','joint-mode projection, UE relative phases quantized4, AP1 anchor0; CPU continuous model projection', ...
  'CPU_information','public geometry and spatial payload only; no reference measured channel blocks', ...
  'UE_information','all-active-AP CSI at UE, decoded spatial beams, phase feedback', ...
- 'CSI_pair','same algorithm/codebook/payload/power, observed versus perfect; no guaranteed per-sample monotonicity', ...
+ 'CSI_pair','supplementary only, never the main ideal reference; same algorithm/codebook/payload/power, observed versus perfect; no guaranteed per-sample monotonicity', ...
  'POS_input','continuous HAQSE -> UE localization -> coordinate quantization only','POS_coordinate_bits',[13 14 9], ...
  'POS_ROI_lo',[19 19 -1],'POS_ROI_hi',[31 31 6],'POS_allocation','frozen public relative-phase sensitivity, no position-adaptive header', ...
  'payload_accounting','MSB-first packed integer payload; method/config/AP order public; transport headers/FEC excluded for all methods', ...
@@ -62,7 +76,7 @@ contract=struct('version','UPA_SINGLE_PROTOCOL_V2','task','UPA单极化单流', 
  'bandwidth_Hz',sim.bandwidth_Hz,'rho_data',sim.rho_data,'reference_data_SNR_dB',sim.reference_data_SNR_dB, ...
  'reference_power',sim.reference_power,'timing_note','decoder_time measures decoder only; UE shared frontend timed per family and repeated, not standalone method complexity', 'bandwidth_model','narrowband SE times 400 MHz; no OFDM or bandwidth-dependent thermal noise', ...
  'CPU_cost','R and geometry-message dimension fixed; observations scale with N, model4xBN and work scale with B,N; pilot symbols not modeled', ...
- 'Docomo','structure adaptation only, QPSK beta + AP DFT + three alternating updates; not verified original reproduction', ...
+ 'Docomo','paper IV25-27/V checked; single-pol rank1, QPSK beta + logical AP DFT +3 sweeps; structural adaptation', ...
  'ideal','true joint SVD, total power1, relaxed per-AP equal-power constraint', ...
  'elapsed_seconds',toc(started));write_json(fullfile(out,'experiment_contract.json'),contract);
 if opt.MakeFigures,plot_single_stream_task2(out);end
@@ -104,36 +118,6 @@ write_json(fullfile(out,'audit.json'),audit);disp(audit);
   row.maximum_AP_power_error=max(abs(sum(abs(reshape(d.w,net.Nap,q.B)).^2,1)-1/q.B));
  end
 end
-function [designs,count,maxerr]=ue_designs(net,H,active)
-clock=tic;[m1,m2,detail]=sstr.baseline_messages(net,H,active);baseTime=toc(clock);
-clock=tic;md=sstr.docomo_message(net,H,active);docTime=toc(clock);
-clock=tic;[pred,diag]=sstr.space_messages(net,H,active,net.reference3,14);geoTime=toc(clock);
-messages={m1,m2,md};items={pred.HAQSE,pred.DFT,pred.POS};[~,~,v]=upa.principal(H);
-for j=1:3
- item=items{j};[~,phase]=sstr.project_phases(item.F,v,4);
- messages{end+1}=struct('protocol','SSTR_V2','method',item.method_id,'mode','UE_PHASE', ...
-  'space',item.direction_message,'phase_indices',phase); %#ok<AGROW>
-end
-designs=cell(1,6);maxerr=0;count=0;
-for j=1:6
- clock=tic;msg=messages{j};wire=sstr.feedback_wire('encode',net,active,msg);
- clock=tic;d=sstr.decode_feedback(net,active,wire,msg.method,msg.mode);decodeTime=toc(clock);
- if j<=2
-  if j==1,F=detail.F1;else,F=detail.F2;end
-  c=sstr.project_phases(F,detail.target,4);
- elseif j>=4,F=items{j-3}.F;c=sstr.project_phases(F,v,4);
- else
-  F=d.F;B=numel(active);c=exp(1j*2*pi*[0;msg.space.beta_indices]/4).*exp(1j*2*pi*(0:B-1).'*msg.space.ap_dft_index/B);
- end
- w=reshape(F.*c.',[],1)/sqrt(numel(active));err=norm(w-d.w);assert(err<1e-11);maxerr=max(maxerr,err);count=count+1;
- d.decoder_time_s=decodeTime;
- if j<=2,d.shared_frontend_time_s=baseTime;elseif j==3,d.shared_frontend_time_s=docTime;else
-  d.shared_frontend_time_s=geoTime;d.continuous_frequency=diag.frequency_unquantized;
-  if j==6,d.raw_position=diag.position_unquantized;d.overflow=diag.quantizer_overflow;else,d.raw_position=d.estimated_position;end
- end
- designs{j}=d;
-end
-end
 function d=copy_diagnostics(d,src)
 d.raw_position=src.raw_position;d.continuous_frequency=src.continuous_frequency;d.overflow=src.overflow;
 end
@@ -157,25 +141,6 @@ end
 function q=item(curve,x,N,B,SNR,K)
 q=struct('curve',curve,'xvalue',x,'Nant',N,'B',B,'SNRdB',SNR,'KdB',K);
 end
-function sample=make_sample(net,sim,bank,sid,KdB,model)
-p=bank.positions(:,sid);scatter=sim.scatterer_positions_m.';sample.position=p;
-sample.H=zeros(4,net.Nap,10);sample.Z=sample.H;K=10^(KdB/10);
-for b=1:10
- ap=net.ap_elements(:,:,b);los=zeros(4,net.Nap);nlos=los;
- for u=1:4
-  user=p+net.ue_offsets(:,u);r=vecnorm(ap-user);los(u,:)=exp(-1j*net.k*r)./r;
-  for ell=1:6,L=vecnorm(ap-scatter(:,ell))+norm(scatter(:,ell)-user);nlos(u,:)=nlos(u,:)+bank.zeta(sid,ell)*exp(-1j*net.k*L)./L;end
- end
- if strcmp(model,'LOS'),sample.H(:,:,b)=los;else
-  nlos=nlos*norm(los,'fro')/norm(nlos,'fro');sample.H(:,:,b)=sqrt(K/(K+1))*los+sqrt(1/(K+1))*nlos;
- end
- rng(bank.noise_seed(sid,b),'twister');sample.Z(:,:,b)=(randn(4,net.Nap)+1j*randn(4,net.Nap))/sqrt(2);
-end
-end
-function [Htrue,Hobs]=observe_sample(sample,ids,snr)
-Htrue=reshape(sample.H(:,:,ids),4,[]);Z=reshape(sample.Z(:,:,ids),4,[]);
-Hobs=Htrue+sqrt(mean(abs(Htrue(:)).^2)/10^(snr/10))*Z;
-end
 function S=summarize(T)
 keys={'branch','role','csi','channel_model','curve','x_value','method','feedback_scope', ...
  'B','antenna_count','observation_SNR_dB','Rician_K_dB'};
@@ -193,9 +158,13 @@ a=renamevars(a(:,[keys {'throughput_Mbps','spectral_efficiency','feedback_bits'}
  {'throughput_Mbps','spectral_efficiency','feedback_bits'},{'observed_Mbps','observed_SE','observed_bits'});
 b=renamevars(b(:,[keys {'throughput_Mbps','spectral_efficiency','feedback_bits'}]), ...
  {'throughput_Mbps','spectral_efficiency','feedback_bits'},{'perfect_Mbps','perfect_SE','perfect_bits'});
-P=innerjoin(a,b,'Keys',keys);assert(height(P)==height(a)&&all(P.observed_bits==P.perfect_bits));
+P=innerjoin(a,b,'Keys',keys);assert((isempty(b)||height(P)==height(a))&&all(P.observed_bits==P.perfect_bits));
 P.delta_Mbps=P.perfect_Mbps-P.observed_Mbps;P.delta_SE=P.perfect_SE-P.observed_SE;
 end
 function write_json(path,value)
 fid=fopen(path,'w');assert(fid>0);fwrite(fid,jsonencode(value),'char');fclose(fid);
+end
+
+function T=read_checkpoint(path)
+opts=detectImportOptions(path,'TextType','char');opts=setvartype(opts,'feedback_wire','char');T=readtable(path,opts);
 end

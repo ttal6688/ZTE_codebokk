@@ -1,0 +1,1 @@
+{"status":"passed","checks":54,"shared_spatial_beams":true,"first_column_only_power_rescaled":true,"UE_extra_bits_B8":28,"CPU_extra_feedback_bits":0,"maximum_CPU_replay_error":0,"synthetic_two_stream_gain_verified":true,"global_phase_only_second_column_rank1_verified":true,"metric":"linear-MMSE per-stream SINR and joint logdet crosscheck","holdout_sample":399}

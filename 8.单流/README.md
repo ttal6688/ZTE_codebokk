@@ -1,20 +1,28 @@
-# UPA单极化单流仿真
+# UPA单极化单流与双流实验
 
-当前版本为 **UPA_SINGLE_PROTOCOL_V2**。已修正联合主模式基线、Type-II正交分组、统一UE相对相位量化、完整反馈编解码和CPU/UE信息边界；位置反馈仍从连续HAQSE频率定位，只量化一次坐标。
+已完成Docomo结构核对及专项验证、400位置单流正式扫描、32位置单极化双流最小验证。CPU与UE分别说明和出图，主参考是完美CSI直接SVD；普通方法使用带噪观测，400 MHz直接换算。
 
-- [本轮修正与验证报告](docs/单流基线与反馈协议修正报告.md)：修改依据、实现、验证结果和结论边界。
-- [运行方式与反馈格式](README_单流任务二.md)。
-- [CPU独立说明](docs/CPU说明.md)。
-- [UE独立说明](docs/UE说明.md)。
-- [两位置LOS/MIX验证](results/single_stream_UPA_V2_verify_final/README.md)。
-- [四位置MIX流程与图表验证](results/single_stream_UPA_V2_smoke4_final/README.md)。
+## 报告
 
-本轮覆盖6个不同预定位置、64个信道/参数案例、1,216条记录。它们是最小实现验证，不是新的400位置性能排名；同一案例中的CPU参考行不视为额外独立样本。CPU与UE图表分别保存。
+| 内容 | Markdown | Word |
+|---|---|---|
+| 单流正式结果及CPU与UE解释 | [400位置报告](docs/UPA单流400位置正式实验报告.md) | [转发版](docs/UPA单流400位置正式实验报告.docx) |
+| 如何从单流扩展双流及最小结果 | [双流扩展报告](docs/UPA单极化双流扩展验证报告.md) | [转发版](docs/UPA单极化双流扩展验证报告.docx) |
+| Docomo论文对应与检查 | [专项说明](docs/Docomo结构适配与专项验证.md) | 包含于单流Word报告 |
+| 最终信息与反馈口径 | [口径和推进顺序](docs/当前实验口径与推进顺序.md) | 包含于两份Word报告 |
 
-## 当前目录和历史材料
+## 数据与复现
 
-`run_single_stream_task2.m`、`+sstr/`和本目录直属的V2结果是当前实现。`6.位置反馈方案`提供冻结的公共配置及基础依赖，本轮未修改。`1`至`5`是阶段性复制材料；`历史双极化多流扩展`保留此前的双极化实验，不代表本轮的单极化或双流结果。
+- [单流400位置](results/single_stream_V3_full400/README.md)：98,800条记录，19个曲线标签，16个物理配置；原始明细为无损gzip，CPU与UE各11组图。
+- [双流32位置](results/dual_stream_minimal32/README.md)：LOS和混合信道，1,408条记录，576个可实施方法配对，CPU与UE各7组图。
+- [Docomo检查](results/docomo_validation/README.md)：48项专项检查、701项协议检查及42项UPA/POS回归。
+- [双流单元检查](results/dual_stream_unit/README.md)：54项检查。
+- [运行和有效载荷格式](README_单流任务二.md)，[CPU说明](docs/CPU说明.md)，[UE说明](docs/UE说明.md)。
 
-原来的`results/single_stream_full`是旧场景归档。`single_stream_UPA_POS_V1_*`是前一阶段只修复UPA及POS前端的记录，不能用于说明V2已经修正的基线和完整消息协议。历史说明见[前阶段报告](docs/UPA与位置反馈修复说明.md)和[目录整理记录](docs/整理说明.md)。
+单流入口为run_single_stream_task2，双流入口为run_dual_stream_minimal，统一绘图入口为plot_precoding_results。只添加本目录，不要对整个历史副本使用addpath(genpath(...))。解压或重新运行均使用新输出目录，避免覆盖现有结果。
 
-请只加入本目录，由入口自动加载依赖；不要对整个仓库使用`addpath(genpath(...))`，避免混入历史同名包。新实验仅使用UPA，单极化、单流；本轮没有扩展双流。
+V3正式扫描不额外运行同算法完美CSI配对；之前V2小样本配对仅供诊断。第二流复用每AP空间波束、第一相位仅缩放，UE只增加一组相位，CPU不增加空间反馈。尚未进行完整双流参数扫描。
+
+## 历史材料
+
+6.位置反馈方案为冻结公共输入和基础依赖，本轮未修改。历史双极化多流扩展与旧single_stream_full属于此前实验；UPA_POS_V1和UPA_V2结果是修复阶段记录，不混入本次正式均值。第5、第6目录此前已建立CPU/UE相位口径，本轮恢复第8目录一致性并补齐协议，不将这些原则描述为首次提出。

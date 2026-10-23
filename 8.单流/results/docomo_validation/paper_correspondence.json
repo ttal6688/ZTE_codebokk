@@ -1,0 +1,23 @@
+{
+  "title": "Near-Field Line-of-Sight MIMO Precoding with Distributed Antennas",
+  "authors": [
+    "Xiang Li",
+    "Xiaolin Hou",
+    "Lan Chen"
+  ],
+  "venue": "IEEE PIMRC 2024",
+  "source_SHA256": "04af736a9ac761998282aaa0294c272c9338ccf8a0b4529cdf61b522415a4bce",
+  "source_pages": 6,
+  "matched_sections": [
+    "IV equations25-27",
+    "V TableI and TableII"
+  ],
+  "implementation": "structural adaptation, not full paper reproduction",
+  "differences": [
+    "single polarization, rank1",
+    "irregular AP logical1D DFT",
+    "project codebook, channel and400MHz scaling",
+    "project fixed3 sweeps"
+  ],
+  "reference_TypeI": "paper NCJT versus project coherent baseline"
+}
