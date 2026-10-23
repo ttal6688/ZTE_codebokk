@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "positions": 400,
+  "records": 17600,
+  "implementable_records_independently_reconstructed": 14400,
+  "maximum_true_effective_channel_error": 4.91806172015654e-13,
+  "maximum_metric_SE_error": 3.3519853559482726e-12,
+  "maximum_CPU_continuous_coefficient_numerical_error": 1.351250966067487e-06,
+  "maximum_precoder_signature_error": 2.398081733190338e-14,
+  "UE_extra_bits": 28,
+  "CPU_extra_bits": 0,
+  "shared_F": true,
+  "all_summary_means_recomputed": true,
+  "truth_regenerated_from_public_sample_bank": true
+}
