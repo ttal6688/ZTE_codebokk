@@ -1,5 +1,5 @@
 function audit = run_single_stream_task2(varargin)
-%RUN_SINGLE_STREAM_TASK2 单流、400 MHz 任务二仿真入口。
+%RUN_SINGLE_STREAM_TASK2 UPA单极化单流、400 MHz窄带速率换算入口。
 %   默认 smoke 模式只使用少量固定样本检查数据链路与全部出图。
 %   完整仿真示例：
 %   run_single_stream_task2('Mode','full','OutputDir','results/single_stream_full');
@@ -10,38 +10,39 @@ function audit = run_single_stream_task2(varargin)
 
 root = fileparts(mfilename('fullpath'));
 dep = fullfile(root,'6.位置反馈方案');
-addpath(dep,fullfile(dep,'lib'));
+addpath(root,dep,fullfile(dep,'lib'));maxNumCompThreads(1);
 parser = inputParser;
-addParameter(parser,'Mode','smoke',@(x) ismember(x,{'smoke','full'}));
+addParameter(parser,'Mode','smoke',@(x) ismember(x,{'smoke','full','verify'}));
 addParameter(parser,'OutputDir','',@(x) ischar(x) || isstring(x));
 addParameter(parser,'Samples',[],@(x) isempty(x) || (isnumeric(x) && isscalar(x) && x>=1));
 addParameter(parser,'MakeFigures',true,@islogical);
 parse(parser,varargin{:});
 opt = parser.Results;
 
-[net0,sim,bank] = ula.load_inputs();
+[net0,sim,bank] = upa.load_inputs();
 sim.bandwidth_Hz = 400e6;
 sim.rho_data = 10^(sim.reference_data_SNR_dB/10)/sim.reference_power;
-sim.task_id = 'single_stream_400MHz_task2';
+sim.task_id = 'UPA_SINGLE_POS_CONTINUOUS_V1';
 if isempty(opt.OutputDir)
-    out = fullfile(root,'results',['single_stream_400MHz_' char(opt.Mode)]);
+    out = fullfile(root,'results',['single_stream_UPA_POS_V1_' char(opt.Mode)]);
 else
     out = char(opt.OutputDir);
 end
+assert(~exist(fullfile(out,'single_stream_trials.csv'),'file'),'sstr:ExistingResults','Use a new OutputDir to preserve prior results');
 if ~exist(out,'dir'), mkdir(out); end
 
 if isempty(opt.Samples)
-    if strcmp(opt.Mode,'full'), sampleIds = 1:400; else, sampleIds = 1:6; end
+    if strcmp(opt.Mode,'full'), sampleIds = 1:400; elseif strcmp(opt.Mode,'verify'), sampleIds=[399 400]; else, sampleIds = 1:6; end
 else
     sampleIds = 1:min(400,round(opt.Samples));
 end
 settings = make_settings(opt.Mode);
-rows = cell(0,19);
+rows = cell(0,29);
 started = tic;
 
 for si = 1:numel(settings)
     q = settings(si);
-    net = configure_ula(net0,q.Nant);
+    net = sstr.configure_upa(net0,q.Nant);
     ids = net.active_order(1:q.B);
     refs = net.reference3;
     for sid = sampleIds
@@ -63,7 +64,10 @@ for si = 1:numel(settings)
                 design.cpu_estimation_dimension,q.B,q.Nant,q.SNRdB,q.KdB,sid, ...
                 metric.position_error_m,metric.throughput_Mbps,design.feedback_bits, ...
                 design.coordinate_bits_x,design.coordinate_bits_y,sample.position(1),sample.position(2), ...
-                design.estimated_position(1)}; %#ok<AGROW>
+                design.estimated_position(1),design.coordinate_bits_z,sample.position(3), ...
+                design.estimated_position(2),design.estimated_position(3),jsonencode(design.raw_position), ...
+                jsonencode(design.continuous_frequency),jsonencode(design.space_message),design.overflow, ...
+                'UPA',net.Nside}; %#ok<AGROW>
         end
     end
     fprintf('单流 400 MHz: %s %d/%d，%.1f 秒\n',q.curve,si,numel(settings),toc(started));
@@ -72,17 +76,24 @@ end
 names = {'branch','curve','x_value','method','feedback_scope','cpu_estimation_dimension', ...
     'B','antenna_count','observation_SNR_dB','Rician_K_dB','sample_id', ...
     'position_error_m','throughput_Mbps','feedback_bits','coordinate_bits_x','coordinate_bits_y', ...
-    'true_x_m','true_y_m','estimated_x_m'};
+    'true_x_m','true_y_m','estimated_x_m','coordinate_bits_z','true_z_m', ...
+    'estimated_y_m','estimated_z_m','position_before_coordinate_quantization','frequency_unquantized', ...
+    'space_message','quantizer_overflow','array','UPA_side'};
 trials = cell2table(rows,'VariableNames',names);
 writetable(trials,fullfile(out,'single_stream_trials.csv'));
 summary = summarize_trials(trials);
 writetable(summary,fullfile(out,'single_stream_summary.csv'));
 
-contract = struct('task','单流','bandwidth_Hz',sim.bandwidth_Hz,'streams',1, ...
+contract = struct('task','UPA单极化单流','version',sim.task_id,'array','UPA','default_shape',[32 32], ...
+    'POS_input','continuous HAQSE frequency -> UE 3D position -> integer coordinate message', ...
+    'POS_frequency_quantization',false,'coordinate_bits',[13 14 9],'AP_phase_bits',sim.UE_phase_bits, ...
+    'baseline_status','local-energy TypeI/II and Docomo structure retained; only 2D spatial-codebook adaptation', ...
+    'bandwidth_model','narrowband spectral efficiency times 400MHz; not OFDM', ...
+    'sample_ids',sampleIds,'settings',settings,'bandwidth_Hz',sim.bandwidth_Hz,'streams',1, ...
     'samples',numel(sampleIds),'reference_AP_count',3,'partial_feedback_methods',{{'HAQSE','DFT-index','位置反馈'}}, ...
-    'full_feedback_baselines',{{'Type-I','Type-II','Docomo 近场 LoS 码本（仅 UE）','完美 CSI SVD 上界'}}, ...
+    'full_feedback_baselines',{{'Type-I','Type-II','Docomo结构适配（仅 UE）','完美 CSI SVD 上界'}}, ...
     'curves',{{'定位误差-SNR','定位误差-天线数','定位误差-AP数','吞吐量-SNR','吞吐量-天线数','吞吐量-莱斯因子','比特数-AP数'}}, ...
-    'CPU_note','部分反馈方案的 CPU 信道估计维度固定为 R=3，不随协作 AP 数 B 增加。', ...
+    'CPU_note','R=3固定参考消息来源数；CPU重构矩阵为4×BN，并非固定计算维度。', ...
     'UE_note','UE 使用本地观测 CSI 计算 AP 间共相位；IDEAL_SVD 使用完美 CSI，仅作性能上界。', ...
     'docomo_note','Docomo 采用本地 4 倍过采样 DFT、QPSK beta、AP 逻辑栅格 DFT 和三轮交替更新。对 B=5:10 以 QPSK 坐标更新代替原文仅适用于小 B 的全枚举。', ...
     'status','complete','elapsed_seconds',toc(started));
@@ -90,7 +101,8 @@ write_json(fullfile(out,'experiment_contract.json'),contract);
 if opt.MakeFigures
     plot_single_stream_task2(out);
 end
-audit = struct('status','complete','output_directory',out,'records',height(trials), ...
+audit = struct('status','complete','output_directory',out,'records',height(trials),'array','UPA','streams',1,'POS_coordinate_bits',[13 14 9], ...
+    'POS_frequency_quantization',false,'coordinate_overflow_records',sum(trials.quantizer_overflow), ...
     'samples',numel(sampleIds),'settings',numel(settings),'bandwidth_Hz',sim.bandwidth_Hz, ...
     'elapsed_seconds',toc(started));
 write_json(fullfile(out,'audit.json'),audit);
@@ -98,29 +110,23 @@ end
 
 function settings = make_settings(mode)
 if strcmp(mode,'full')
-    snrs = 20:5:40; antennas = [16 32 64]; aps = 5:10; ks = 0:5:20;
+    snrs = 20:5:40; antennas = [64 256 1024]; aps = 5:10; ks = 0:5:20;
 else
-    snrs = [20 30 40]; antennas = [16 32 64]; aps = [5 8 10]; ks = [0 10 20];
+    snrs = [20 30 40]; antennas = [64 256 1024]; aps = [5 8 10]; ks = [0 10 20];
 end
 settings = struct('curve',{},'xvalue',{},'Nant',{},'B',{},'SNRdB',{},'KdB',{});
-for x = snrs, settings(end+1) = item('SNR',x,64,8,x,10); end %#ok<AGROW>
+if strcmp(mode,'verify')
+    settings=[item('SNR',30,64,5,30,10),item('SNR',30,256,8,30,10), ...
+              item('SNR',30,1024,8,30,10),item('SNR',30,1024,10,30,10)];return;
+end
+for x = snrs, settings(end+1) = item('SNR',x,1024,8,x,10); end %#ok<AGROW>
 for x = antennas, settings(end+1) = item('天线数',x,x,8,30,10); end %#ok<AGROW>
-for x = aps, settings(end+1) = item('AP数',x,64,x,30,10); end %#ok<AGROW>
-for x = ks, settings(end+1) = item('莱斯因子',x,64,8,30,x); end %#ok<AGROW>
+for x = aps, settings(end+1) = item('AP数',x,1024,x,30,10); end %#ok<AGROW>
+for x = ks, settings(end+1) = item('莱斯因子',x,1024,8,30,x); end %#ok<AGROW>
 end
 
 function q = item(curve,x,Nant,B,SNRdB,KdB)
 q = struct('curve',curve,'xvalue',x,'Nant',Nant,'B',B,'SNRdB',SNRdB,'KdB',KdB);
-end
-
-function net = configure_ula(net0,N)
-net = net0;
-net.Nap = N; net.M = 8*N; net.index_bits = round(log2(net.M));
-net.local = [zeros(1,N);((0:N-1)-(N-1)/2)*net.d;zeros(1,N)];
-net.ap_elements = zeros(3,N,10);
-for b = 1:10
-    net.ap_elements(:,:,b) = net.pb(:,b) + net.R(:,:,b)*net.local;
-end
 end
 
 function sample = make_sample(net,sim,bank,sid,KdB)
@@ -151,21 +157,23 @@ Hobs = Htrue + sqrt(noiseVariance)*Z;
 end
 
 function [type1,type2,docomo,ideal] = full_feedback_design(net,Hobs,truth,B,Q)
-% Type-I/II 与原仓库的 ULA 基线相同：本地 DFT 波束分别为 1/2 条，
+% Preserve this runner's local-energy Type-I/II selection; adapt the codebook to 2D.
 % 后续使用量化 AP 间相位。全部索引和量化系数都计入 feedback_bits。
 F1 = zeros(net.Nap,B);
 F2 = zeros(net.Nap,B);
-codebook = local_dft_codebook(net,net.M);
+
 for slot = 1:B
     ix = (slot-1)*net.Nap + (1:net.Nap);
     Hb = Hobs(:,ix);
-    [~,order] = sort(sum(abs(Hb*codebook).^2,1),'descend');
-    F1(:,slot) = codebook(:,order(1));
+    G=sstr.codebook_responses(net,Hb,net.M);
+    [~,order] = sort(sum(abs(G).^2,1),'descend');
+    pair=sstr.local_beams(net,order(1:2)-1,net.M);
+    F1(:,slot) = pair(:,1);
     [~,~,v] = upa.principal(Hb);
-    a1 = F1(:,slot)'*v; a2 = codebook(:,order(2))'*v;
+    a1 = F1(:,slot)'*v; a2 = pair(:,2)'*v;
     amp = round(7*min(1,abs(a2)/max(abs(a1),realmin)))/7;
     phase = 2*pi*mod(round(angle(a2*conj(a1))*4/(2*pi)),4)/4;
-    f = F1(:,slot) + amp*exp(1j*phase)*codebook(:,order(2));
+    f = F1(:,slot) + amp*exp(1j*phase)*pair(:,2);
     F2(:,slot) = f/norm(f);
 end
 c1 = greedy_qpsk_phases(Hobs,F1,Q);
@@ -178,22 +186,21 @@ ideal.w = truth.v; ideal.feedback_scope = '全反馈';
 end
 
 function [haqse,dftindex,pos] = partial_designs(net,Hobs,ids,refs,sim)
-R = numel(refs); fq = zeros(1,R); dft = zeros(1,R);
-for j = 1:R
-    slot = find(ids==refs(j),1); ix = (slot-1)*net.Nap+(1:net.Nap); Hb = Hobs(:,ix);
-    raw = haqse_ula_reference(Hb.'); L = 2^sim.frequency_bits_per_dimension;
-    code = mod(round(L*raw),L); fq(j) = mod(code/L+.5,1)-.5;
-    [dft(j),~] = dft_beam(net,Hb);
-end
-df = mod(-dft/net.M+.5,1)-.5;
-[pH,condH] = localize_ula(net,refs,fq); [pD,condD] = localize_ula(net,refs,df);
-Fh = predict_beams(net,ids,refs,pH,mod(round(-fq*net.M),net.M));
-Fd = predict_beams(net,ids,refs,pD,dft);
-[pP,bits] = encode_position(net,pH,ids,24);
-Fp = predict_beams(net,ids,[],pP,[]);
-haqse = paired_design(net,Hobs,ids,Fh,pH,condH,'HAQSE_R3',R*sim.frequency_bits_per_dimension,R,sim.UE_phase_bits,NaN,NaN);
-dftindex = paired_design(net,Hobs,ids,Fd,pD,condD,'DFT_INDEX_R3',R*net.index_bits,R,sim.UE_phase_bits,NaN,NaN);
-pos = paired_design(net,Hobs,ids,Fp,pP,NaN,'POS_R3',sum(bits),2,sim.UE_phase_bits,bits(1),bits(2));
+[pred,diag]=sstr.space_messages(net,Hobs,ids,refs,sim.frequency_bits_per_dimension);
+haqse=finish(pred.HAQSE,6);dftindex=finish(pred.DFT,6);pos=finish(pred.POS,3);
+ function pair=finish(p,dimension)
+  bits=nan(3,1);overflow=false;raw=p.position;
+  if strcmp(p.direction_message.method,'POS')
+   bits=p.direction_message.coordinate_bits;overflow=diag.quantizer_overflow;raw=diag.position_unquantized;
+  end
+  pair=paired_design(net,Hobs,ids,p.F,p.position,p.localization.condition,p.method_id, ...
+      p.direction_bits,dimension,sim.UE_phase_bits,bits(1),bits(2));
+  for branch={'cpu','ue'}
+   name=branch{1};pair.(name).coordinate_bits_z=bits(3);pair.(name).raw_position=raw;
+   pair.(name).continuous_frequency=diag.frequency_unquantized;
+   pair.(name).space_message=p.direction_message;pair.(name).overflow=overflow;
+  end
+ end
 end
 
 function pair = paired_design(net,Hobs,ids,F,p,condition,method,bits,dimension,Q,bx,by)
@@ -209,20 +216,9 @@ end
 function d = design(method,scope,bits,F,c,p,dimension,bx,by)
 d = struct('method_id',method,'feedback_scope',scope,'feedback_bits',bits, ...
     'F',F,'c',c,'w',[],'estimated_position',p,'cpu_estimation_dimension',dimension, ...
-    'coordinate_bits_x',bx,'coordinate_bits_y',by,'localization_condition',NaN);
+    'coordinate_bits_x',bx,'coordinate_bits_y',by,'coordinate_bits_z',NaN, ...
+    'raw_position',nan(3,1),'continuous_frequency',[],'space_message',struct,'overflow',false,'localization_condition',NaN);
 if ~isempty(F), d.w = reshape(F.*reshape(c,1,[]),[],1)/sqrt(size(F,2)); end
-end
-
-function [code,f] = dft_beam(net,Hb)
-[~,~,v] = upa.principal(Hb); spectrum = fft(v,net.M)/sqrt(net.Nap);
-[~,index] = max(abs(spectrum).^2); code = index-1;
-n = (0:net.Nap-1).'; f = exp(1j*2*pi*n*code/net.M)/sqrt(net.Nap);
-end
-
-function C = local_dft_codebook(net,M)
-% 所有本地 DFT 码字均为单位范数列向量；M/N 是过采样倍数。
-n = (0:net.Nap-1).';
-C = exp(1j*2*pi*n*(0:M-1)/M)/sqrt(net.Nap);
 end
 
 function c = greedy_qpsk_phases(H,F,Q)
@@ -242,13 +238,13 @@ end
 end
 
 function d = docomo_design(net,Hobs,B)
-% Docomo Near-Field LoS 方案的 ULA 适配：
+% Docomo structure adaptation to a 2D local UPA codebook; AP logical DFT unchanged.
 % 本地 4 倍过采样 DFT、QPSK beta、AP 逻辑栅格 DFT，以及 beta/v/f 交替更新。
 % 原 simulate_proposed 对 beta 全枚举 4^(B-1)；此处 B=5:10，采用坐标更新。
-Mlocal = 4*net.Nap; C = local_dft_codebook(net,Mlocal);
+Mlocal = net.M;
 G = cell(B,1); index = ones(B,1);
 for slot = 1:B
-    ix = (slot-1)*net.Nap+(1:net.Nap); G{slot} = Hobs(:,ix)*C;
+    ix = (slot-1)*net.Nap+(1:net.Nap); G{slot} = sstr.codebook_responses(net,Hobs(:,ix),Mlocal);
     [~,index(slot)] = max(sum(abs(G{slot}).^2,1));
 end
 V = ap_grid_dft_basis(B); beta = ones(B,1);
@@ -268,10 +264,10 @@ for outer = 1:3
     end
 end
 F = zeros(net.Nap,B);
-for slot = 1:B, F(:,slot) = C(:,index(slot)); end
+for slot = 1:B, F(:,slot) = sstr.local_beams(net,index(slot)-1,Mlocal); end
 % design() 以 sqrt(B) 归一化，因此将 AP 栅格 DFT 的 1/sqrt(B) 还原到 c。
 c = sqrt(B)*beta.*v;
-bits = B*ceil(log2(Mlocal)) + 2*(B-1) + ceil(log2(B));
+bits = B*ceil(log2(Mlocal*Mlocal)) + 2*(B-1) + ceil(log2(B));
 d = design('DOCOMO_NFLOS','全反馈（UE-CSI）',bits,F,c,nan(3,1),B,NaN,NaN);
 end
 
@@ -303,28 +299,6 @@ for slot = 2:numel(G)
 end
 end
 
-function F = predict_beams(net,ids,refs,p,referenceCodes)
-B = numel(ids); F = zeros(net.Nap,B); n = (0:net.Nap-1).';
-for slot = 1:B
-    b = ids(slot); q = net.R(:,:,b)'*((net.pb(:,b)-p)/norm(net.pb(:,b)-p));
-    m = mod(round(net.M*q(2)/2),net.M);
-    if ~isempty(refs)
-        ref = find(refs==b,1); if ~isempty(ref), m = referenceCodes(ref); end
-    end
-    F(:,slot) = exp(1j*2*pi*n*m/net.M)/sqrt(net.Nap);
-end
-end
-
-function [p,condition] = localize_ula(net,refs,frequency)
-A = zeros(2); rhs = zeros(2,1);
-for j = 1:numel(refs)
-    qy = -2*frequency(j); qx = -sqrt(max(0,1-qy*qy)); q = [qx;qy;0];
-    g = -net.R(:,:,refs(j))*q; g = g(1:2)/norm(g(1:2)); P = eye(2)-g*g.';
-    A = A+P; rhs = rhs+P*net.pb(1:2,refs(j));
-end
-condition = cond(A); p = [A\rhs;0];
-end
-
 function H = geometry_channel(net,p,ids)
 H = zeros(4,numel(ids)*net.Nap);
 for slot = 1:numel(ids)
@@ -341,29 +315,15 @@ theta = angle(exp(1j*(angle(a)-angle(a(1)))));
 if isinf(Q), c = exp(1j*theta); else, L = 2^Q; c = exp(1j*2*pi*mod(round(theta*L/(2*pi)),L)/L); end
 end
 
-function [pdecoded,bits] = encode_position(net,p,ids,totalBits)
-bits = coordinate_bits(net,p,ids,totalBits); lo = [19;19]; hi = [31;31]; count = 2.^bits;
-index = max(0,min(count-1,floor((p(1:2)-lo)./(hi-lo).*count)));
-pdecoded = [lo+(index+.5).*(hi-lo)./count;0];
-end
-
-function bits = coordinate_bits(net,p,ids,totalBits)
-lo = [19;19]; hi = [31;31]; weight = zeros(2,1);
-for b = ids
-    g = (net.pb(:,b)-p)/norm(net.pb(:,b)-p); weight = weight + g(1:2).^2;
-end
-best = Inf; bits = [4;totalBits-4];
-for bx = 4:(totalBits-4)
-    by = totalBits-bx; cost = sum(weight.*((hi-lo)./[2^bx;2^by]).^2);
-    if cost < best, best = cost; bits = [bx;by]; end
-end
-end
-
 function metric = evaluate_design(H,truth,d,sim,truePosition)
 metric.position_error_m = NaN;
 if all(isfinite(d.estimated_position)), metric.position_error_m = norm(d.estimated_position-truePosition); end
 power = norm(H*d.w)^2; metric.throughput_Mbps = sim.bandwidth_Hz/1e6*log2(1+sim.rho_data*power);
 assert(abs(norm(d.w)^2-1)<1e-9);
+if ~isempty(d.F)
+    B=size(d.F,2);powerByAP=sum(reshape(abs(d.w).^2,size(d.F,1),B),1);
+    assert(max(abs(powerByAP-1/B))<1e-10);
+end
 assert(power <= truth.s2*(1+1e-8));
 end
 

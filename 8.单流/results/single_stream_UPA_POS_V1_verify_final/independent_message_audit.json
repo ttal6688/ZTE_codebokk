@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "array": "UPA",
+  "streams": 1,
+  "records": 104,
+  "sample_ids": [
+    399,
+    400
+  ],
+  "geometry_messages_independently_replayed": 48,
+  "POS_coordinate_messages_replayed": 16,
+  "maximum_position_replay_error_m": 6.039613253960852e-14,
+  "feedback_bits_checked": true,
+  "CPU_UE_POS_messages_equal": true,
+  "POS_raw_position_recomputed_from_continuous_frequency": true,
+  "POS_coordinate_bits": [
+    13,
+    14,
+    9
+  ],
+  "algorithm_scope": "UPA and continuous-POS fixes only; not baseline-equivalence or performance validation"
+}

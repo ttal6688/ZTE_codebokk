@@ -6,10 +6,10 @@ for branch = ["CPU" "UE"]
     out = fullfile(resultDir,char(branch)); if ~exist(out,'dir'), mkdir(out); end
     tb = T(T.branch==branch,:);
     make_position_plot(tb,branch,'SNR','观测 SNR（dB）','定位误差（m）',out);
-    make_position_plot(tb,branch,'天线数','每 AP 天线数','定位误差（m）',out);
+    make_position_plot(tb,branch,'天线数','每 AP UPA阵元数','定位误差（m）',out);
     make_position_plot(tb,branch,'AP数','协作 AP 数','定位误差（m）',out);
     make_rate_plot(tb,branch,'SNR','观测 SNR（dB）',out);
-    make_rate_plot(tb,branch,'天线数','每 AP 天线数',out);
+    make_rate_plot(tb,branch,'天线数','每 AP UPA阵元数',out);
     make_rate_plot(tb,branch,'莱斯因子','莱斯因子 K（dB）',out);
     make_bits_plot(tb,branch,out);
 end
@@ -76,7 +76,7 @@ switch method
     case "IDEAL_SVD", label = '全反馈-完美 CSI（上界）';
     case "TYPE_I", label = '全反馈-Type-I（UE-CSI）';
     case "TYPE_II", label = '全反馈-Type-II（UE-CSI）';
-    case "DOCOMO_NFLOS", label = 'Docomo 近场 LoS（UE-CSI）';
+    case "DOCOMO_NFLOS", label = '全反馈-Docomo结构适配（UE-CSI）';
     case "HAQSE_R3", label = '部分反馈-HAQSE（R=3）';
     case "DFT_INDEX_R3", label = '部分反馈-DFT-index（R=3）';
     case "POS_R3", label = '部分反馈-位置反馈（R=3）';
