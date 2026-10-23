@@ -1,0 +1,1 @@
+{"status":"passed","records":304,"sample_ids":[399,400],"positions":2,"settings":4,"channel_models":["LOS","MIX"],"complete_payload_replays":240,"maximum_UE_vs_wire_precoder_error":0,"paired_CSI_records":96,"POS_overflow_records":0,"elapsed_seconds":4.9968823,"full400":false}

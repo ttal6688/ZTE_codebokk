@@ -1,46 +1,56 @@
-# UPA单极化单流运行说明
+# UPA单流运行与实验口径
 
-当前入口run_single_stream_task2已修复为UPA，UE有4个单极化接收位置；带宽保持400 MHz窄带速率换算。单流与双流不混合，本阶段没有双流实现。
+当前协议SSTR_V2，所有可实施预编码均由实际打包的整数比特串恢复。方法名、模式、活动AP顺序、码本和量化配置是双方预先共享的配置；统计反馈有效载荷，不含传输头、FEC、字节填充。JSON只是便于检查，JSON文本长度不是反馈bit数。
 
-## 首先执行针对性验证
+## 运行
 
-MATLAB进入第8目录：
-
-```matlab
-verify_single_stream_upa;
-run_single_stream_task2('Mode','verify','OutputDir',fullfile(pwd,'results','upa_verify_new'),'MakeFigures',false);
-```
-
-verify默认使用399、400号位置，覆盖UPA8×8、16×16、32×32及B=5/8/10，共104条记录。默认smoke使用前6个位置；本次另用smoke的前2位置运行12个扫描标签，输出312条记录和CPU/UE各7组PNG/FIG，仅用于流程与绘图检查。
+在MATLAB中进入本目录：
 
 ```matlab
-run_single_stream_task2('Mode','smoke','Samples',2,'OutputDir',fullfile(pwd,'results','upa_smoke_new'));
+verify_single_stream_protocol('results/my_V2_verify');
+run_single_stream_task2('Mode','verify','OutputDir','results/my_V2_verify','MakeFigures',false);
+run_single_stream_task2('Mode','smoke','OutputDir','results/my_V2_smoke','MakeFigures',true);
 ```
 
-full支持400位置；本次没有启动全量正式实验。选择新OutputDir；入口拒绝覆盖已有single_stream_trials.csv。不要对整个历史副本使用addpath(genpath(...))。
+`verify`默认位置399、400，四组UPA/AP设置，每组分别测试LOS和MIX；`smoke`默认位置1至4，12个参数标签，默认MIX。可使用`Samples`指定从1开始的样本数，使用`ChannelModels`, `{'LOS','MIX'}`指定模型。已有CSV的输出目录会被拒绝，以保护历史数据。`verify_single_stream_protocol`只写检查JSON，可先写入同一空结果目录。
 
-## 公共设置
+完整400位置入口已保留，本轮未运行：
 
-默认UPA32×32，每维4倍过采样，共128×128个DFT索引；每AP二维索引14 bit。阵元数扫描改为8×8、16×16、32×32，即64/256/1024。AP数5至10，观测SNR20:5:40 dB，莱斯因子0:5:20 dB；其余参数在扫描时固定为B=8、观测30 dB、UPA32×32、K=10 dB。
+```matlab
+run_single_stream_task2('Mode','full','OutputDir','results/my_V2_full400');
+```
 
-UPA位置、朝向、UE高度、共享散射与噪声种子沿用原冻结UPA输入；没有新增极化端口。真实单AP信道4×N，联合信道4×BN，最终只有一个发送向量；总功率1，每个可实施AP功率1/B。理想SVD放松每AP等功率约束。
+完整扫描为观测SNR20:5:40 dB、每AP阵元数64/256/1024、AP数5:10、莱斯因子0:5:20 dB，共19个参数标签。默认32×32、B=8、观测SNR30 dB、K=10 dB；各扫描的默认点会重复，用于各自画图，不当作额外独立样本。
 
-## 位置反馈的正确链路
+独立Python审计（依赖numpy、pandas）：
 
-UE的三参考AP观测 → 连续二维HAQSE频率 → UE三维定位 → 13/14/9 bit坐标整数消息 → CPU独立解码 → 全部AP空间波束。
+```text
+python audit_single_stream_protocol.py results/my_V2_verify results/my_V2_smoke
+```
 
-POS只量化一次坐标。HAQSE频率反馈分支单独量化每维14 bit；它的量化结果不会送入POS定位。空间消息、量化前位置、连续频率、完整三维解码位置和越界标记均保存到CSV。坐标分配为公开固定配置，总36 bit，不依赖CPU未知的真实或未量化位置。
+旧`audit_single_stream_upa.py`只用于V1历史修复数据，不要用它替代V2完整协议审计。
 
-## CPU与UE分别阅读
+## 整数有效载荷格式
 
-- [CPU说明](docs/CPU说明.md)：CPU由空间消息重构相位；R=3不等于矩阵维度固定。
-- [UE说明](docs/UE说明.md)：UE利用相同解码波束和有噪观测计算4 bit AP间相位。
-- [本次修复与验证](docs/UPA与位置反馈修复说明.md)：测试入口、范围和限制。
+所有整数MSB优先，矩阵按MATLAB列顺序编码。令d为二维码字索引bit数，即d=2log2(4sqrt(N))。所有UE普通方案固定首AP相位为0，其余AP相位4 bit；先去除共同相位，再量化。
 
-默认B=8、UPA32×32时，CPU的HAQSE/DFT/POS反馈为84/42/36 bit；UE再加28 bit，分别为112/70/64 bit。Type-I/II及Docomo的算法规则暂沿用她的实现，只完成必要的二维空间码本适配，不能说已经恢复为原仓库基线或验证为标准实现。Docomo只列在UE图中。
+| 方法 | 字段顺序 | CPU几何方案 | UE方案 |
+|---|---|---:|---:|
+| HAQSE | 3个AP的二维频率整数，每维14 bit；随后UE相位 | 84 | 84+4(B−1) |
+| DFT | 3个AP的二维方向整数，每维log2(4sqrt(N)) bit；随后UE相位 | 3d | 3d+4(B−1) |
+| POS | x/y/z整数，13/14/9 bit；随后UE相位 | 36 | 36+4(B−1) |
+| Type-I | 每AP一个二维码字的线性索引；随后相位 | 仅作UE参考 | Bd+4(B−1) |
+| Type-II | 每AP两个线性索引；每AP3 bit幅度、2 bit内部相位；随后AP相位 | 仅作UE参考 | 2Bd+5B+4(B−1) |
+| Docomo结构适配 | 每AP一个线性索引；B−1个2 bit beta；一个AP逻辑DFT索引 | 不参加CPU几何链路 | Bd+2(B−1)+ceil(log2(B)) |
 
-## 结果归属
+Type-II使用直接索引编码，没有利用正交组关系压缩索引；表中是当前实际有效载荷。默认N=1024、B=8时，CPU几何HAQSE/DFT/POS为84/42/36 bit；UE为112/70/64 bit；Type-I/II为140/292 bit；Docomo结构适配为129 bit。
 
-新验证位于results/single_stream_UPA_POS_V1_verify_final与results/single_stream_UPA_POS_V1_smoke2。CPU和UE图各自单列。旧results/single_stream_full和历史双极化多流扩展属于之前实验，不用于证明这次修复的性能。
+## 输出解释
 
-400 MHz目前只乘窄带频谱效率，不表示已经实现频率选择性、多载波或带宽相关热噪声。其他审查项继续单独推进，不从这些小样本给出性能排名。
+每个案例保存CPU六行：SVD、两个UE基线参考、三个CPU几何方法；UE十三行：SVD、六个观测CSI方法、六个同算法完美CSI方法。`role`明确区分CPU_METHOD、UE_REFERENCE、UE_METHOD、UPPER_BOUND。主图只使用观测CSI和SVD；完美CSI单独通过`paired_CSI.csv`比较。
+
+CSV保存完整消息、比特串、AP系数、预编码检查量、量化前/解码后坐标及越界标志，并记录接收功率、频谱效率、400 MHz换算速率。`cpu_estimation_dimension`已移除，改为分项信息量、模型尺寸和计时。
+
+`reference_observation_complex_count`是UE生成参考AP几何消息所需的原始观测规模，不是CPU获得的信道；对UE方案它是全部AP观测的子集，不与`full_observation_complex_count`相加。模型尺寸只记录CPU实际构造的4×BN模型。`decoder_time_s`只计CPU解码接口；UE的`shared_frontend_time_s`是同一算法族共享的前端时间，重复列出，不代表每种算法独立运行复杂度，也不用于性能排名。
+
+400 MHz仅作窄带SE换算；观测SNR控制CSI噪声，数据链路rho另由公共参考功率和10 dB参考SNR确定。理想SVD放松每AP等功率限制。完美CSI配对不保证每个样本速率上升，因为当前投影、码本和量化规则并非速率全局最优。

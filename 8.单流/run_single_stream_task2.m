@@ -1,342 +1,201 @@
-function audit = run_single_stream_task2(varargin)
-%RUN_SINGLE_STREAM_TASK2 UPA单极化单流、400 MHz窄带速率换算入口。
-%   默认 smoke 模式只使用少量固定样本检查数据链路与全部出图。
-%   完整仿真示例：
-%   run_single_stream_task2('Mode','full','OutputDir','results/single_stream_full');
-%
-%   CPU 侧只由固定 R=3 条方向/位置消息重构波束和共相位；UE 侧
-%   使用观测 CSI 计算共相位。Type-I/II 是全反馈（UE-CSI）基线；
-%   Docomo 方案仅在 UE 侧吞吐量和反馈开销图中比较。
-
-root = fileparts(mfilename('fullpath'));
-dep = fullfile(root,'6.位置反馈方案');
+function audit=run_single_stream_task2(varargin)
+% UPA / single polarization / single stream. All usable precoders decode payloads.
+root=fileparts(mfilename('fullpath'));dep=fullfile(root,'6.位置反馈方案');
 addpath(root,dep,fullfile(dep,'lib'));maxNumCompThreads(1);
-parser = inputParser;
-addParameter(parser,'Mode','smoke',@(x) ismember(x,{'smoke','full','verify'}));
-addParameter(parser,'OutputDir','',@(x) ischar(x) || isstring(x));
-addParameter(parser,'Samples',[],@(x) isempty(x) || (isnumeric(x) && isscalar(x) && x>=1));
-addParameter(parser,'MakeFigures',true,@islogical);
-parse(parser,varargin{:});
-opt = parser.Results;
-
-[net0,sim,bank] = upa.load_inputs();
-sim.bandwidth_Hz = 400e6;
-sim.rho_data = 10^(sim.reference_data_SNR_dB/10)/sim.reference_power;
-sim.task_id = 'UPA_SINGLE_POS_CONTINUOUS_V1';
-if isempty(opt.OutputDir)
-    out = fullfile(root,'results',['single_stream_UPA_POS_V1_' char(opt.Mode)]);
-else
-    out = char(opt.OutputDir);
-end
-assert(~exist(fullfile(out,'single_stream_trials.csv'),'file'),'sstr:ExistingResults','Use a new OutputDir to preserve prior results');
-if ~exist(out,'dir'), mkdir(out); end
-
+p=inputParser;addParameter(p,'Mode','smoke',@(x)ismember(x,{'smoke','verify','full'}));
+addParameter(p,'OutputDir','');addParameter(p,'Samples',[],@(x)isempty(x)||(isscalar(x)&&x>=1&&x<=400));
+addParameter(p,'MakeFigures',true,@islogical);addParameter(p,'ChannelModels',{});parse(p,varargin{:});opt=p.Results;
+[net0,sim,bank]=upa.load_inputs();sim.bandwidth_Hz=400e6;
+sim.rho_data=10^(sim.reference_data_SNR_dB/10)/sim.reference_power;assert(sim.UE_phase_bits==4&&sim.frequency_bits_per_dimension==14);
+if isempty(opt.OutputDir),out=fullfile(root,'results',['single_stream_UPA_V2_' opt.Mode]);else,out=char(opt.OutputDir);end
+assert(~exist(fullfile(out,'single_stream_trials.csv'),'file'),'sstr:ExistingResults','Use a new OutputDir');
+if ~exist(out,'dir'),mkdir(out);end
 if isempty(opt.Samples)
-    if strcmp(opt.Mode,'full'), sampleIds = 1:400; elseif strcmp(opt.Mode,'verify'), sampleIds=[399 400]; else, sampleIds = 1:6; end
-else
-    sampleIds = 1:min(400,round(opt.Samples));
-end
-settings = make_settings(opt.Mode);
-rows = cell(0,29);
-started = tic;
-
-for si = 1:numel(settings)
-    q = settings(si);
-    net = sstr.configure_upa(net0,q.Nant);
-    ids = net.active_order(1:q.B);
-    refs = net.reference3;
-    for sid = sampleIds
-        sample = make_sample(net,sim,bank,sid,q.KdB);
-        [Htrue,Hobs] = observe_sample(sample,ids,q.SNRdB);
-        [utrue,s2,vtrue] = upa.principal(Htrue);
-        truth = struct('u',utrue,'s2',s2,'v',vtrue);
-        [type1,type2,docomo,idealDesign] = full_feedback_design(net,Hobs,truth,q.B,sim.UE_phase_bits);
-        [haqse,dftindex,position] = partial_designs(net,Hobs,ids,refs,sim);
-        % Docomo 的码字选择以 UE 观测 CSI 为依据，按前次讨论不并入
-        % CPU 几何反馈链路；Type-I/II 则作为完整 UE-CSI 反馈基线同时列出。
-        designs = {idealDesign,type1,type2,haqse.cpu,dftindex.cpu,position.cpu, ...
-                   idealDesign,type1,type2,docomo,haqse.ue,dftindex.ue,position.ue};
-        branches = [repmat({'CPU'},1,6),repmat({'UE'},1,7)];
-        for di = 1:numel(designs)
-            design = designs{di};
-            metric = evaluate_design(Htrue,truth,design,sim,sample.position);
-            rows(end+1,:) = {branches{di},q.curve,q.xvalue,design.method_id,design.feedback_scope, ...
-                design.cpu_estimation_dimension,q.B,q.Nant,q.SNRdB,q.KdB,sid, ...
-                metric.position_error_m,metric.throughput_Mbps,design.feedback_bits, ...
-                design.coordinate_bits_x,design.coordinate_bits_y,sample.position(1),sample.position(2), ...
-                design.estimated_position(1),design.coordinate_bits_z,sample.position(3), ...
-                design.estimated_position(2),design.estimated_position(3),jsonencode(design.raw_position), ...
-                jsonencode(design.continuous_frequency),jsonencode(design.space_message),design.overflow, ...
-                'UPA',net.Nside}; %#ok<AGROW>
-        end
+ if strcmp(opt.Mode,'full'),sampleIds=1:400;elseif strcmp(opt.Mode,'verify'),sampleIds=[399 400];else,sampleIds=1:4;end
+else,sampleIds=1:round(opt.Samples);end
+models=opt.ChannelModels;if isempty(models),if strcmp(opt.Mode,'verify'),models={'LOS','MIX'};else,models={'MIX'};end,end
+assert(iscell(models)&&all(ismember(models,{'LOS','MIX'})));
+settings=make_settings(opt.Mode);rows=cell(0,1);started=tic;replays=0;maxReplay=0;
+for si=1:numel(settings)
+ q=settings(si);net=sstr.configure_upa(net0,q.Nant);active=net.active_order(1:q.B);
+ for mi=1:numel(models)
+  model=models{mi};
+  for sid=sampleIds
+   sample=make_sample(net,sim,bank,sid,q.KdB,model);[Htrue,Hobs]=observe_sample(sample,active,q.SNRdB);
+   [~,s2,vtrue]=upa.principal(Htrue);ideal=struct('w',vtrue,'s2',s2);
+   [observed,rc,err]=ue_designs(net,Hobs,active);replays=replays+rc;maxReplay=max(maxReplay,err);
+   [perfect,rc,err]=ue_designs(net,Htrue,active);replays=replays+rc;maxReplay=max(maxReplay,err);
+   % CPU has only decoded spatial payload + public geometry. Hobs is not passed.
+   cpu=cell(1,3);
+   for j=1:3
+    src=observed{j+3};msg=src.feedback_message;msg.mode='CPU_MODEL';msg.phase_indices=[];
+    wire=sstr.feedback_wire('encode',net,active,msg);clock=tic;cpu{j}=sstr.decode_feedback(net,active,wire,msg.method,msg.mode);
+    cpu{j}.decoder_time_s=toc(clock);cpu{j}=copy_diagnostics(cpu{j},src);replays=replays+1;
+   end
+   for branch={'CPU','UE'}
+    name=branch{1};rows{end+1}=record(ideal,'IDEAL',name,'UPPER_BOUND'); %#ok<AGROW>
+    if strcmp(name,'CPU')
+     for j=1:2,rows{end+1}=record(observed{j},'OBSERVED',name,'UE_REFERENCE');end %#ok<AGROW>
+     for j=1:3,rows{end+1}=record(cpu{j},'OBSERVED',name,'CPU_METHOD');end %#ok<AGROW>
+    else
+     for j=1:6,rows{end+1}=record(observed{j},'OBSERVED',name,'UE_METHOD');end %#ok<AGROW>
+     for j=1:6,rows{end+1}=record(perfect{j},'PERFECT',name,'UE_METHOD');end %#ok<AGROW>
     end
-    fprintf('单流 400 MHz: %s %d/%d，%.1f 秒\n',q.curve,si,numel(settings),toc(started));
-end
-
-names = {'branch','curve','x_value','method','feedback_scope','cpu_estimation_dimension', ...
-    'B','antenna_count','observation_SNR_dB','Rician_K_dB','sample_id', ...
-    'position_error_m','throughput_Mbps','feedback_bits','coordinate_bits_x','coordinate_bits_y', ...
-    'true_x_m','true_y_m','estimated_x_m','coordinate_bits_z','true_z_m', ...
-    'estimated_y_m','estimated_z_m','position_before_coordinate_quantization','frequency_unquantized', ...
-    'space_message','quantizer_overflow','array','UPA_side'};
-trials = cell2table(rows,'VariableNames',names);
-writetable(trials,fullfile(out,'single_stream_trials.csv'));
-summary = summarize_trials(trials);
-writetable(summary,fullfile(out,'single_stream_summary.csv'));
-
-contract = struct('task','UPA单极化单流','version',sim.task_id,'array','UPA','default_shape',[32 32], ...
-    'POS_input','continuous HAQSE frequency -> UE 3D position -> integer coordinate message', ...
-    'POS_frequency_quantization',false,'coordinate_bits',[13 14 9],'AP_phase_bits',sim.UE_phase_bits, ...
-    'baseline_status','local-energy TypeI/II and Docomo structure retained; only 2D spatial-codebook adaptation', ...
-    'bandwidth_model','narrowband spectral efficiency times 400MHz; not OFDM', ...
-    'sample_ids',sampleIds,'settings',settings,'bandwidth_Hz',sim.bandwidth_Hz,'streams',1, ...
-    'samples',numel(sampleIds),'reference_AP_count',3,'partial_feedback_methods',{{'HAQSE','DFT-index','位置反馈'}}, ...
-    'full_feedback_baselines',{{'Type-I','Type-II','Docomo结构适配（仅 UE）','完美 CSI SVD 上界'}}, ...
-    'curves',{{'定位误差-SNR','定位误差-天线数','定位误差-AP数','吞吐量-SNR','吞吐量-天线数','吞吐量-莱斯因子','比特数-AP数'}}, ...
-    'CPU_note','R=3固定参考消息来源数；CPU重构矩阵为4×BN，并非固定计算维度。', ...
-    'UE_note','UE 使用本地观测 CSI 计算 AP 间共相位；IDEAL_SVD 使用完美 CSI，仅作性能上界。', ...
-    'docomo_note','Docomo 采用本地 4 倍过采样 DFT、QPSK beta、AP 逻辑栅格 DFT 和三轮交替更新。对 B=5:10 以 QPSK 坐标更新代替原文仅适用于小 B 的全枚举。', ...
-    'status','complete','elapsed_seconds',toc(started));
-write_json(fullfile(out,'experiment_contract.json'),contract);
-if opt.MakeFigures
-    plot_single_stream_task2(out);
-end
-audit = struct('status','complete','output_directory',out,'records',height(trials),'array','UPA','streams',1,'POS_coordinate_bits',[13 14 9], ...
-    'POS_frequency_quantization',false,'coordinate_overflow_records',sum(trials.quantizer_overflow), ...
-    'samples',numel(sampleIds),'settings',numel(settings),'bandwidth_Hz',sim.bandwidth_Hz, ...
-    'elapsed_seconds',toc(started));
-write_json(fullfile(out,'audit.json'),audit);
-end
-
-function settings = make_settings(mode)
-if strcmp(mode,'full')
-    snrs = 20:5:40; antennas = [64 256 1024]; aps = 5:10; ks = 0:5:20;
-else
-    snrs = [20 30 40]; antennas = [64 256 1024]; aps = [5 8 10]; ks = [0 10 20];
-end
-settings = struct('curve',{},'xvalue',{},'Nant',{},'B',{},'SNRdB',{},'KdB',{});
-if strcmp(mode,'verify')
-    settings=[item('SNR',30,64,5,30,10),item('SNR',30,256,8,30,10), ...
-              item('SNR',30,1024,8,30,10),item('SNR',30,1024,10,30,10)];return;
-end
-for x = snrs, settings(end+1) = item('SNR',x,1024,8,x,10); end %#ok<AGROW>
-for x = antennas, settings(end+1) = item('天线数',x,x,8,30,10); end %#ok<AGROW>
-for x = aps, settings(end+1) = item('AP数',x,1024,x,30,10); end %#ok<AGROW>
-for x = ks, settings(end+1) = item('莱斯因子',x,1024,8,30,x); end %#ok<AGROW>
-end
-
-function q = item(curve,x,Nant,B,SNRdB,KdB)
-q = struct('curve',curve,'xvalue',x,'Nant',Nant,'B',B,'SNRdB',SNRdB,'KdB',KdB);
-end
-
-function sample = make_sample(net,sim,bank,sid,KdB)
-p = bank.positions(:,sid); scatter = sim.scatterer_positions_m.';
-sample.position = p; sample.H = zeros(4,net.Nap,10); sample.Z = sample.H;
-K = 10^(KdB/10);
-for b = 1:10
-    ap = net.ap_elements(:,:,b); los = zeros(4,net.Nap); nlos = los;
-    for u = 1:4
-        user = p + net.ue_offsets(:,u); r = vecnorm(ap-user);
-        los(u,:) = exp(-1j*net.k*r)./r;
-        for ell = 1:6
-            L = vecnorm(ap-scatter(:,ell)) + norm(scatter(:,ell)-user);
-            nlos(u,:) = nlos(u,:) + bank.zeta(sid,ell)*exp(-1j*net.k*L)./L;
-        end
-    end
-    nlos = nlos*norm(los,'fro')/norm(nlos,'fro');
-    sample.H(:,:,b) = sqrt(K/(K+1))*los + sqrt(1/(K+1))*nlos;
-    rng(bank.noise_seed(sid,b),'twister');
-    sample.Z(:,:,b) = (randn(4,net.Nap)+1j*randn(4,net.Nap))/sqrt(2);
-end
-end
-
-function [Htrue,Hobs] = observe_sample(sample,ids,snr)
-Htrue = reshape(sample.H(:,:,ids),4,[]); Z = reshape(sample.Z(:,:,ids),4,[]);
-noiseVariance = mean(abs(Htrue(:)).^2)/10^(snr/10);
-Hobs = Htrue + sqrt(noiseVariance)*Z;
-end
-
-function [type1,type2,docomo,ideal] = full_feedback_design(net,Hobs,truth,B,Q)
-% Preserve this runner's local-energy Type-I/II selection; adapt the codebook to 2D.
-% 后续使用量化 AP 间相位。全部索引和量化系数都计入 feedback_bits。
-F1 = zeros(net.Nap,B);
-F2 = zeros(net.Nap,B);
-
-for slot = 1:B
-    ix = (slot-1)*net.Nap + (1:net.Nap);
-    Hb = Hobs(:,ix);
-    G=sstr.codebook_responses(net,Hb,net.M);
-    [~,order] = sort(sum(abs(G).^2,1),'descend');
-    pair=sstr.local_beams(net,order(1:2)-1,net.M);
-    F1(:,slot) = pair(:,1);
-    [~,~,v] = upa.principal(Hb);
-    a1 = F1(:,slot)'*v; a2 = pair(:,2)'*v;
-    amp = round(7*min(1,abs(a2)/max(abs(a1),realmin)))/7;
-    phase = 2*pi*mod(round(angle(a2*conj(a1))*4/(2*pi)),4)/4;
-    f = F1(:,slot) + amp*exp(1j*phase)*pair(:,2);
-    F2(:,slot) = f/norm(f);
-end
-c1 = greedy_qpsk_phases(Hobs,F1,Q);
-c2 = greedy_qpsk_phases(Hobs,F2,Q);
-type1 = design('TYPE_I','全反馈（UE-CSI）',B*net.index_bits+(B-1)*Q,F1,c1,nan(3,1),B,NaN,NaN);
-type2 = design('TYPE_II','全反馈（UE-CSI）',2*B*net.index_bits+5*B+(B-1)*Q,F2,c2,nan(3,1),B,NaN,NaN);
-docomo = docomo_design(net,Hobs,B);
-ideal = design('IDEAL_SVD','全反馈',NaN,[],[],nan(3,1),-1,NaN,NaN);
-ideal.w = truth.v; ideal.feedback_scope = '全反馈';
-end
-
-function [haqse,dftindex,pos] = partial_designs(net,Hobs,ids,refs,sim)
-[pred,diag]=sstr.space_messages(net,Hobs,ids,refs,sim.frequency_bits_per_dimension);
-haqse=finish(pred.HAQSE,6);dftindex=finish(pred.DFT,6);pos=finish(pred.POS,3);
- function pair=finish(p,dimension)
-  bits=nan(3,1);overflow=false;raw=p.position;
-  if strcmp(p.direction_message.method,'POS')
-   bits=p.direction_message.coordinate_bits;overflow=diag.quantizer_overflow;raw=diag.position_unquantized;
-  end
-  pair=paired_design(net,Hobs,ids,p.F,p.position,p.localization.condition,p.method_id, ...
-      p.direction_bits,dimension,sim.UE_phase_bits,bits(1),bits(2));
-  for branch={'cpu','ue'}
-   name=branch{1};pair.(name).coordinate_bits_z=bits(3);pair.(name).raw_position=raw;
-   pair.(name).continuous_frequency=diag.frequency_unquantized;
-   pair.(name).space_message=p.direction_message;pair.(name).overflow=overflow;
+   end
   end
  end
+ fprintf('UPA V2: %s %d/%d, %.1f s\n',q.curve,si,numel(settings),toc(started));
 end
-
-function pair = paired_design(net,Hobs,ids,F,p,condition,method,bits,dimension,Q,bx,by)
-B = numel(ids); Hmodel = geometry_channel(net,p,ids); [~,~,vmodel] = upa.principal(Hmodel);
-[~,~,vobs] = upa.principal(Hobs);
-ccpu = co_phases(F,vmodel,net.Nap,Inf); cue = co_phases(F,vobs,net.Nap,Q);
-pair.cpu = design(method,'部分反馈',bits,F,ccpu,p,dimension,bx,by);
-pair.cpu.localization_condition = condition;
-pair.ue = design(method,'部分反馈',bits+(B-1)*Q,F,cue,p,dimension,bx,by);
-pair.ue.localization_condition = condition;
+T=struct2table(vertcat(rows{:}));writetable(T,fullfile(out,'single_stream_trials.csv'));
+S=summarize(T);writetable(S,fullfile(out,'single_stream_summary.csv'));
+P=paired_csi(T);writetable(P,fullfile(out,'paired_CSI.csv'));
+contract=struct('version','UPA_SINGLE_PROTOCOL_V2','task','UPA单极化单流', ...
+ 'baseline_selection','joint right singular mode; Type-II same orthogonal group, amplitude3/relativephase2', ...
+ 'phase_rule','joint-mode projection, UE relative phases quantized4, AP1 anchor0; CPU continuous model projection', ...
+ 'CPU_information','public geometry and spatial payload only; no reference measured channel blocks', ...
+ 'UE_information','all-active-AP CSI at UE, decoded spatial beams, phase feedback', ...
+ 'CSI_pair','same algorithm/codebook/payload/power, observed versus perfect; no guaranteed per-sample monotonicity', ...
+ 'POS_input','continuous HAQSE -> UE localization -> coordinate quantization only','POS_coordinate_bits',[13 14 9], ...
+ 'POS_ROI_lo',[19 19 -1],'POS_ROI_hi',[31 31 6],'POS_allocation','frozen public relative-phase sensitivity, no position-adaptive header', ...
+ 'payload_accounting','MSB-first packed integer payload; method/config/AP order public; transport headers/FEC excluded for all methods', ...
+ 'reference_AP_ids',net0.reference3,'sample_ids',sampleIds,'settings',settings,'channel_models',{models}, ...
+ 'bandwidth_Hz',sim.bandwidth_Hz,'rho_data',sim.rho_data,'reference_data_SNR_dB',sim.reference_data_SNR_dB, ...
+ 'reference_power',sim.reference_power,'timing_note','decoder_time measures decoder only; UE shared frontend timed per family and repeated, not standalone method complexity', 'bandwidth_model','narrowband SE times 400 MHz; no OFDM or bandwidth-dependent thermal noise', ...
+ 'CPU_cost','R and geometry-message dimension fixed; observations scale with N, model4xBN and work scale with B,N; pilot symbols not modeled', ...
+ 'Docomo','structure adaptation only, QPSK beta + AP DFT + three alternating updates; not verified original reproduction', ...
+ 'ideal','true joint SVD, total power1, relaxed per-AP equal-power constraint', ...
+ 'elapsed_seconds',toc(started));write_json(fullfile(out,'experiment_contract.json'),contract);
+if opt.MakeFigures,plot_single_stream_task2(out);end
+audit=struct('status','passed','records',height(T),'sample_ids',sampleIds,'positions',numel(sampleIds), ...
+ 'settings',numel(settings),'channel_models',{models},'complete_payload_replays',replays, ...
+ 'maximum_UE_vs_wire_precoder_error',maxReplay,'paired_CSI_records',height(P), ...
+ 'POS_overflow_records',sum(T.quantizer_overflow),'elapsed_seconds',toc(started),'full400',isequal(sampleIds,1:400));
+write_json(fullfile(out,'audit.json'),audit);disp(audit);
+ function row=record(d,csi,branch,role)
+  isideal=strcmp(csi,'IDEAL');power=norm(Htrue*d.w)^2;se=log2(1+sim.rho_data*power);
+  assert(abs(norm(d.w)^2-1)<1e-9&&power<=s2*(1+1e-8));
+  row=struct('branch',branch,'role',role,'csi',csi,'channel_model',model, ...
+   'curve',q.curve,'x_value',q.xvalue,'B',q.B,'antenna_count',q.Nant,'UPA_side',net.Nside, ...
+   'array','UPA','observation_SNR_dB',q.SNRdB,'Rician_K_dB',q.KdB,'sample_id',sid, ...
+   'method','','feedback_scope','','position_error_m',NaN,'raw_position_error_m',NaN, ...
+   'throughput_Mbps',400*se,'spectral_efficiency',se,'received_power',power, ...
+   'ideal_received_power',s2,'normalized_power_gain',power/s2,'feedback_bits',NaN, ...
+   'coordinate_bits_x',NaN,'coordinate_bits_y',NaN,'coordinate_bits_z',NaN, ...
+   'true_x_m',sample.position(1),'true_y_m',sample.position(2),'true_z_m',sample.position(3), ...
+   'estimated_x_m',NaN,'estimated_y_m',NaN,'estimated_z_m',NaN, ...
+   'position_before_coordinate_quantization','[]','frequency_unquantized','[]','space_message','{}', ...
+   'feedback_message','{}','feedback_wire','','quantizer_overflow',false, ...
+   'reference_AP_count',0,'geometry_parameter_count',0,'model_rows',0,'model_columns',0, ...
+   'reference_observation_complex_count',0,'full_observation_complex_count',0,'shared_frontend_time_s',0,'decoder_time_s',NaN, ...
+   'AP_coefficients','[]','precoder_signature',signature(d.w),'maximum_AP_power_error',NaN);
+  if isideal,row.method='IDEAL_SVD';row.feedback_scope='理想上界';return;end
+  row.method=d.method_id;row.feedback_scope=d.feedback_scope;row.feedback_bits=d.feedback_bits;
+  if all(isfinite(d.estimated_position)),row.position_error_m=norm(d.estimated_position-sample.position);end
+  if all(isfinite(d.raw_position)),row.raw_position_error_m=norm(d.raw_position-sample.position);end
+  row.coordinate_bits_x=d.coordinate_bits(1);row.coordinate_bits_y=d.coordinate_bits(2);row.coordinate_bits_z=d.coordinate_bits(3);
+  row.estimated_x_m=d.estimated_position(1);row.estimated_y_m=d.estimated_position(2);row.estimated_z_m=d.estimated_position(3);
+  row.position_before_coordinate_quantization=jsonencode(d.raw_position);row.frequency_unquantized=jsonencode(d.continuous_frequency);
+  row.space_message=jsonencode(d.space_message);row.feedback_message=jsonencode(d.feedback_message);row.feedback_wire=d.feedback_wire;
+  row.quantizer_overflow=d.overflow;row.AP_coefficients=jsonencode([real(d.c) imag(d.c)]);
+  for key={'reference_AP_count','geometry_parameter_count','model_rows','model_columns', ...
+    'reference_observation_complex_count','full_observation_complex_count','shared_frontend_time_s','decoder_time_s'}
+   row.(key{1})=d.(key{1});
+  end
+  row.maximum_AP_power_error=max(abs(sum(abs(reshape(d.w,net.Nap,q.B)).^2,1)-1/q.B));
+ end
 end
-
-function d = design(method,scope,bits,F,c,p,dimension,bx,by)
-d = struct('method_id',method,'feedback_scope',scope,'feedback_bits',bits, ...
-    'F',F,'c',c,'w',[],'estimated_position',p,'cpu_estimation_dimension',dimension, ...
-    'coordinate_bits_x',bx,'coordinate_bits_y',by,'coordinate_bits_z',NaN, ...
-    'raw_position',nan(3,1),'continuous_frequency',[],'space_message',struct,'overflow',false,'localization_condition',NaN);
-if ~isempty(F), d.w = reshape(F.*reshape(c,1,[]),[],1)/sqrt(size(F,2)); end
+function [designs,count,maxerr]=ue_designs(net,H,active)
+clock=tic;[m1,m2,detail]=sstr.baseline_messages(net,H,active);baseTime=toc(clock);
+clock=tic;md=sstr.docomo_message(net,H,active);docTime=toc(clock);
+clock=tic;[pred,diag]=sstr.space_messages(net,H,active,net.reference3,14);geoTime=toc(clock);
+messages={m1,m2,md};items={pred.HAQSE,pred.DFT,pred.POS};[~,~,v]=upa.principal(H);
+for j=1:3
+ item=items{j};[~,phase]=sstr.project_phases(item.F,v,4);
+ messages{end+1}=struct('protocol','SSTR_V2','method',item.method_id,'mode','UE_PHASE', ...
+  'space',item.direction_message,'phase_indices',phase); %#ok<AGROW>
 end
-
-function c = greedy_qpsk_phases(H,F,Q)
-% 与 Type-I 参考实现一致：固定第一个 AP，按 AP 次序贪婪地选量化相位。
-B = size(F,2); Heff = zeros(size(H,1),B);
-for slot = 1:B
-    ix = (slot-1)*size(F,1)+(1:size(F,1));
-    Heff(:,slot) = H(:,ix)*F(:,slot);
-end
-L = 2^Q; alphabet = exp(1j*2*pi*(0:L-1)/L); c = ones(B,1);
-acc = Heff(:,1);
-for slot = 2:B
-    trials = acc + Heff(:,slot)*alphabet;
-    [~,best] = max(sum(abs(trials).^2,1));
-    c(slot) = alphabet(best); acc = trials(:,best);
-end
-end
-
-function d = docomo_design(net,Hobs,B)
-% Docomo structure adaptation to a 2D local UPA codebook; AP logical DFT unchanged.
-% 本地 4 倍过采样 DFT、QPSK beta、AP 逻辑栅格 DFT，以及 beta/v/f 交替更新。
-% 原 simulate_proposed 对 beta 全枚举 4^(B-1)；此处 B=5:10，采用坐标更新。
-Mlocal = net.M;
-G = cell(B,1); index = ones(B,1);
-for slot = 1:B
-    ix = (slot-1)*net.Nap+(1:net.Nap); G{slot} = sstr.codebook_responses(net,Hobs(:,ix),Mlocal);
-    [~,index(slot)] = max(sum(abs(G{slot}).^2,1));
-end
-V = ap_grid_dft_basis(B); beta = ones(B,1);
-[~,best] = max(arrayfun(@(k) docomo_power(G,index,beta,V(:,k)),1:B));
-v = V(:,best);
-for outer = 1:3
-    beta = docomo_beta_update(G,index,beta,v);
-    [~,best] = max(arrayfun(@(k) docomo_power(G,index,beta,V(:,k)),1:B));
-    v = V(:,best);
-    total = docomo_effective_channel(G,index,beta,v);
-    for slot = 1:B
-        old = beta(slot)*v(slot)*G{slot}(:,index(slot));
-        residual = total-old;
-        trials = residual + beta(slot)*v(slot)*G{slot};
-        [~,index(slot)] = max(sum(abs(trials).^2,1));
-        total = residual + beta(slot)*v(slot)*G{slot}(:,index(slot));
-    end
-end
-F = zeros(net.Nap,B);
-for slot = 1:B, F(:,slot) = sstr.local_beams(net,index(slot)-1,Mlocal); end
-% design() 以 sqrt(B) 归一化，因此将 AP 栅格 DFT 的 1/sqrt(B) 还原到 c。
-c = sqrt(B)*beta.*v;
-bits = B*ceil(log2(Mlocal*Mlocal)) + 2*(B-1) + ceil(log2(B));
-d = design('DOCOMO_NFLOS','全反馈（UE-CSI）',bits,F,c,nan(3,1),B,NaN,NaN);
-end
-
-function V = ap_grid_dft_basis(B)
-% 当前活动 AP 的个数可变且不总是矩形网格，按 active_order 建立一维逻辑栅格。
-n = (0:B-1).'; V = exp(1j*2*pi*n*(0:B-1)/B)/sqrt(B);
-end
-
-function power = docomo_power(G,index,beta,v)
-h = docomo_effective_channel(G,index,beta,v); power = sum(abs(h).^2);
-end
-
-function h = docomo_effective_channel(G,index,beta,v)
-h = zeros(size(G{1},1),1);
-for slot = 1:numel(G)
-    h = h + beta(slot)*v(slot)*G{slot}(:,index(slot));
-end
-end
-
-function beta = docomo_beta_update(G,index,beta,v)
-% beta(1)=1；其余 AP 依序在 QPSK 上做坐标最大化。
-h = docomo_effective_channel(G,index,beta,v);
-alphabet = exp(1j*pi/2*(0:3));
-for slot = 2:numel(G)
-    residual = h-beta(slot)*v(slot)*G{slot}(:,index(slot));
-    trials = residual + v(slot)*G{slot}(:,index(slot))*alphabet;
-    [~,best] = max(sum(abs(trials).^2,1));
-    beta(slot) = alphabet(best); h = trials(:,best);
+designs=cell(1,6);maxerr=0;count=0;
+for j=1:6
+ clock=tic;msg=messages{j};wire=sstr.feedback_wire('encode',net,active,msg);
+ clock=tic;d=sstr.decode_feedback(net,active,wire,msg.method,msg.mode);decodeTime=toc(clock);
+ if j<=2
+  if j==1,F=detail.F1;else,F=detail.F2;end
+  c=sstr.project_phases(F,detail.target,4);
+ elseif j>=4,F=items{j-3}.F;c=sstr.project_phases(F,v,4);
+ else
+  F=d.F;B=numel(active);c=exp(1j*2*pi*[0;msg.space.beta_indices]/4).*exp(1j*2*pi*(0:B-1).'*msg.space.ap_dft_index/B);
+ end
+ w=reshape(F.*c.',[],1)/sqrt(numel(active));err=norm(w-d.w);assert(err<1e-11);maxerr=max(maxerr,err);count=count+1;
+ d.decoder_time_s=decodeTime;
+ if j<=2,d.shared_frontend_time_s=baseTime;elseif j==3,d.shared_frontend_time_s=docTime;else
+  d.shared_frontend_time_s=geoTime;d.continuous_frequency=diag.frequency_unquantized;
+  if j==6,d.raw_position=diag.position_unquantized;d.overflow=diag.quantizer_overflow;else,d.raw_position=d.estimated_position;end
+ end
+ designs{j}=d;
 end
 end
-
-function H = geometry_channel(net,p,ids)
-H = zeros(4,numel(ids)*net.Nap);
-for slot = 1:numel(ids)
-    b = ids(slot); delta = net.pb(:,b)-p; r = norm(delta); q = delta/r; ql = net.R(:,:,b)'*q;
-    ix = (slot-1)*net.Nap+(1:net.Nap);
-    H(:,ix) = exp(-1j*net.k*r)/r*exp(1j*net.k*net.ue_offsets.'*q)*exp(-1j*net.k*ql.'*net.local);
+function d=copy_diagnostics(d,src)
+d.raw_position=src.raw_position;d.continuous_frequency=src.continuous_frequency;d.overflow=src.overflow;
+end
+function value=signature(w)
+n=(1:numel(w)).';z=zeros(3,1);
+for j=1:3,z(j)=(sin(.013*j*n)+1j*cos(.017*j*n)).'*w;end
+value=jsonencode([real(z) imag(z)]);
+end
+function settings=make_settings(mode)
+settings=struct('curve',{},'xvalue',{},'Nant',{},'B',{},'SNRdB',{},'KdB',{});
+if strcmp(mode,'verify')
+ settings=[item('SNR',30,64,5,30,10),item('SNR',30,256,8,30,10), ...
+ item('SNR',30,1024,8,30,10),item('SNR',30,1024,10,30,10)];return;
+end
+if strcmp(mode,'full'),snrs=20:5:40;aps=5:10;ks=0:5:20;else,snrs=[20 30 40];aps=[5 8 10];ks=[0 10 20];end
+for x=snrs,settings(end+1)=item('SNR',x,1024,8,x,10);end
+for x=[64 256 1024],settings(end+1)=item('天线数',x,x,8,30,10);end
+for x=aps,settings(end+1)=item('AP数',x,1024,x,30,10);end
+for x=ks,settings(end+1)=item('莱斯因子',x,1024,8,30,x);end
+end
+function q=item(curve,x,N,B,SNR,K)
+q=struct('curve',curve,'xvalue',x,'Nant',N,'B',B,'SNRdB',SNR,'KdB',K);
+end
+function sample=make_sample(net,sim,bank,sid,KdB,model)
+p=bank.positions(:,sid);scatter=sim.scatterer_positions_m.';sample.position=p;
+sample.H=zeros(4,net.Nap,10);sample.Z=sample.H;K=10^(KdB/10);
+for b=1:10
+ ap=net.ap_elements(:,:,b);los=zeros(4,net.Nap);nlos=los;
+ for u=1:4
+  user=p+net.ue_offsets(:,u);r=vecnorm(ap-user);los(u,:)=exp(-1j*net.k*r)./r;
+  for ell=1:6,L=vecnorm(ap-scatter(:,ell))+norm(scatter(:,ell)-user);nlos(u,:)=nlos(u,:)+bank.zeta(sid,ell)*exp(-1j*net.k*L)./L;end
+ end
+ if strcmp(model,'LOS'),sample.H(:,:,b)=los;else
+  nlos=nlos*norm(los,'fro')/norm(nlos,'fro');sample.H(:,:,b)=sqrt(K/(K+1))*los+sqrt(1/(K+1))*nlos;
+ end
+ rng(bank.noise_seed(sid,b),'twister');sample.Z(:,:,b)=(randn(4,net.Nap)+1j*randn(4,net.Nap))/sqrt(2);
 end
 end
-
-function c = co_phases(F,v,N,Q)
-B = size(F,2); a = zeros(B,1);
-for slot = 1:B, ix = (slot-1)*N+(1:N); a(slot) = F(:,slot)'*v(ix); end
-theta = angle(exp(1j*(angle(a)-angle(a(1)))));
-if isinf(Q), c = exp(1j*theta); else, L = 2^Q; c = exp(1j*2*pi*mod(round(theta*L/(2*pi)),L)/L); end
+function [Htrue,Hobs]=observe_sample(sample,ids,snr)
+Htrue=reshape(sample.H(:,:,ids),4,[]);Z=reshape(sample.Z(:,:,ids),4,[]);
+Hobs=Htrue+sqrt(mean(abs(Htrue(:)).^2)/10^(snr/10))*Z;
 end
-
-function metric = evaluate_design(H,truth,d,sim,truePosition)
-metric.position_error_m = NaN;
-if all(isfinite(d.estimated_position)), metric.position_error_m = norm(d.estimated_position-truePosition); end
-power = norm(H*d.w)^2; metric.throughput_Mbps = sim.bandwidth_Hz/1e6*log2(1+sim.rho_data*power);
-assert(abs(norm(d.w)^2-1)<1e-9);
-if ~isempty(d.F)
-    B=size(d.F,2);powerByAP=sum(reshape(abs(d.w).^2,size(d.F,1),B),1);
-    assert(max(abs(powerByAP-1/B))<1e-10);
+function S=summarize(T)
+keys={'branch','role','csi','channel_model','curve','x_value','method','feedback_scope', ...
+ 'B','antenna_count','observation_SNR_dB','Rician_K_dB'};
+[g,S]=findgroups(T(:,keys));S.samples=splitapply(@numel,T.sample_id,g);
+for field={'position_error_m','raw_position_error_m','throughput_Mbps','spectral_efficiency','received_power','feedback_bits', ...
+ 'reference_AP_count','geometry_parameter_count','model_rows','model_columns','reference_observation_complex_count', ...
+ 'full_observation_complex_count','shared_frontend_time_s','decoder_time_s','quantizer_overflow'}
+ S.(['mean_' field{1}])=splitapply(@(x)mean(x,'omitnan'),double(T.(field{1})),g);
 end
-assert(power <= truth.s2*(1+1e-8));
 end
-
-function summary = summarize_trials(t)
-keys = {'branch','curve','x_value','method','feedback_scope','cpu_estimation_dimension','B','antenna_count','observation_SNR_dB','Rician_K_dB'};
-[g,summary] = findgroups(t(:,keys));
-summary.samples = splitapply(@numel,t.sample_id,g);
-summary.mean_position_error_m = splitapply(@(x) mean(x,'omitnan'),t.position_error_m,g);
-summary.mean_throughput_Mbps = splitapply(@mean,t.throughput_Mbps,g);
-summary.mean_feedback_bits = splitapply(@(x) mean(x,'omitnan'),t.feedback_bits,g);
+function P=paired_csi(T)
+keys={'channel_model','curve','x_value','B','antenna_count','observation_SNR_dB','Rician_K_dB','sample_id','method'};
+a=T(strcmp(T.branch,'UE')&strcmp(T.csi,'OBSERVED'),:);b=T(strcmp(T.branch,'UE')&strcmp(T.csi,'PERFECT'),:);
+a=renamevars(a(:,[keys {'throughput_Mbps','spectral_efficiency','feedback_bits'}]), ...
+ {'throughput_Mbps','spectral_efficiency','feedback_bits'},{'observed_Mbps','observed_SE','observed_bits'});
+b=renamevars(b(:,[keys {'throughput_Mbps','spectral_efficiency','feedback_bits'}]), ...
+ {'throughput_Mbps','spectral_efficiency','feedback_bits'},{'perfect_Mbps','perfect_SE','perfect_bits'});
+P=innerjoin(a,b,'Keys',keys);assert(height(P)==height(a)&&all(P.observed_bits==P.perfect_bits));
+P.delta_Mbps=P.perfect_Mbps-P.observed_Mbps;P.delta_SE=P.perfect_SE-P.observed_SE;
 end
-
 function write_json(path,value)
-fid = fopen(path,'w'); assert(fid>0);
-fwrite(fid,jsonencode(value),'char'); fclose(fid);
+fid=fopen(path,'w');assert(fid>0);fwrite(fid,jsonencode(value),'char');fclose(fid);
 end

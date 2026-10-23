@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "records": 304,
+  "sample_ids": [
+    399,
+    400
+  ],
+  "channel_models": [
+    "LOS",
+    "MIX"
+  ],
+  "independently_decoded_full_payloads": 272,
+  "maximum_precoder_signature_error": 1.1155965040643423e-11,
+  "maximum_CPU_phase_error": 7.734717821180695e-12,
+  "maximum_position_error_m": 7.105427357601002e-14,
+  "all_feedback_bit_lengths_checked": true,
+  "CPU_no_measured_CSI": true,
+  "all_summary_means_recomputed": true,
+  "paired_CSI_records": 96,
+  "paired_feedback_bits_identical": true,
+  "negative_paired_deltas": 19,
+  "full400": false
+}

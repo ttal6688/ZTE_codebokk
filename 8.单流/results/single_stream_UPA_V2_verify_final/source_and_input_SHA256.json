@@ -1,0 +1,253 @@
+{
+  "text_normalization": "CRLF to LF",
+  "files": [
+    {
+      "path": "+sstr/baseline_messages.m",
+      "sha256": "eb89877ebd87cdfa9255d4d9b5fe8af4ce7b9dfa592b97d75cc7875dc1746104"
+    },
+    {
+      "path": "+sstr/codebook_responses.m",
+      "sha256": "42ebae358a20edfcdd147e461f5789af5b5c5dcafdedf247b620e8622913319b"
+    },
+    {
+      "path": "+sstr/configure_upa.m",
+      "sha256": "2d17806be3be97e74f3af7ff1f8206011837891f29bd161cfcd7f2f86346a6e7"
+    },
+    {
+      "path": "+sstr/decode_feedback.m",
+      "sha256": "7242015f512636b6e22ec7e5430360166432fac461410b6bfb4de0af22b1dfeb"
+    },
+    {
+      "path": "+sstr/decode_spatial.m",
+      "sha256": "23b27e5c9cf4bc85e68f9b778530ec7186e6a154cf43c787d0eb4fda8f2d8cd8"
+    },
+    {
+      "path": "+sstr/docomo_message.m",
+      "sha256": "13f6e5f8df23210dc6403bf3f940909f5f8d09d16b4ebe21bc1b94d25ad94b70"
+    },
+    {
+      "path": "+sstr/feedback_wire.m",
+      "sha256": "43785271969736d7df7932aabdad6598e7c6313b57d2e9f2820d027136ad509a"
+    },
+    {
+      "path": "+sstr/geometry_channel.m",
+      "sha256": "e91a5e3f3ab7c708baae3df4c3dbc40286d386781d517d332bdd6d2b1751aa72"
+    },
+    {
+      "path": "+sstr/local_beams.m",
+      "sha256": "7b25dec6230b0b209d3b80751a350c9afd34a1946beb7db88e866e65c07a8bbb"
+    },
+    {
+      "path": "+sstr/messages_from_estimates.m",
+      "sha256": "8058e28b5e5a671ae490b92c101bb843c1b0cabfd4030c86681cf33465c03ac1"
+    },
+    {
+      "path": "+sstr/project_phases.m",
+      "sha256": "ef815588e9114bba62ba52d89e3e76a9dca81f158955cb45cf1a9969b9ec8118"
+    },
+    {
+      "path": "+sstr/space_messages.m",
+      "sha256": "1d78a7588ffb663a84bc5a389589b08e7df607719a67f7b4b7944e201ef5dd4d"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/allocate.m",
+      "sha256": "dd6e203a69a5e07357f7a4dad0580703fd66b06e2aff1f36da845991a5f03c94"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/columns.m",
+      "sha256": "69e88eba47eb39a544476f4431ad55e2b22565d3342b3d93fecf6c85a1ded519"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/config.m",
+      "sha256": "52ef80cc261414c844e61ea31b8974861d135ae8a789473c7d5bc993970d0bc5"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/cpu_phase.m",
+      "sha256": "f0f32f2c8f2544f97c33bb5518ac695b846468d1974028c0aea1d82e042a9d65"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/decode.m",
+      "sha256": "85af628d73098fdcf119f90e004d8906b8710d668784bf4aef14a316cc12351e"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/encode.m",
+      "sha256": "4f1d6c202d6dcae219d813424cd008adb78586167bf3645968af0cc4a1458658"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/phases.m",
+      "sha256": "f1dd00794e2f3e67c3439a17b26baaadc48c6139b8a9e073f469f339dc4115a9"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/prediction.m",
+      "sha256": "122946306f4852086af8944fa06f9cbe20a761a08ede5fe4b4c9b8f42d004d08"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/result_row.m",
+      "sha256": "4e5df6482b681be2d2032f30ab8d4e6415a1f583f789f1ff5dfadb7b51bff0ab"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/summarize.m",
+      "sha256": "a3a8c6085ad132d44333bf30154813b107b448d09746d479cdea18bd27dd9371"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/ue_phase.m",
+      "sha256": "c10abad87ef433ab80c3ea066a007c08c9a4dc33a7b1c8f27a63c4bfb01253f2"
+    },
+    {
+      "path": "6.位置反馈方案/+posfb/weighted_position.m",
+      "sha256": "f7566feec93817955102aa95f0802794d10361577a8d7b3cf9364e75865c22ed"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/assemble.m",
+      "sha256": "56db486739f0f93b5882d87ac9a7548a1e4adb238da0c5185049d861bcfc9069"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/beams.m",
+      "sha256": "e2bdbb1639c59fe3ef6d8e999aa9fdadbcb4cc4922ce42bbffd03cdf4a566dd0"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/cpu_from_message.m",
+      "sha256": "606fa85b816b681859acc6863e0a1d91ca0c8d961a29689dd0fe0d6fc9a9b05a"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/design_baselines.m",
+      "sha256": "e949c01fcba719b0456804315305016a726e9f7d2abac721829a0674498b3d30"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/encode_directions.m",
+      "sha256": "547b1aacc3dfd16247d1e65fcece06ce7f6e92f282aa62c60c10df52bac2ddce"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/evaluate.m",
+      "sha256": "b3ea1447918e4810475a2be190b39eec4b23c25d641d9013e1e451bac3734097"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/load_inputs.m",
+      "sha256": "a8ce0f3391480ee3e1767182d510b18ded159f6865179cac396f08d1aaf11377"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/localize.m",
+      "sha256": "8c7b5abf1e79ff0b35e54eeb92dc3e3bfbdfc6b745a2b199e9561803262cd62a"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/observe.m",
+      "sha256": "c9c92930316a40190d0152a578ee674361c0e4a555412086a78e6ddf89dbf8cc"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/phase_weights.m",
+      "sha256": "c6984a1f4cc361e9bbfc9e87f68511229d161b8d059fe837c7e13f6dcaaff934"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/predict_directions.m",
+      "sha256": "98210cdb62ec8a15a4fc60a008a3daff703ab1ac0be136dade6e548aae3120e2"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/principal.m",
+      "sha256": "670398f2fa88aa5564a52a2a3b4ee8af90554d6fe642bd6fcd3f2e5742bfd525"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/reconstruct_channel.m",
+      "sha256": "90f0cf568dd6d7c5a9b3960c8f794718122728763b23e7277dcfa2689834a571"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/result_row.m",
+      "sha256": "73a3cb90d96cd66a5be30cb9df31c7aa1f3c862f7c5ca08d78e831abc92c96b3"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/sample_channels.m",
+      "sha256": "f314d8d47f062eac7bcab18bfdf2d6c929c5cb89af98e0127846696c952dcfcc"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/schema.m",
+      "sha256": "96cf4a58db8c1902cf4cd13bb66e7b1661bd9e39258445e7cccd36def150b669"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/spectrum.m",
+      "sha256": "d7df389897ddafef4a5c531636344f7307551d935217c9fcbb3f686eab84f66e"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/subset_message.m",
+      "sha256": "82896cf94a5e34b582b6eab618ccaa9a90efe8ef84ed79f7baaaeebe330d0348"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/summarize.m",
+      "sha256": "1fa1176e16f09b5f56944b8dbb66d70055adf22af6074b8929c615e6d928deef"
+    },
+    {
+      "path": "6.位置反馈方案/+upa/ue_phase_from_message.m",
+      "sha256": "eed658c8717cf58bc19f3159f05fdaa6c57c3cb24b1a414571197d6ac686aae8"
+    },
+    {
+      "path": "6.位置反馈方案/lib/haqse_ula_reference.m",
+      "sha256": "168b95bd147a7e896c0d249a55812bdbb740a62b354f3074374154ead5df9bb2"
+    },
+    {
+      "path": "6.位置反馈方案/lib/MMV_CF_mQSE2_SumOfRatios.m",
+      "sha256": "85991de64832bda907c24d15f80bb366d1ae90b52c9073c76e6f5444569fada8"
+    },
+    {
+      "path": "6.位置反馈方案/shared/AP坐标与完整朝向_10台.csv",
+      "sha256": "9505a6c0e90003eddf0d2e734fdea87c3545c9e9a17997996478fcff14582195"
+    },
+    {
+      "path": "6.位置反馈方案/shared/network_geometry.json",
+      "sha256": "037f8c4f7bac92efaca0239578dfb7c4327a42c9b84696f87886f849e6921f5d"
+    },
+    {
+      "path": "6.位置反馈方案/shared/simulation_settings.json",
+      "sha256": "13c31269d732f7a46d503ea03559c2d4b177681386ca0485826fc289a59e27f1"
+    },
+    {
+      "path": "6.位置反馈方案/shared/single_sample_alignment_summary.json",
+      "sha256": "a6047d78bd29b07cedca8ef191b4a700d30298bbfc65b0bd5d23128ffc9fe6d5"
+    },
+    {
+      "path": "6.位置反馈方案/shared/source_hashes.json",
+      "sha256": "b1545891ec93980745f0d15af932424268647e8f4aec7a0cc4e2a0687f44f781"
+    },
+    {
+      "path": "6.位置反馈方案/shared/主实验运行清单.csv",
+      "sha256": "d877eecddc567736d76f7f78e623c816ca2280f33ccd4435d6530222d81e44e5"
+    },
+    {
+      "path": "6.位置反馈方案/shared/共享UE位置_400.csv",
+      "sha256": "cd46cfd3e836cf064c7f13993e57098f642d80226d184e99ad437257f7a09baa"
+    },
+    {
+      "path": "6.位置反馈方案/shared/共享散射系数_400x6.csv",
+      "sha256": "e2e2cfd76b554eed2299105ed2a58524aa2a6fc3eff458496022e588c755c820"
+    },
+    {
+      "path": "6.位置反馈方案/shared/反馈开销_确定值.csv",
+      "sha256": "6fa9e2a39529d832b0cc49837643f771201a2c4bdcdfcc01fec3e6b5bd4ab10b"
+    },
+    {
+      "path": "6.位置反馈方案/shared/标准噪声种子_逐物理AP.csv",
+      "sha256": "aba65992bc5ad13ec49876d501b4fdf6e18dbeab173f7b8e391c98e52d351196"
+    },
+    {
+      "path": "audit_single_stream_protocol.py",
+      "sha256": "2324082d0be62597a7acabfc998c7e74dc0f9517c6d43c5c8fd480cc9a647f83"
+    },
+    {
+      "path": "audit_single_stream_upa.py",
+      "sha256": "672efad483395e8ae4e265e6ec0151406e696a7f5a6ee901a29342437e74fed2"
+    },
+    {
+      "path": "plot_single_stream_task2.m",
+      "sha256": "82999833d191f5106c429c1d301ca0c9bf29a52d3f7f0a47e5376e316de27456"
+    },
+    {
+      "path": "run_single_stream_task2.m",
+      "sha256": "b2cc218603f496dfb9b42723221858677a545715977d3aa6be1d2a192c1eb61b"
+    },
+    {
+      "path": "verify_single_stream_protocol.m",
+      "sha256": "2a2b153e44a19496f0418e8af5517f45885886b0a6fe89d7873f798c46e122e9"
+    },
+    {
+      "path": "verify_single_stream_upa.m",
+      "sha256": "0491ec0b953af7cfb3a97b01dc497c5c4bde3cef16574a7d100eb878ac828f86"
+    }
+  ]
+}
