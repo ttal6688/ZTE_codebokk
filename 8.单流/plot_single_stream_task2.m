@@ -121,6 +121,7 @@ f=figure('Visible','off','Color','w','Position',[100 100 1120 760]);
 end
 function format(ax,x,y)
 xlabel(ax,x);ylabel(ax,y);grid(ax,'on');box(ax,'on');set(ax,'FontSize',16,'LineWidth',1.1);
+if strcmp(x,'协作AP数'),xlim(ax,[5 9]);xticks(ax,5:9);xtickformat(ax,'%d');end
 end
 function saveplot(f,out,name)
 exportgraphics(f,fullfile(out,[name '.png']),'Resolution',180);savefig(f,fullfile(out,[name '.fig']));close(f);
