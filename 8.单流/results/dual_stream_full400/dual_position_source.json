@@ -1,0 +1,8 @@
+{
+  "source": "cases/case_XX/dual_stream_trials.csv(.gz), stream_count=2, original feedback_wire spatial prefix",
+  "truth": "frozen public UE positions; evaluation only",
+  "method": "existing integer decoder and localization equations; no channel observation or phase search rerun",
+  "stream_relation": "second stream reuses the first spatial message; localization is unchanged by added stream phases",
+  "physical_localization_records": 76800,
+  "summary_rows": 228
+}

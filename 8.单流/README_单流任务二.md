@@ -101,3 +101,16 @@ python package_dual_stream_results.py results/new_dual400
 ```
 
 结果与复现细节见[完整双流报告](docs/UPA单极化双流400位置完整实验报告.md)和[数据说明](results/dual_stream_full400/README.md)。第二流算法与最小验证一致，非正收益逐条保存；每个MIX单流基线与上一轮400位置单流按位置和配置核对。
+
+
+## 最新报告的实验正文
+
+单双流均按CPU和UE分开，分别列定位误差与SNR、天线数、AP数，吞吐量与SNR、天线数、莱斯因子，以及反馈比特数与AP数。其他已做实验保留在末尾补充。CPU双流Type-I、Type-II、Docomo均作为UE共享参考展示，不改为CPU几何算法。
+
+双流定位误差未在原性能汇总中单列，可直接从保存的空间反馈比特串恢复，不重跑信道和相位搜索：
+
+```text
+python derive_dual_position_results.py results/dual_stream_full400
+```
+
+随后使用原统一绘图入口。DFT索引和位置反馈图例不再显示R=3，实际定位参考AP数量仍为3。

@@ -51,12 +51,13 @@ end
 
 end
 function plot_full_dual(resultDir)
+plot_dual_positions(resultDir);
 S=readtable(fullfile(resultDir,'dual_stream_summary.csv'),'TextType','string');
 if ~exist(fullfile(resultDir,'single_dual_pairs.csv'),'file'),gunzip(fullfile(resultDir,'single_dual_pairs.csv.gz'),resultDir);end
 P=readtable(fullfile(resultDir,'single_dual_pairs.csv'),'TextType','string');
 for branch=["CPU" "UE"]
  out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
- if branch=="CPU",methods=["DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
+ methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];
  for model=["LOS" "MIX"]
   tb=display_panel(S,branch);tb=tb(tb.channel_model==model,:);pb=display_panel(P,branch);pb=pb(pb.channel_model==model,:);
   for curve=["SNR" "天线数" "AP数" "莱斯因子"]
@@ -136,7 +137,7 @@ if nargin<2,branch="";end
 switch m
  case "IDEAL_SVD",text='理想SVD上界';case "TYPE_I",text='全反馈Type-I(UE)';case "TYPE_II",text='全反馈Type-II(UE)';
  case "DOCOMO_NFLOS",text='Docomo';if strcmp(branch,'CPU'),text='Docomo(UE)';end;case "HAQSE_R3",text='空间频率';
- case "DFT_INDEX_R3",text='DFT索引（R=3）';otherwise,text='位置反馈（R=3）';
+ case "DFT_INDEX_R3",text='DFT索引';otherwise,text='位置反馈';
 end
 end
 
@@ -145,7 +146,7 @@ T=readtable(fullfile(resultDir,'dual_stream_trials.csv'),'TextType','string');
 P=readtable(fullfile(resultDir,'single_dual_pairs.csv'),'TextType','string');
 for branch=["CPU" "UE"]
  out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
- if branch=="CPU",methods=["DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
+ methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];
  for model=["LOS" "MIX"]
   tb=display_panel(T,branch);tb=tb(tb.channel_model==model,:);pb=display_panel(P,branch);pb=pb(pb.channel_model==model,:);
   names=[methods "IDEAL_SVD"];values=zeros(numel(names),2);labels=cell(1,numel(names));
@@ -180,13 +181,37 @@ end
 end
 
 function result=display_panel(source,branch)
-% Presentation-only reuse of the existing UE result; never regenerate a CPU design.
+% Existing UE baselines are shared display references, never CPU algorithms.
 result=source(source.branch==branch,:);
-if strcmp(branch,'CPU') && ~any(result.method=="DOCOMO_NFLOS")
- reference=source(source.branch=="UE"&source.method=="DOCOMO_NFLOS",:);
- if ismember('csi',reference.Properties.VariableNames),reference=reference(reference.csi~="PERFECT",:);end
- reference.branch(:)="CPU";
- if ismember('role',reference.Properties.VariableNames),reference.role(:)="UE_REFERENCE";end
- result=[result;reference];
+if strcmp(branch,'CPU')
+ for method=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS"]
+  if any(result.method==method),continue;end
+  reference=source(source.branch=="UE"&source.method==method,:);
+  if ismember('csi',reference.Properties.VariableNames),reference=reference(reference.csi~="PERFECT",:);end
+  reference.branch(:)="CPU";
+  if ismember('role',reference.Properties.VariableNames),reference.role(:)="UE_REFERENCE";end
+  result=[result;reference]; %#ok<AGROW>
+ end
+end
+end
+
+function plot_dual_positions(resultDir)
+source=fullfile(resultDir,'dual_position_summary.csv');
+if ~exist(source,'file'),return;end
+S=readtable(source,'TextType','string');
+for branch=["CPU" "UE"]
+ out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
+ for model=["LOS" "MIX"]
+  for curve=["SNR" "天线数" "AP数"]
+   f=newfigure;ax=axes(f);hold(ax,'on');
+   for method=["HAQSE_R3" "DFT_INDEX_R3" "POS_R3"]
+    q=S(S.branch==branch&S.channel_model==model&S.curve==curve&S.method==method,:);
+    [x,order]=sort(q.x_value);plot(ax,x,q.mean_position_error_m(order),'-o','LineWidth',2,'Color',color(method),'DisplayName',label(method,branch));
+   end
+   if curve=="SNR",xtext='观测 SNR（dB）';elseif curve=="天线数",xtext='每AP UPA阵元数';else,xtext='协作AP数';end
+   format(ax,xtext,'定位误差（m）');legend(ax,'Location','best','FontSize',12);
+   saveplot(f,out,char(branch+"_"+model+"_定位误差_"+curve));
+  end
+ end
 end
 end

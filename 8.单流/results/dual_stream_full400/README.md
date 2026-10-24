@@ -4,6 +4,14 @@
 
 16组参数配置对应19个曲线标签，实际明细281,600条，展开334,400条；实际可实施单双流配对115,200组，展开136,800组。默认配置复用四次，不能按独立样本重复统计。完整报告在[Markdown](../../docs/UPA单极化双流400位置完整实验报告.md)与[Word](../../docs/UPA单极化双流400位置完整实验报告.docx)。
 
+## 正文和补充实验
+
+最新报告按CPU、UE分别组织。每端正文只列三项定位误差（SNR、天线数、AP数）、三项吞吐量（SNR、天线数、莱斯因子）及反馈比特数与AP数。AP数与吞吐量、单双流增量、第二模式、CDF和默认配置对照保留在末尾补充。
+
+CPU性能与反馈图加入全反馈Type-I(UE)、全反馈Type-II(UE)、Docomo(UE)，复用原UE结果。定位误差图只含三种有位置输出的方法。
+
+定位误差由原双流空间反馈比特串恢复，并与冻结位置计算欧氏距离，未重跑信道观测和相位设计。新增文件为dual_position_trials.csv.gz、dual_position_summary.csv、dual_position_source.json；CPU共享参考来源见CPU_UE_reference_summary.csv。
+
 ## 参数与文件对应
 
 | case | UPA阵元数 | AP数 | 观测SNR dB | K dB | 曲线用途 |
@@ -35,7 +43,7 @@
 - 根目录single_dual_pairs.csv.gz与dual_stream_summary.csv：按19个标签展开的配对与汇总。
 - method_feasibility_summary.csv：每种方法各曲线点的增量、最小增量、正收益率和第二模式统计。
 - nonpositive_gain_cases.csv：所有非正收益，不删样本；含重复默认曲线标签。按case_id、端、信道、方法、位置去重可得到实际条目数。
-- CPU与UE目录：各29幅PNG和对应可编辑FIG，纯LOS与MIX分开。
+- CPU与UE目录：各35幅PNG和对应可编辑FIG，纯LOS与MIX分开。
 - independent_full_audit.json：覆盖、消息重放、独立指标、旧单流逐样本对齐及两项对照检查。
 - compression_manifest.json：压缩与解压后SHA256、大小和无损校验。
 - source_and_input_SHA256.json：运行代码与冻结输入版本，文本CRLF统一成LF后计算。
@@ -50,7 +58,7 @@ t = pd.read_csv('cases/case_03/dual_stream_trials.csv.gz',
                 dtype={'feedback_wire': 'string'})
 ```
 
-MATLAB的gunzip可解压到新目录。统一绘图只需根目录汇总和配对，缺少配对CSV时会从gzip解压，不需要加载全部原始明细。Python两级审计均支持直接读取压缩文件。
+MATLAB的gunzip可解压到新目录。统一绘图使用根目录汇总、配对和dual_position_summary.csv；首次恢复定位误差先运行python derive_dual_position_results.py results/dual_stream_full400。其余性能绘图只需汇总和配对，缺少配对CSV时会从gzip解压，不需要加载全部原始明细。Python两级审计均支持直接读取压缩文件。
 
 ```matlab
 addpath('8.单流');

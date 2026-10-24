@@ -2,9 +2,15 @@
 
 已完成Docomo结构核对及专项验证、400位置单流正式扫描、400位置单极化双流完整扫描。双流覆盖LOS与MIX以及四类参数，CPU与UE分别说明和出图，主参考是完美CSI直接SVD；普通方法使用带噪观测，400 MHz直接换算。
 
-最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部22幅单流图与58幅双流图、对应数值及解释；Word与Markdown内容一致。
+最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部22幅单流图与70幅双流图、对应数值及解释；Word与Markdown内容一致。
 
 图例统一为全反馈Type-I(UE)、全反馈Type-II(UE)、空间频率和Docomo；CPU对比同步包含Docomo(UE)共享参考，定位误差图不加入无位置输出的方法。名称与参考数据来源见[图例及CPU共享参考说明](docs/图例命名和CPU共享参考.md)，原始仿真数值不变。
+
+## 报告正文安排
+
+CPU与UE分别按同一大纲组织：定位误差与SNR、天线数、AP数；吞吐量与SNR、天线数、莱斯因子；反馈比特数与AP数。其他已做实验移到报告末尾额外补充，保留图片、数值和结论。双流定位误差由已保存的空间反馈消息恢复，定位前端与单流共用。
+
+最新图例为全反馈Type-I(UE)、全反馈Type-II(UE)、空间频率、DFT索引、位置反馈和Docomo；CPU比较同步展示三种UE共享参考。参考AP数仍固定为3，只从图例删除R=3后缀。
 
 ## 最新400位置报告
 
@@ -27,7 +33,7 @@
 
 - [单流400位置](results/single_stream_V3_full400/README.md)：98,800条记录，19个曲线标签，16个物理配置；原始明细为无损gzip，CPU与UE各11组图。
 - [双流32位置](results/dual_stream_minimal32/README.md)：LOS和混合信道，1,408条记录，576个可实施方法配对，CPU与UE各7组图。
-- [双流400位置](results/dual_stream_full400/README.md)：LOS和MIX，16个参数配置、19个曲线标签；CPU与UE各29组图，实际明细281,600条，展开334,400条。全部样本保留，非正收益单独列出。
+- [双流400位置](results/dual_stream_full400/README.md)：LOS和MIX，16个参数配置、19个曲线标签；CPU与UE各35组图，实际明细281,600条，展开334,400条。全部样本保留，非正收益单独列出。
 - [Docomo检查](results/docomo_validation/README.md)：48项专项检查、701项协议检查及42项UPA/POS回归。
 - [双流单元检查](results/dual_stream_unit/README.md)：54项检查。
 - [运行和有效载荷格式](README_单流任务二.md)，[CPU说明](docs/CPU说明.md)，[UE说明](docs/UE说明.md)。
