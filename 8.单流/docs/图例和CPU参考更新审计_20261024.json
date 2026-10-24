@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "numeric_files_checked_unchanged": 134,
+  "numeric_files_changed": 0,
+  "source_simulation_commit": "86389e0213e35f32af01d2cf0337307d8f366a58",
+  "reports": [
+    {
+      "report": "UPA单流400位置正式实验报告",
+      "pages": 25,
+      "figures": 22,
+      "all_figures_embedded": true
+    },
+    {
+      "report": "UPA单极化双流400位置完整实验报告",
+      "pages": 59,
+      "figures": 58,
+      "all_figures_embedded": true
+    }
+  ],
+  "source_code_SHA256": [
+    {
+      "path": "plot_single_stream_task2.m",
+      "sha256": "4a5647940139dba34c3d5f430510bf772ac37c17934fa66df05e6ceaf45cb231"
+    },
+    {
+      "path": "report_experiments.py",
+      "sha256": "62e32301cb2a8d1f4e46c1594b761cb0e3d945428b9b9c99a2b042a18f9773d4"
+    },
+    {
+      "path": "build_dual_full_report.py",
+      "sha256": "c733fccd7c1d8b164e7d0c8cefdb9cda920b5b3c86348b6acb63ab259e66cf3c"
+    },
+    {
+      "path": "build_single_detailed_report.py",
+      "sha256": "d5cfb3cf87a92d23abf37aafa8b3b503814efca6e672adec480c09c33034708d"
+    },
+    {
+      "path": "verify_comparison_figures.m",
+      "sha256": "6625281639a7ca63a3cd729413ff032285778ca976c811565861ab972061da8b"
+    }
+  ],
+  "CPU_Docomo_reference_source": "UE same positions/configuration/channel; no new algorithm or trials",
+  "figure_audit": {
+    "status": "passed",
+    "figures_checked": 80,
+    "CPU_shared_reference_line_plots": 32,
+    "CPU_shared_reference_bar_plots": 2,
+    "maximum_Docomo_CPU_vs_UE_curve_difference": 0,
+    "labels": [
+      "全反馈Type-I(UE)",
+      "全反馈Type-II(UE)",
+      "空间频率",
+      "Docomo",
+      "Docomo(UE)"
+    ]
+  },
+  "document_visual_review": {
+    "single_pages": 25,
+    "dual_pages": 59,
+    "status": "passed",
+    "renderer": "Microsoft Word PDF export and Poppler page PNGs",
+    "review": "All rendered pages inspected; no clipping, overlapping or missing glyphs observed."
+  }
+}

@@ -2,10 +2,10 @@
 from pathlib import Path
 import json
 import pandas as pd
-from report_experiments import dual_experiments
+from report_experiments import dual_experiments,display_panel,method_name
 ROOT=Path(__file__).resolve().parent
 OUT=ROOT/'results/dual_stream_full400'
-NAMES={'TYPE_I':'项目Type-I 含共相位','TYPE_II':'Type-II','DOCOMO_NFLOS':'Docomo结构适配','HAQSE_R3':'HAQSE','DFT_INDEX_R3':'DFT索引','POS_R3':'位置反馈'}
+NAMES={'TYPE_I':'全反馈Type-I(UE)','TYPE_II':'全反馈Type-II(UE)','DOCOMO_NFLOS':'Docomo','HAQSE_R3':'空间频率','DFT_INDEX_R3':'DFT索引','POS_R3':'位置反馈'}
 CPU=['HAQSE_R3','DFT_INDEX_R3','POS_R3'];UE=['TYPE_I','TYPE_II','DOCOMO_NFLOS']+CPU
 
 def table(headers,rows):
@@ -43,9 +43,9 @@ def build():
       '## CPU端完整实验',
       'CPU分别接收HAQSE频率整数、DFT方向索引或位置坐标整数，只用这些消息和公共几何重建模型、恢复共享波束，计算两流相位。CPU接口不接收观测信道、真实信道或UE连续位置；真实信道仅在仿真评价时使用。第二流相位由CPU在模型上直接计算，空间消息只发送一次，第二流无需新增反馈。']
     def default_table(branch,model):
-        q=default[default.branch.eq(branch)&default.channel_model.eq(model)].set_index('method');rows=[]
-        for method in CPU if branch=='CPU' else UE:
-            r=q.loc[method];rows.append([NAMES[method],f'{r.mean_single_Mbps:.2f}',f'{r.mean_dual_Mbps:.2f}',f'{r.mean_delta_Mbps:.2f}',f'{100*r.positive_fraction:.2f}%',f'{r.minimum_delta_Mbps:.2f}'])
+        q=display_panel(default,branch);q=q[q.channel_model.eq(model)].set_index('method');rows=[]
+        for method in ['DOCOMO_NFLOS']+CPU if branch=='CPU' else UE:
+            r=q.loc[method];rows.append([method_name(method,branch),f'{r.mean_single_Mbps:.2f}',f'{r.mean_dual_Mbps:.2f}',f'{r.mean_delta_Mbps:.2f}',f'{100*r.positive_fraction:.2f}%',f'{r.minimum_delta_Mbps:.2f}'])
         return table(['方法','单流 Mbps','双流 Mbps','增量 Mbps','正收益比例','最小增量 Mbps'],rows)
     def branch_section(branch):
         section=[]
@@ -93,6 +93,9 @@ def build():
       '```text\npython audit_dual_stream_full.py results/new_dual400 --stage summary\npython package_dual_stream_results.py results/new_dual400\n```',
       '需要并行运行时，四个进程分别传入Stage=run、Worker=1至4、Workers=4，完成后单独以Stage=finalize汇总。并行只划分参数配置，不改变样本、算法或消息。包内README给出逐条数据读取与审计方式。',
       '本轮已完成既定四类参数的完整双流实验。同步误差、移动性、宽带逐子载波处理、自适应流数与双极化不属于当前单极化扩展模型，尚无对应验证结论。']
-    dest=ROOT/'docs/UPA单极化双流400位置完整实验报告.md';dest.write_text('\n\n'.join(lines)+'\n',encoding='utf-8');print(dest)
+    content='\n\n'.join(lines)+'\n'
+    content=content.replace('报告与图例持续标为结构适配','图例统一使用Docomo，实现范围在正文说明').replace('Docomo结构适配','Docomo').replace('HAQSE','空间频率').replace('空间频率频率','空间频率')
+    content=content.replace('## CPU端完整实验','## CPU端完整实验\n\n本轮同步加入Docomo(UE)共享参考，复用相同参数和位置下的UE消息解码结果，涵盖吞吐量、单双流增量、第二模式、CDF和反馈量。它不作为第四种CPU几何算法，不新增仿真记录或计入原CPU样本数量。全反馈Type-I(UE)、全反馈Type-II(UE)是图例名称，仍采用本文给出的码本和相位反馈字段，并非逐元素上传完整CSI。')
+    dest=ROOT/'docs/UPA单极化双流400位置完整实验报告.md';dest.write_text(content,encoding='utf-8');print(dest)
 
 if __name__=='__main__':build()

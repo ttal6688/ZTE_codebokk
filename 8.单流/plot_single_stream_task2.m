@@ -9,7 +9,7 @@ assert(ismember('csi',T.Properties.VariableNames),'V2 results required');
 if any(T.channel_model=="MIX"),T=T(T.channel_model=="MIX",:);end
 for branch=["CPU" "UE"]
  out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
- all=T(T.branch==branch,:);tb=all(all.csi~="PERFECT",:);
+ all=display_panel(T,branch);tb=all(all.csi~="PERFECT",:);
  for curve=["SNR" "天线数" "AP数"]
   draw(tb,branch,curve,'position_error_m','定位误差（m）',out,'定位误差',true);
  end
@@ -42,7 +42,7 @@ for branch=["CPU" "UE"]
   f=newfigure;ax=axes(f);hold(ax,'on');
   for method=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"]
    q=aggregate(P(P.method==method&P.curve=="SNR",:),'delta_Mbps');
-   plot(ax,q.x_value,q.value,'-o','LineWidth',2,'Color',color(method),'DisplayName',label(method));
+   plot(ax,q.x_value,q.value,'-o','LineWidth',2,'Color',color(method),'DisplayName',label(method,branch));
   end
   yline(ax,0,':','HandleVisibility','off');format(ax,'观测 SNR（dB）','完美CSI减观测CSI吞吐量（Mbps）');
   legend(ax,'Location','best','FontSize',12);saveplot(f,out,'UE_同算法CSI配对收益');
@@ -56,9 +56,9 @@ if ~exist(fullfile(resultDir,'single_dual_pairs.csv'),'file'),gunzip(fullfile(re
 P=readtable(fullfile(resultDir,'single_dual_pairs.csv'),'TextType','string');
 for branch=["CPU" "UE"]
  out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
- if branch=="CPU",methods=["HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
+ if branch=="CPU",methods=["DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
  for model=["LOS" "MIX"]
-  tb=S(S.branch==branch&S.channel_model==model,:);pb=P(P.branch==branch&P.channel_model==model,:);
+  tb=display_panel(S,branch);tb=tb(tb.channel_model==model,:);pb=display_panel(P,branch);pb=pb(pb.channel_model==model,:);
   for curve=["SNR" "天线数" "AP数" "莱斯因子"]
    if curve=="SNR",xtext='观测 SNR（dB）';elseif curve=="天线数",xtext='每AP UPA阵元数';elseif curve=="AP数",xtext='协作AP数';else,xtext='莱斯因子 K（dB）';end
    for metric=["双流吞吐量" "单双流增量" "第二模式功率比"]
@@ -71,7 +71,7 @@ for branch=["CPU" "UE"]
      else
       z=tb(tb.curve==curve&tb.method==method&tb.stream_count==2,:);[x,order]=sort(z.x_value);y=z.mean_second_mode_ratio(order);yt='接收第二模式与第一模式功率比均值';
      end
-     name=label(method);if method=="IDEAL_SVD",name='等功率双流SVD参考';end
+     name=label(method,branch);if method=="IDEAL_SVD",name='等功率双流SVD参考';end
      plot(ax,x,y,'-o','LineWidth',2,'Color',color(method),'DisplayName',name);
     end
     if metric=="单双流增量",yline(ax,0,':','HandleVisibility','off');end
@@ -82,27 +82,27 @@ for branch=["CPU" "UE"]
   names=[methods "IDEAL_SVD"];values=zeros(numel(names),2);labels=cell(1,numel(names));
   for j=1:numel(names)
    for ns=1:2,values(j,ns)=default.mean_throughput_Mbps(default.method==names(j)&default.stream_count==ns);end
-   labels{j}=label(names(j));if names(j)=="IDEAL_SVD",labels{j}='SVD参考';end
+   labels{j}=label(names(j),branch);if names(j)=="IDEAL_SVD",labels{j}='SVD参考';end
   end
   f=newfigure;ax=axes(f);bar(ax,values);xticks(ax,1:numel(names));xticklabels(ax,labels);xtickangle(ax,20);format(ax,'反馈方法','默认配置平均吞吐量（Mbps）');set(ax,'FontSize',13);legend(ax,{'单流','双流等功率'},'Location','best');saveplot(f,out,char(branch+"_"+model+"_默认单双流"));
   f=newfigure;ax=axes(f);hold(ax,'on');
-  for method=methods,z=sort(pd.delta_Mbps(pd.method==method));plot(ax,z,(1:numel(z))/numel(z),'LineWidth',2,'Color',color(method),'DisplayName',label(method));end
+  for method=methods,z=sort(pd.delta_Mbps(pd.method==method));plot(ax,z,(1:numel(z))/numel(z),'LineWidth',2,'Color',color(method),'DisplayName',label(method,branch));end
   format(ax,'默认配置双流减单流吞吐量（Mbps）','累计概率');ylim(ax,[0 1]);legend(ax,'Location','best','FontSize',12);saveplot(f,out,char(branch+"_"+model+"_默认增量CDF"));
  end
  f=newfigure;ax=axes(f);hold(ax,'on');
- for method=methods,z=S(S.branch==branch&S.channel_model=="MIX"&S.curve=="AP数"&S.method==method& S.stream_count==2,:);[x,order]=sort(z.x_value);plot(ax,x,z.mean_feedback_bits(order),'-o','LineWidth',2,'Color',color(method),'DisplayName',label(method));end
+ displayed=display_panel(S,branch);
+ for method=methods,z=displayed(displayed.channel_model=="MIX"&displayed.curve=="AP数"&displayed.method==method& displayed.stream_count==2,:);[x,order]=sort(z.x_value);plot(ax,x,z.mean_feedback_bits(order),'-o','LineWidth',2,'Color',color(method),'DisplayName',label(method,branch));end
  format(ax,'协作AP数','双流每次更新反馈有效载荷（bit）');legend(ax,'Location','best','FontSize',12);saveplot(f,out,char(branch+"_双流反馈量_AP数"));
 end
 end
 function draw(T,branch,curve,field,ytext,out,stem,geo)
 f=newfigure;ax=axes(f);hold(ax,'on');
 if geo,methods=["HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];
-elseif branch=="CPU",methods=["IDEAL_SVD" "TYPE_I" "TYPE_II" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];
+elseif branch=="CPU",methods=["IDEAL_SVD" "TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];
 else,methods=["IDEAL_SVD" "TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
 for method=methods
  z=T(T.curve==curve&T.method==method,:);z=z(isfinite(z.(field)),:);if isempty(z),continue;end
- q=aggregate(z,field);text=label(method);
- if branch=="CPU"&&ismember(method,["TYPE_I" "TYPE_II"]),text=[text '（UE参考）'];end
+ q=aggregate(z,field);text=label(method,branch);
  plot(ax,q.x_value,q.value,'-o','LineWidth',2,'MarkerSize',7,'Color',color(method),'DisplayName',text);
 end
 switch curve
@@ -131,10 +131,11 @@ switch m
  case "DFT_INDEX_R3",c=[.1 .6 .28];otherwise,c=[.6 .25 .72];
 end
 end
-function text=label(m)
+function text=label(m,branch)
+if nargin<2,branch="";end
 switch m
- case "IDEAL_SVD",text='理想SVD上界';case "TYPE_I",text='项目Type-I（含共相位）';case "TYPE_II",text='Type-II';
- case "DOCOMO_NFLOS",text='Docomo结构适配';case "HAQSE_R3",text='HAQSE（R=3）';
+ case "IDEAL_SVD",text='理想SVD上界';case "TYPE_I",text='全反馈Type-I(UE)';case "TYPE_II",text='全反馈Type-II(UE)';
+ case "DOCOMO_NFLOS",text='Docomo';if strcmp(branch,'CPU'),text='Docomo(UE)';end;case "HAQSE_R3",text='空间频率';
  case "DFT_INDEX_R3",text='DFT索引（R=3）';otherwise,text='位置反馈（R=3）';
 end
 end
@@ -144,13 +145,13 @@ T=readtable(fullfile(resultDir,'dual_stream_trials.csv'),'TextType','string');
 P=readtable(fullfile(resultDir,'single_dual_pairs.csv'),'TextType','string');
 for branch=["CPU" "UE"]
  out=fullfile(resultDir,char(branch));if ~exist(out,'dir'),mkdir(out);end
- if branch=="CPU",methods=["HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
+ if branch=="CPU",methods=["DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];else,methods=["TYPE_I" "TYPE_II" "DOCOMO_NFLOS" "HAQSE_R3" "DFT_INDEX_R3" "POS_R3"];end
  for model=["LOS" "MIX"]
-  tb=T(T.branch==branch&T.channel_model==model,:);pb=P(P.branch==branch&P.channel_model==model,:);
+  tb=display_panel(T,branch);tb=tb(tb.channel_model==model,:);pb=display_panel(P,branch);pb=pb(pb.channel_model==model,:);
   names=[methods "IDEAL_SVD"];values=zeros(numel(names),2);labels=cell(1,numel(names));
   for j=1:numel(names)
    for ns=1:2,values(j,ns)=mean(tb.throughput_Mbps(tb.method==names(j)&tb.stream_count==ns));end
-   labels{j}=label(names(j));if names(j)=="IDEAL_SVD",labels{j}='SVD参考';end
+   labels{j}=label(names(j),branch);if names(j)=="IDEAL_SVD",labels{j}='SVD参考';end
   end
   f=newfigure;ax=axes(f);bar(ax,values);xticks(ax,1:numel(names));xticklabels(ax,labels);xtickangle(ax,20);
   format(ax,'反馈方法','平均吞吐量（Mbps）');legend(ax,{'单流','双流等功率'},'Location','best');
@@ -159,7 +160,7 @@ for branch=["CPU" "UE"]
    f=newfigure;ax=axes(f);hold(ax,'on');
    for method=methods
     z=sort(pb.(field)(pb.method==method));
-    plot(ax,z,(1:numel(z))/numel(z),'-','LineWidth',2,'Color',color(method),'DisplayName',label(method));
+    plot(ax,z,(1:numel(z))/numel(z),'-','LineWidth',2,'Color',color(method),'DisplayName',label(method,branch));
    end
    if field=="delta_Mbps",xtext='双流减单流吞吐量（Mbps）';stem='速率增量CDF';else,xtext='接收第二模式与第一模式功率比';stem='第二模式CDF';end
    format(ax,xtext,'累计概率');legend(ax,'Location','best','FontSize',12);ylim(ax,[0 1]);
@@ -167,13 +168,25 @@ for branch=["CPU" "UE"]
   end
  end
  f=newfigure;ax=axes(f);values=zeros(numel(methods),2);labels=cell(1,numel(methods));
- tb=T(T.branch==branch&T.channel_model=="MIX",:);
+ tb=display_panel(T,branch);tb=tb(tb.channel_model=="MIX",:);
  for j=1:numel(methods)
   for ns=1:2,values(j,ns)=mean(tb.feedback_bits(tb.method==methods(j)&tb.stream_count==ns));end
-  labels{j}=label(methods(j));
+  labels{j}=label(methods(j),branch);
  end
  bar(ax,values);xticks(ax,1:numel(methods));xticklabels(ax,labels);xtickangle(ax,20);
  format(ax,'反馈方法','每次更新反馈有效载荷（bit）');set(ax,'FontSize',13);
  legend(ax,{'单流','双流'},'Location','best');saveplot(f,out,[char(branch) '_单双流反馈量']);
+end
+end
+
+function result=display_panel(source,branch)
+% Presentation-only reuse of the existing UE result; never regenerate a CPU design.
+result=source(source.branch==branch,:);
+if strcmp(branch,'CPU') && ~any(result.method=="DOCOMO_NFLOS")
+ reference=source(source.branch=="UE"&source.method=="DOCOMO_NFLOS",:);
+ if ismember('csi',reference.Properties.VariableNames),reference=reference(reference.csi~="PERFECT",:);end
+ reference.branch(:)="CPU";
+ if ismember('role',reference.Properties.VariableNames),reference.role(:)="UE_REFERENCE";end
+ result=[result;reference];
 end
 end
