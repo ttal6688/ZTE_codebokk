@@ -2,7 +2,7 @@
 
 ## 当前UPA单极化单双流实验
 
-第8目录已完成UPA单极化400位置单流正式扫描，以及400位置双流完整扫描，CPU与UE分别说明和出图。双流覆盖LOS与混合信道、观测SNR、UPA规模、AP数与K因子，并保留负收益样本。Docomo采用已核对论文结构的适配实现。入口见[当前首页](8.单流/README.md)、[单流正式报告](8.单流/docs/UPA单流400位置正式实验报告.md)和[双流完整报告](8.单流/docs/UPA单极化双流400位置完整实验报告.md)，均附Word版本；[32位置最小验证](8.单流/docs/UPA单极化双流扩展验证报告.md)保留为前期记录。主参考为完美CSI直接SVD，400 MHz直接换算。
+第8目录已完成UPA单极化400位置单流正式扫描，以及400位置双流完整扫描，CPU与UE分别说明和出图。双流覆盖LOS与混合信道、观测SNR、UPA规模、AP数与K因子，并保留负收益样本。Docomo采用已核对论文结构的适配实现。入口见[当前首页](8.单流/README.md)、[单流正式报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)和[双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)，均附Word版本；[32位置最小验证](8.单流/docs/UPA单极化双流扩展验证报告.md)保留为前期记录。主参考为完美CSI直接SVD，400 MHz直接换算。
 
 后续UPA单极化单双流统一维护分支为feat/upa-single-dual-complete-20261024，详见[维护约定](8.单流/docs/当前维护分支.md)。最新两份报告逐实验附齐92幅图和对应数值、结果解释。
 
@@ -10,8 +10,8 @@
 
 | 实验 | Markdown在线阅读 | Word下载 |
 |---|---|---|
-| UPA单极化单流400位置，CPU与UE分别说明，22幅图 | [单流完整实验报告](8.单流/docs/UPA单流400位置正式实验报告.md) | [单流Word报告](8.单流/docs/UPA单流400位置正式实验报告.docx) |
-| UPA单极化双流400位置，CPU与UE分别说明，70幅图 | [双流完整实验报告](8.单流/docs/UPA单极化双流400位置完整实验报告.md) | [双流Word报告](8.单流/docs/UPA单极化双流400位置完整实验报告.docx) |
+| UPA单极化单流400位置，CPU与UE分别说明，22幅图 | [单流完整实验报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [单流Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
+| UPA单极化双流400位置，CPU与UE分别说明，70幅图 | [双流完整实验报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [双流Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
 
 - [当前代码、数据与复现入口](8.单流/README.md)
 - [最新图例与CPU图中Docomo(UE)参考来源](8.单流/docs/图例命名和CPU共享参考.md)
@@ -98,3 +98,6 @@ CPU 共相位链路则展示了几何重构的敏感性：DFT 方向索引经位
 - `4.补充仿真/`：固定部署下的吞吐量、反馈开销和 AP 物理部署补充结果。
 
 如需复现第5、第6目录历史实验，请先阅读 [同步配置](5.低反馈预编码CPU与UE仿真/shared/低反馈预编码_双方同步实验配置_v2.md) 和 [仿真目录说明](5.低反馈预编码CPU与UE仿真/README.md)。最新UPA单极化单双流实验请使用[第8目录当前运行入口](8.单流/README.md)，并为重跑结果指定新的输出目录，避免覆盖已保存的数据。
+
+
+最新报告的跳转已明确指向当前维护分支；MD中的AP数量图统一引用ap_ticks_5_to_9_v1版本目录，显示整数5、6、7、8、9。此次修正实际报告链接和图片引用，Word保持上一版不变。

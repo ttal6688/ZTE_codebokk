@@ -2,7 +2,7 @@
 from pathlib import Path
 import json
 import pandas as pd
-from report_experiments import dual_experiments,dual_supplement,display_panel,method_name
+from report_experiments import dual_experiments,dual_supplement,display_panel,method_name,version_report_images
 ROOT=Path(__file__).resolve().parent
 OUT=ROOT/'results/dual_stream_full400'
 NAMES={'TYPE_I':'全反馈Type-I(UE)','TYPE_II':'全反馈Type-II(UE)','DOCOMO_NFLOS':'Docomo','HAQSE_R3':'空间频率','DFT_INDEX_R3':'DFT索引','POS_R3':'位置反馈'}
@@ -103,6 +103,7 @@ def build():
     content='\n\n'.join(lines)+'\n'
     content=content.replace('报告与图例持续标为结构适配','图例统一使用Docomo，实现范围在正文说明').replace('Docomo结构适配','Docomo').replace('HAQSE','空间频率').replace('空间频率频率','空间频率')
     content=content.replace('### CPU端补充分析','### CPU端补充分析\n\n全反馈Type-I(UE)、全反馈Type-II(UE)和Docomo(UE)复用已有UE结果作为共享参考，不计为CPU独立几何算法。')
+    content=version_report_images(content)
     dest=ROOT/'docs/UPA单极化双流400位置完整实验报告.md';dest.write_text(content,encoding='utf-8');print(dest)
 
 if __name__=='__main__':build()

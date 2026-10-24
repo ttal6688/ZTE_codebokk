@@ -1,5 +1,16 @@
 """Complete per-experiment figures, numeric results and source-grounded notes."""
 import pandas as pd
+import re
+from pathlib import PurePosixPath
+AP_IMAGE_VERSION='ap_ticks_5_to_9_v1'
+
+def version_report_images(content):
+    def replace(match):
+        path=PurePosixPath(match.group(2))
+        if path.parent.name==AP_IMAGE_VERSION:return match.group(0)
+        return match.group(1)+str(path.parent/AP_IMAGE_VERSION/path.name)+match.group(3)
+    return re.sub(r'(!\[[^\]]*\]\()([^\n)]+AP数\.png)(\))',replace,content)
+
 NAMES={'IDEAL_SVD':'SVD参考','TYPE_I':'全反馈Type-I(UE)','TYPE_II':'全反馈Type-II(UE)','DOCOMO_NFLOS':'Docomo','HAQSE_R3':'空间频率','DFT_INDEX_R3':'DFT索引','POS_R3':'位置反馈'}
 GEO=['HAQSE_R3','DFT_INDEX_R3','POS_R3'];UE=['TYPE_I','TYPE_II','DOCOMO_NFLOS']+GEO
 CURVES=[('SNR','观测SNR','dB'),('天线数','UPA阵元数','阵元'),('AP数','协作AP数','个'),('莱斯因子','莱斯因子K','dB')]

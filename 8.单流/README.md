@@ -24,8 +24,8 @@ CPU与UE分别按同一大纲组织：定位误差与SNR、天线数、AP数；�
 
 | 内容 | Markdown | Word |
 |---|---|---|
-| 单流正式结果及CPU与UE解释 | [400位置报告](docs/UPA单流400位置正式实验报告.md) | [转发版](docs/UPA单流400位置正式实验报告.docx) |
-| 双流400位置完整扫描及不利样本 | [双流完整报告](docs/UPA单极化双流400位置完整实验报告.md) | [转发版](docs/UPA单极化双流400位置完整实验报告.docx) |
+| 单流正式结果及CPU与UE解释 | [单流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [转发版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
+| 双流400位置完整扫描及不利样本 | [双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [转发版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
 
 以上两份为当前完整实验报告，已同步最新图例和CPU图中的Docomo(UE)。[返回仓库首页的最新报告入口](../README.md#最新报告入口)。
 
@@ -53,3 +53,6 @@ V3正式扫描不额外运行同算法完美CSI配对；之前V2小样本配对�
 ## 历史材料
 
 6.位置反馈方案为冻结公共输入和基础依赖，本轮未修改。历史双极化多流扩展与旧single_stream_full属于此前实验；UPA_POS_V1和UPA_V2结果是修复阶段记录，不混入本次正式均值。第5、第6目录此前已建立CPU/UE相位口径，本轮恢复第8目录一致性并补齐协议，不将这些原则描述为首次提出。
+
+
+最新报告的跳转已明确指向当前维护分支；MD中的AP数量图统一引用ap_ticks_5_to_9_v1版本目录，显示整数5、6、7、8、9。此次修正实际报告链接和图片引用，Word保持上一版不变。
