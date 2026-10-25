@@ -1,0 +1,50 @@
+[
+  {
+    "channel_model": "LOS",
+    "method": "HAQSE",
+    "mean_R3_m": 0.0019402334770508,
+    "mean_R8_m": 0.0012601493182841,
+    "mean_reduction_percent": 35.051666039720324,
+    "strictly_improved_fraction": 0.735
+  },
+  {
+    "channel_model": "LOS",
+    "method": "DFT_INDEX",
+    "mean_R3_m": 0.232082650743862,
+    "mean_R8_m": 0.134888269334729,
+    "mean_reduction_percent": 41.87921031477772,
+    "strictly_improved_fraction": 0.7775
+  },
+  {
+    "channel_model": "LOS",
+    "method": "POS",
+    "mean_R3_m": 0.0037232560630278,
+    "mean_R8_m": 0.0036479172344969,
+    "mean_reduction_percent": 2.0234662149353624,
+    "strictly_improved_fraction": 0.5125
+  },
+  {
+    "channel_model": "MIX",
+    "method": "HAQSE",
+    "mean_R3_m": 0.008531636371366,
+    "mean_R8_m": 0.0060037406943561,
+    "mean_reduction_percent": 29.629669701981896,
+    "strictly_improved_fraction": 0.6025
+  },
+  {
+    "channel_model": "MIX",
+    "method": "DFT_INDEX",
+    "mean_R3_m": 0.235091406756309,
+    "mean_R8_m": 0.13613564778558,
+    "mean_reduction_percent": 42.09246111377629,
+    "strictly_improved_fraction": 0.79
+  },
+  {
+    "channel_model": "MIX",
+    "method": "POS",
+    "mean_R3_m": 0.009490209198427,
+    "mean_R8_m": 0.0071398738941186,
+    "mean_reduction_percent": 24.76589562112042,
+    "strictly_improved_fraction": 0.5875
+  }
+]

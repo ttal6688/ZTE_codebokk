@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "report": "8.单流/docs/UPA单流400位置正式实验报告.md",
+      "original_main_text_unchanged": true,
+      "original_supplemental_experiments_unchanged": true,
+      "new_experiment_first": true,
+      "shared_new_figures": 6,
+      "total_figures": 46
+    },
+    {
+      "report": "8.单流/docs/UPA单极化双流400位置完整实验报告.md",
+      "original_main_text_unchanged": true,
+      "original_supplemental_experiments_unchanged": true,
+      "new_experiment_first": true,
+      "shared_new_figures": 6,
+      "total_figures": 80
+    }
+  ],
+  "existing_AP_images_and_numeric_files_unchanged": true,
+  "Word_inspected": false
+}

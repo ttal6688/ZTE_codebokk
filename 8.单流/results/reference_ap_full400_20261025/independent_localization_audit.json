@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "positions": 400,
+  "physical_localization_records": 14400,
+  "AP_estimate_records": 6400,
+  "B_fixed": 8,
+  "R_values": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "all_groups_have_all_positions": true,
+  "all_samples_retained": true,
+  "maximum_recovered_position_error_m": 1.3855583347321954e-13,
+  "maximum_reported_distance_error_m": 1.3002186133315163e-13,
+  "maximum_relative_condition_error": 5.099998499273164e-15,
+  "all_summary_statistics_recomputed": true,
+  "integer_feedback_lengths_checked": true,
+  "observations_reused_across_R": true,
+  "previous_R3_overlap_records": 192,
+  "maximum_previous_R3_error_m": 0.0,
+  "formal400_R3_overlap_records": 2400,
+  "maximum_formal400_R3_error_m": 8.020016942222874e-14,
+  "pilot32_all_R_overlap_records": 1152,
+  "maximum_pilot32_all_R_error_m": 0.0,
+  "full_precoder_protocol_extended": false
+}

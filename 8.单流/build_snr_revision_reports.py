@@ -4,6 +4,7 @@ import json, re
 import pandas as pd
 from report_experiments import GEO, UE, REFERENCE_NOTE, display_panel, matrix, method_name, table
 from prepare_snr_revision400 import OUT, LOCATION_SNRS, RATE_SNRS
+from report_reference_ap_full400 import reference_ap_supplement
 
 ROOT=Path(__file__).resolve().parent
 TITLES={1:'UPA单流400位置正式实验报告',2:'UPA单极化双流400位置完整实验报告'}
@@ -79,6 +80,7 @@ def main_experiments(ns,branch,s):
 
 def supplements(ns,s,p,diag):
     lines=['## 4 额外补充','补充实验也使用当前SNR范围。单流定位前端的量化与越界诊断单独列出；双流补充逐位置增量、第二模式以及默认配置分布。']
+    lines += reference_ap_supplement(ns)
     for branch in ['CPU','UE']:
         q=display_panel(s,branch);q=q[q.stream_count.eq(ns)]
         ps=display_panel(p,branch)
@@ -138,7 +140,7 @@ def build(stream_counts=(1,2)):
             '新增案例先在原MATLAB环境运行，再由独立Python程序解码比特串、重建真实有效信道、核对功率、发送签名、MMSE速率、第二模式及均值。连续第二相位在跨实现浮点边界处有分歧的记录逐条保留，并在原生解码器中仅凭公共几何和整数消息严格重放。定位指标独立从空间前缀恢复；另外重新计算连续位置诊断并与保存的解码位置逐条对齐。',
             f'原单流MIX重叠配置共核对{a["old_single_overlap_records"]:,}条，最大吞吐量差{a["maximum_old_single_throughput_difference_Mbps"]:.3g} Mbps。坐标诊断与消息解码核对{a["diagnostic_overlap_records"]:,}条，最大误差差值{a["maximum_diagnostic_position_error_difference_m"]:.3g} m。SVD随观测SNR不变、纯LOS随K不变及全部曲线组400位置均通过检查。',
             '[数据、配置来源及运行命令](../results/'+OUT.name+'/README.md)。原400位置数据、原小样本SNR预实验和固定8 AP参考数预实验继续保留；本次正式报告替换原报告同名入口，所有新图使用独立版本路径避免缓存。',
-            '位置反馈的完整通信协议仍固定三个定位参考AP；之前R=3至8实验是独立定位诊断，本轮未将其混入正式扫描。观测SNR提高不能消除离散反馈和模型误差，双流也不保证每个位置或每个低SNR配置都比单流更好。Word与Markdown由同一内容生成；按用户要求Word不追加检查。']
+            '位置反馈的完整通信协议仍固定三个定位参考AP；固定B=8、R=3至8的400位置定位诊断列为本报告补充第一个实验，独立保存数据，不覆盖原协作AP数扫描。观测SNR提高不能消除离散反馈和模型误差，双流也不保证每个位置或每个低SNR配置都比单流更好。Word与Markdown由同一内容生成；按用户要求Word不追加检查。']
         content='\n\n'.join(lines)+'\n'
         for link in re.findall(r'!\[[^\]]*\]\(([^)]+)\)',content):assert (ROOT/'docs'/link).resolve().exists(),link
         (ROOT/'docs'/f'{title}.md').write_text(content,encoding='utf-8')

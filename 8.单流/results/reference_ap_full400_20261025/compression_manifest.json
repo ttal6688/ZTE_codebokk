@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "files": [
+    {
+      "file": "localization_trials.csv.gz",
+      "raw_sha256": "3b520cc53fe97ce38969a9f13889f5a58607969b352e63d7acf4d045914cc4e4",
+      "gzip_sha256": "587cd3bcee99d496b357516f089b9556b26487b3b73988956827202563a76c8a",
+      "round_trip": true
+    },
+    {
+      "file": "ap_estimates.csv.gz",
+      "raw_sha256": "d77c4ada45b00f7ca93df4e3e5553574d29d3ce381f54e0f1e95fc222ff482ed",
+      "gzip_sha256": "e89e3b4b625da1f8582919f5845428d3d28704729dd164e039ac39394f19bcea",
+      "round_trip": true
+    }
+  ]
+}

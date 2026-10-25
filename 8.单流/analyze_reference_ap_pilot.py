@@ -28,7 +28,7 @@ def integers(wire,widths,shape):
 
 def audit(out):
     c=json.loads((out/'experiment_contract.json').read_text(encoding='utf-8'));ids=c['sample_ids'];active=c['active_AP_ids']
-    t=read(out/'localization_trials.csv',dtype={'feedback_wire':'string'});e=pd.read_csv(out/'ap_estimates.csv');s=pd.read_csv(out/'localization_summary.csv')
+    t=read(out/'localization_trials.csv',dtype={'feedback_wire':'string'});e=read(out/'ap_estimates.csv');s=pd.read_csv(out/'localization_summary.csv')
     assert len(t)==len(ids)*2*6*3 and len(e)==len(ids)*2*8
     assert t.B.eq(8).all() and t.observation_SNR_dB.eq(30).all() and t.K_dB.eq(10).all()
     assert set(t.R)==set(range(3,9)) and set(t.sample_id)==set(ids)
@@ -80,16 +80,35 @@ def audit(out):
     old['method']=old.method.map({'HAQSE_R3':'HAQSE','DFT_INDEX_R3':'DFT_INDEX','POS_R3':'POS'})
     old=old[old.method.isin(METHODS)]
     a=t[t.R.eq(3)].merge(old,on=['channel_model','method','sample_id'],suffixes=('_new','_old'),validate='one_to_one')
-    assert len(a)==len(ids)*2*3
+    assert len(a)==len(set(ids)&set(old.sample_id))*2*3
     overlap=float(max(abs(a.position_error_m_new-a.position_error_m_old).max(),abs(a.raw_position_error_m_new-a.raw_position_error_m_old).max()));assert overlap<1e-8
+    full_overlap=0;full_error=0.;pilot_all_R_overlap=0;pilot_all_R_error=0.
+    if ids==list(range(1,401)):
+        formal=read(ROOT/'results/upa_snr_revision400_20261025/localization_trials.csv')
+        formal=formal[formal.branch.eq('CPU')&formal.N.eq(1024)&formal.B.eq(8)&formal.SNR.eq(30)&formal.K.eq(10)].copy()
+        formal['method']=formal.method.map({'HAQSE_R3':'HAQSE','DFT_INDEX_R3':'DFT_INDEX','POS_R3':'POS'})
+        f=t[t.R.eq(3)].merge(formal,on=['channel_model','method','sample_id'],suffixes=('_scan','_formal'),validate='one_to_one')
+        assert len(f)==2400
+        full_error=float(abs(f.position_error_m_scan-f.position_error_m_formal).max());assert full_error<1e-8
+        full_overlap=len(f)
+        pilot=read(ROOT/'results/reference_ap_pilot32_20261025/localization_trials.csv',dtype={'feedback_wire':'string'})
+        f=t.merge(pilot,on=['channel_model','method','sample_id','R'],suffixes=('_full','_pilot'),validate='one_to_one')
+        assert len(f)==1152 and f.feedback_wire_full.eq(f.feedback_wire_pilot).all()
+        pilot_all_R_error=float(max(abs(f.position_error_m_full-f.position_error_m_pilot).max(),abs(f.raw_position_error_m_full-f.raw_position_error_m_pilot).max()))
+        assert pilot_all_R_error<1e-8;pilot_all_R_overlap=len(f)
     result=dict(status='passed',positions=len(ids),physical_localization_records=len(t),AP_estimate_records=len(e),
         B_fixed=8,R_values=list(range(3,9)),all_groups_have_all_positions=True,all_samples_retained=True,
         maximum_recovered_position_error_m=maximum_position,maximum_reported_distance_error_m=maximum_error,
         maximum_relative_condition_error=maximum_condition,all_summary_statistics_recomputed=True,
         integer_feedback_lengths_checked=True,observations_reused_across_R=True,
-        previous_R3_overlap_records=len(a),maximum_previous_R3_error_m=overlap,full_precoder_protocol_extended=False)
+        previous_R3_overlap_records=len(a),maximum_previous_R3_error_m=overlap,
+        formal400_R3_overlap_records=full_overlap,maximum_formal400_R3_error_m=full_error,
+        pilot32_all_R_overlap_records=pilot_all_R_overlap,maximum_pilot32_all_R_error_m=pilot_all_R_error,
+        full_precoder_protocol_extended=False)
     (out/'independent_localization_audit.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     files=[ROOT/'run_reference_ap_pilot.m',ROOT/'plot_reference_ap_pilot.m',Path(__file__),ROOT/'+sstr/space_messages.m',ROOT/'+sstr/messages_from_estimates.m',ROOT/'+sstr/observe_sample.m',ROOT/'+sstr/make_sample.m']
+    if ids==list(range(1,401)):
+        files += [ROOT/name for name in ['run_reference_ap_full400.m','plot_reference_ap_full400.m','report_reference_ap_full400.py','build_snr_revision_reports.py']]
     files+=list((ROOT/'6.位置反馈方案').glob('+*/*.m'))+list((ROOT/'6.位置反馈方案/lib').glob('*.m'))+list(base.PUBLIC.glob('*.json'))+list(base.PUBLIC.glob('*.csv'))
     source=[dict(path=p.relative_to(ROOT).as_posix(),sha256=hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest()) for p in sorted(set(files))]
     (out/'source_and_input_SHA256.json').write_text(json.dumps(dict(text_normalization='CRLF to LF',files=source),ensure_ascii=False,indent=2),encoding='utf-8')

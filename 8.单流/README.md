@@ -1,5 +1,17 @@
 # UPA单极化单流与双流实验
 
+## 2026年10月25日 定位参考AP数400位置补充实验
+
+固定协作AP总数B=8，将定位参考／反馈AP数R从3扫到8；400位置、LOS与MIX分别统计。新实验已放在单流和双流正式报告“4 额外补充”的第一项4.1，按CPU与UE列图表。**原固定R=3、改变协作AP总数的正文实验及图片、数据完整保留。**
+
+[单流补充第一个实验](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md#41-固定8个协作ap的定位参考数扫描) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx)
+
+[双流补充第一个实验](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md#41-固定8个协作ap的定位参考数扫描) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
+
+[独立数据、消息及复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/reference_ap_full400_20261025/README.md)
+
+定位前端在单双流、CPU与UE间共用，不将重复展示当作独立样本。新实验含14,400条物理定位记录、6,400条AP估计记录及6组PNG/FIG，R=3与原400位置基线对齐。单流报告现46幅插图，双流80幅，其中6幅由两份报告共用。位置反馈仍只量化一次坐标并发送36 bit；本诊断不扩展原完整预编码协议或覆盖原吞吐量结果。Word同步生成，按要求不追加检查。
+
 ## 2026年10月25日 正式实验SNR更新及单流LOS补齐
 
 当前400位置单流和双流报告均分别列出LOS、MIX及CPU、UE。定位误差使用观测SNR **−20:10:40 dB**；吞吐量使用 **−20:5:20 dB**，纵轴从各图最低值略向下留白。定位纵轴只标误差和单位。数据链路SNR保持固定，原算法和反馈规则不变。
@@ -8,7 +20,7 @@
 - [双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
 - [当前数据和复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/upa_snr_revision400_20261025/README.md)
 
-新增8个低SNR配置，复用14个已审计配置，共22个物理配置；单流取同一配对案例的第一流结果并补齐LOS全套实验。报告逐图附数值与解释，单流40幅、双流74幅，共114幅；新图使用新目录避免旧图片缓存。Word按要求生成后不追加检查。以下32位置预实验保留为历史诊断。
+新增8个低SNR配置，复用14个已审计配置，共22个物理配置；单流取同一配对案例的第一流结果并补齐LOS全套实验。报告逐图附数值与解释，单流46幅、双流80幅，共126幅插图；新图使用新目录避免旧图片缓存。Word按要求生成后不追加检查。以下32位置预实验保留为历史诊断。
 
 ## 2026年10月25日 固定8个协作AP的定位参考数扫描
 
@@ -30,7 +42,7 @@ MIX下R=3至8，空间频率平均定位误差从9.321降至6.525 mm，DFT索引
 
 已完成Docomo结构核对及专项验证、400位置单流正式扫描、400位置单极化双流完整扫描。双流覆盖LOS与MIX以及四类参数，CPU与UE分别说明和出图，主参考是完美CSI直接SVD；普通方法使用带噪观测，400 MHz直接换算。
 
-最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部40幅单流图与74幅双流图、对应数值及解释；Word与Markdown内容一致。
+最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部46幅单流图与80幅双流图、对应数值及解释；Word与Markdown内容一致。
 
 图例统一为全反馈Type-I(UE)、全反馈Type-II(UE)、空间频率和Docomo；CPU对比同步包含Docomo(UE)共享参考，定位误差图不加入无位置输出的方法。名称与参考数据来源见[图例及CPU共享参考说明](docs/图例命名和CPU共享参考.md)，原始仿真数值不变。
 
