@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "positions": 400,
+  "records": 17600,
+  "implementable_records_independently_reconstructed": 14400,
+  "maximum_true_effective_channel_error": 9.626034742434748e-13,
+  "maximum_metric_SE_error": 5.007549930269306e-12,
+  "maximum_CPU_continuous_coefficient_numerical_error": 1.8937669111698594e-06,
+  "maximum_precoder_signature_error": 4.1744385725905886e-14,
+  "continuous_optimizer_native_replay_required": 0,
+  "maximum_CPU_design_SE_cross_implementation_difference": 1.5276668818842154e-13,
+  "UE_extra_bits": 28,
+  "CPU_extra_bits": 0,
+  "shared_F": true,
+  "all_summary_means_recomputed": true,
+  "truth_regenerated_from_public_sample_bank": true
+}

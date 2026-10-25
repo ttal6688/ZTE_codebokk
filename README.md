@@ -1,5 +1,15 @@
 # 中兴任务二仿真材料
 
+## 2026年10月25日 正式实验SNR更新及单流LOS补齐
+
+当前400位置单流和双流报告均分别列出LOS、MIX及CPU、UE。定位误差使用观测SNR **−20:10:40 dB**；吞吐量使用 **−20:5:20 dB**，纵轴从各图最低值略向下留白。定位纵轴只标误差和单位。数据链路SNR保持固定，原算法和反馈规则不变。
+
+- [单流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx)
+- [双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
+- [当前数据和复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/upa_snr_revision400_20261025/README.md)
+
+新增8个低SNR配置，复用14个已审计配置，共22个物理配置；单流取同一配对案例的第一流结果并补齐LOS全套实验。报告逐图附数值与解释，单流40幅、双流74幅，共114幅；新图使用新目录避免旧图片缓存。Word按要求生成后不追加检查。以下32位置预实验保留为历史诊断。
+
 ## 2026年10月25日 固定8个协作AP的定位参考数扫描
 
 新增32位置定位预实验：固定协作AP总数B=8、观测SNR30 dB，定位参考AP数R按3、4、5、6、7、8扫描。每个位置使用同一份8 AP观测，参考集合按公开AP顺序逐步嵌套。CPU、UE共享定位前端，分别给出LOS与MIX的线性图、对数图和数值表。
@@ -22,14 +32,14 @@ MIX下R=3至8，空间频率平均定位误差从9.321降至6.525 mm，DFT索引
 
 第8目录已完成UPA单极化400位置单流正式扫描，以及400位置双流完整扫描，CPU与UE分别说明和出图。双流覆盖LOS与混合信道、观测SNR、UPA规模、AP数与K因子，并保留负收益样本。Docomo采用已核对论文结构的适配实现。入口见[当前首页](8.单流/README.md)、[单流正式报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)和[双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)，均附Word版本；[32位置最小验证](8.单流/docs/UPA单极化双流扩展验证报告.md)保留为前期记录。主参考为完美CSI直接SVD，400 MHz直接换算。
 
-后续UPA单极化单双流统一维护分支为feat/upa-single-dual-complete-20261024，详见[维护约定](8.单流/docs/当前维护分支.md)。最新两份报告逐实验附齐92幅图和对应数值、结果解释。
+后续UPA单极化单双流统一维护分支为feat/upa-single-dual-complete-20261024，详见[维护约定](8.单流/docs/当前维护分支.md)。最新两份报告逐实验附齐114幅图和对应数值、结果解释。
 
 ## 最新报告入口
 
 | 实验 | Markdown在线阅读 | Word下载 |
 |---|---|---|
-| UPA单极化单流400位置，CPU与UE分别说明，22幅图 | [单流完整实验报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [单流Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
-| UPA单极化双流400位置，CPU与UE分别说明，70幅图 | [双流完整实验报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [双流Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
+| UPA单极化单流400位置，CPU与UE分别说明，40幅图，LOS与MIX齐全 | [单流完整实验报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [单流Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
+| UPA单极化双流400位置，CPU与UE分别说明，74幅图 | [双流完整实验报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) | [双流Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) |
 
 - [当前代码、数据与复现入口](8.单流/README.md)
 - [最新图例与CPU图中Docomo(UE)参考来源](8.单流/docs/图例命名和CPU共享参考.md)

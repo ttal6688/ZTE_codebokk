@@ -1,0 +1,523 @@
+{
+  "version": "UPA_SINGLE_DUAL_SNR_REVISION_20261025",
+  "positions": 400,
+  "channel_models": [
+    "LOS",
+    "MIX"
+  ],
+  "localization_observation_SNR_dB": [
+    -20,
+    -10,
+    0,
+    10,
+    20,
+    30,
+    40
+  ],
+  "throughput_observation_SNR_dB": [
+    -20,
+    -15,
+    -10,
+    -5,
+    0,
+    5,
+    10,
+    15,
+    20
+  ],
+  "computed_union_SNR_dB": [
+    -20,
+    -15,
+    -10,
+    -5,
+    0,
+    5,
+    10,
+    15,
+    20,
+    30,
+    40
+  ],
+  "default": {
+    "N": 1024,
+    "B": 8,
+    "SNR": 30,
+    "K": 10
+  },
+  "data_SNR_fixed": true,
+  "bandwidth_Hz": 400000000.0,
+  "reference_AP_count": 3,
+  "settings": [
+    {
+      "curve": "SNR",
+      "x_value": -20,
+      "N": 1024,
+      "B": 8,
+      "SNR": -20,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": -15,
+      "N": 1024,
+      "B": 8,
+      "SNR": -15,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": -10,
+      "N": 1024,
+      "B": 8,
+      "SNR": -10,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": -5,
+      "N": 1024,
+      "B": 8,
+      "SNR": -5,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": 0,
+      "N": 1024,
+      "B": 8,
+      "SNR": 0,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": 5,
+      "N": 1024,
+      "B": 8,
+      "SNR": 5,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": 10,
+      "N": 1024,
+      "B": 8,
+      "SNR": 10,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": 15,
+      "N": 1024,
+      "B": 8,
+      "SNR": 15,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": 20,
+      "N": 1024,
+      "B": 8,
+      "SNR": 20,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": 30,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "SNR",
+      "x_value": 40,
+      "N": 1024,
+      "B": 8,
+      "SNR": 40,
+      "K": 10
+    },
+    {
+      "curve": "天线数",
+      "x_value": 64,
+      "N": 64,
+      "B": 8,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "天线数",
+      "x_value": 256,
+      "N": 256,
+      "B": 8,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "天线数",
+      "x_value": 1024,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "AP数",
+      "x_value": 5,
+      "N": 1024,
+      "B": 5,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "AP数",
+      "x_value": 6,
+      "N": 1024,
+      "B": 6,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "AP数",
+      "x_value": 7,
+      "N": 1024,
+      "B": 7,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "AP数",
+      "x_value": 8,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "AP数",
+      "x_value": 9,
+      "N": 1024,
+      "B": 9,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "AP数",
+      "x_value": 10,
+      "N": 1024,
+      "B": 10,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "莱斯因子",
+      "x_value": 0,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 0
+    },
+    {
+      "curve": "莱斯因子",
+      "x_value": 5,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 5
+    },
+    {
+      "curve": "莱斯因子",
+      "x_value": 10,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 10
+    },
+    {
+      "curve": "莱斯因子",
+      "x_value": 15,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 15
+    },
+    {
+      "curve": "莱斯因子",
+      "x_value": 20,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 20
+    }
+  ],
+  "physical_cases": [
+    {
+      "physical_case": 1,
+      "N": 1024,
+      "B": 8,
+      "SNR": -20,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_-20",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_-20/dual_stream_trials.csv.gz",
+      "input_sha256": "69619d45677079ce0640f82a45f1090076bd61ef070072578745d9594707975a",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 2,
+      "N": 1024,
+      "B": 8,
+      "SNR": -15,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_-15",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_-15/dual_stream_trials.csv.gz",
+      "input_sha256": "c5673913cee330722b402c965dc0b96012985381c139506fa8cc8f9c6af726c0",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 3,
+      "N": 1024,
+      "B": 8,
+      "SNR": -10,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_-10",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_-10/dual_stream_trials.csv.gz",
+      "input_sha256": "ab6906d1b7f7ac87b27f137255e6353f99d86612750175463e5f14ee0c74bdea",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 4,
+      "N": 1024,
+      "B": 8,
+      "SNR": -5,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_-05",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_-05/dual_stream_trials.csv.gz",
+      "input_sha256": "e84df0c083b1eb2280383de265eb97f8ac7fd72258fa8ffef5921db96dadeead",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 5,
+      "N": 1024,
+      "B": 8,
+      "SNR": 0,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_+00",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_+00/dual_stream_trials.csv.gz",
+      "input_sha256": "1cd6d5b511b01b42130b21854712b1be33eb8b820f2cf76eb0e4cdda0d0a6b82",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 6,
+      "N": 1024,
+      "B": 8,
+      "SNR": 5,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_+05",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_+05/dual_stream_trials.csv.gz",
+      "input_sha256": "8aa29bc561ae7ab9e995fd040ef22e729e6b80fbebe2ad0d2e340b3a7d39b681",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 7,
+      "N": 1024,
+      "B": 8,
+      "SNR": 10,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_+10",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_+10/dual_stream_trials.csv.gz",
+      "input_sha256": "0e9f231bbf9d0e27ac6db235b1973830f63f57b9930cfcbdf8c7fc676d1340f2",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 8,
+      "N": 1024,
+      "B": 8,
+      "SNR": 15,
+      "K": 10,
+      "directory": "results/upa_snr_revision400_20261025/cases/snr_+15",
+      "source": "results/upa_snr_revision400_20261025/cases/snr_+15/dual_stream_trials.csv.gz",
+      "input_sha256": "e344c37c9b8525062f5f391c51c74d7ceff666e8cbff6a170690ec467f00f9fc",
+      "reused": false,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 9,
+      "N": 1024,
+      "B": 8,
+      "SNR": 20,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_01",
+      "source": "results/dual_stream_full400/cases/case_01/dual_stream_trials.csv.gz",
+      "input_sha256": "edf8e7aca8e09d3eac6e0aed2d963a01376f638a86b9d98d6cfb63dce555ae95",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 10,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_03",
+      "source": "results/dual_stream_full400/cases/case_03/dual_stream_trials.csv.gz",
+      "input_sha256": "531843a326c4be73b06e49d60f0bd12d508c1701e5ae5f049828443c87593b04",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 11,
+      "N": 1024,
+      "B": 8,
+      "SNR": 40,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_05",
+      "source": "results/dual_stream_full400/cases/case_05/dual_stream_trials.csv.gz",
+      "input_sha256": "617a1f9bb2eb9e589335d8ce2563600a6a0516c3a8dbf796041975251cd3909a",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 12,
+      "N": 64,
+      "B": 8,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_06",
+      "source": "results/dual_stream_full400/cases/case_06/dual_stream_trials.csv.gz",
+      "input_sha256": "fb497baf081abd8f8cd7ff0d47a564c356daf88a399df2535e32ffdd90ecf41f",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 13,
+      "N": 256,
+      "B": 8,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_07",
+      "source": "results/dual_stream_full400/cases/case_07/dual_stream_trials.csv.gz",
+      "input_sha256": "86a5135de019cb7d3a4768618cc65c6978e4b04640523ed7a4f79a6606d849ee",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 14,
+      "N": 1024,
+      "B": 5,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_08",
+      "source": "results/dual_stream_full400/cases/case_08/dual_stream_trials.csv.gz",
+      "input_sha256": "5713863277b997691120aeba9e05e5d74e6c3faca3d02944ce4e22e9a2b64d0a",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 15,
+      "N": 1024,
+      "B": 6,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_09",
+      "source": "results/dual_stream_full400/cases/case_09/dual_stream_trials.csv.gz",
+      "input_sha256": "e8cbfd46d016e2dfbde8dabf9b6d2577b334c0cf6359a81743fb943a9851a4b5",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 16,
+      "N": 1024,
+      "B": 7,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_10",
+      "source": "results/dual_stream_full400/cases/case_10/dual_stream_trials.csv.gz",
+      "input_sha256": "994e5db27d9409729eaa94c32afb08d211f80a43daac8c62e97c243000fd7b3e",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 17,
+      "N": 1024,
+      "B": 9,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_11",
+      "source": "results/dual_stream_full400/cases/case_11/dual_stream_trials.csv.gz",
+      "input_sha256": "24575be04e17caafb46df864a8b9d6241416b4ee1a25e7ccbf9d96608e05e89b",
+      "reused": true,
+      "audit_status": "passed_with_native_replay"
+    },
+    {
+      "physical_case": 18,
+      "N": 1024,
+      "B": 10,
+      "SNR": 30,
+      "K": 10,
+      "directory": "results/dual_stream_full400/cases/case_12",
+      "source": "results/dual_stream_full400/cases/case_12/dual_stream_trials.csv.gz",
+      "input_sha256": "9451fb6c3b18c36d0726467d1f8bb5e7b744150bda2aed5af620c1e0b306f0c5",
+      "reused": true,
+      "audit_status": "passed_with_native_replay"
+    },
+    {
+      "physical_case": 19,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 0,
+      "directory": "results/dual_stream_full400/cases/case_13",
+      "source": "results/dual_stream_full400/cases/case_13/dual_stream_trials.csv.gz",
+      "input_sha256": "169d79715195303f7b5d6582f24c19fa2f71d194bf2c70e8aa9977d868606b80",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 20,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 5,
+      "directory": "results/dual_stream_full400/cases/case_14",
+      "source": "results/dual_stream_full400/cases/case_14/dual_stream_trials.csv.gz",
+      "input_sha256": "a75a2c44d07edfd455a61ce51c39bcf9bfa6bcbff65cde9a69b77ebe2ae42cd6",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 21,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 15,
+      "directory": "results/dual_stream_full400/cases/case_15",
+      "source": "results/dual_stream_full400/cases/case_15/dual_stream_trials.csv.gz",
+      "input_sha256": "61a97958dbfd44d9ec1d3d86a27607edae3f3fdee266201aae3396e569b4f757",
+      "reused": true,
+      "audit_status": "passed"
+    },
+    {
+      "physical_case": 22,
+      "N": 1024,
+      "B": 8,
+      "SNR": 30,
+      "K": 20,
+      "directory": "results/dual_stream_full400/cases/case_16",
+      "source": "results/dual_stream_full400/cases/case_16/dual_stream_trials.csv.gz",
+      "input_sha256": "e2256b42353f732ecc84ccbbea0478c1918a5f45f0f97959370ab3f5d63144e0",
+      "reused": true,
+      "audit_status": "passed"
+    }
+  ],
+  "physical_case_count": 22,
+  "single_stream_source": "stream_count=1 of paired native cases; same original sstr.ue_designs and CPU decoder",
+  "localization_source": "independently decode spatial prefix; second stream reuses exact same spatial bits",
+  "y_axis": "localization label: 定位误差（m）; throughput linear, lower=max(0,min-max(3%*abs(min),1%*range))",
+  "historical_results_preserved": true
+}

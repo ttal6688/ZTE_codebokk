@@ -1,8 +1,9 @@
-function audit=verify_dual_stream_replay(resultDir)
+function audit=verify_dual_stream_replay(resultDir,casePattern)
 % Resolve all independently flagged continuous-optimizer differences by strict
 % native replay from public geometry + wire only. No observed/truth CSI input.
 root=fileparts(mfilename('fullpath'));dep=fullfile(root,'6.位置反馈方案');addpath(root,dep,fullfile(dep,'lib'));maxNumCompThreads(1);
-[net0,~,~]=upa.load_inputs();dirs=dir(fullfile(resultDir,'cases','case_*'));count=0;maximum=0;
+if nargin<2,casePattern='case_*';end
+[net0,~,~]=upa.load_inputs();dirs=dir(fullfile(resultDir,'cases',casePattern));count=0;maximum=0;
 for j=1:numel(dirs)
  out=fullfile(dirs(j).folder,dirs(j).name);source=fullfile(out,'CPU_continuous_replay_required.csv');
  if ~exist(source,'file'),a=jsondecode(fileread(fullfile(out,'independent_dual_audit.json')));assert(strcmp(a.status,'passed'));continue;end

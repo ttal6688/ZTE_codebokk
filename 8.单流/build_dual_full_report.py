@@ -12,6 +12,10 @@ def table(headers,rows):
     return '\n'.join(['| '+' | '.join(headers)+' |','|'+'|'.join(['---']*len(headers))+'|']+['| '+' | '.join(map(str,row))+' |' for row in rows])
 
 def build():
+    if (ROOT/'results/upa_snr_revision400_20261025/assembly_audit.json').exists():
+        from build_snr_revision_reports import build as current_build
+        current_build((2,))
+        return
     a=json.loads((OUT/'independent_full_audit.json').read_text(encoding='utf-8'));assert a['status']=='passed' and a['positions']==400
     s=pd.read_csv(OUT/'method_feasibility_summary.csv');summary=pd.read_csv(OUT/'dual_stream_summary.csv')
     localization=pd.read_csv(OUT/'dual_position_summary.csv')

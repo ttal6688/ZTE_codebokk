@@ -1,5 +1,8 @@
 function plot_single_stream_task2(resultDir)
 % Central single/dual plotting: CPU / UE separated, Chinese labels, no titles.
+if exist(fullfile(resultDir,'experiment_summary.csv'),'file')&&exist(fullfile(resultDir,'assembly_audit.json'),'file')
+ plot_snr_revision400(resultDir);return;
+end
 if exist(fullfile(resultDir,'cases'),'dir')&&exist(fullfile(resultDir,'dual_stream_summary.csv'),'file'),plot_full_dual(resultDir);return;end
 if exist(fullfile(resultDir,'dual_stream_trials.csv'),'file'),plot_dual(resultDir);return;end
 if ~exist(fullfile(resultDir,'single_stream_trials.csv'),'file'),gunzip(fullfile(resultDir,'single_stream_trials.csv.gz'),resultDir);end

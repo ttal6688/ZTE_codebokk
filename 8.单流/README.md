@@ -1,5 +1,15 @@
 # UPA单极化单流与双流实验
 
+## 2026年10月25日 正式实验SNR更新及单流LOS补齐
+
+当前400位置单流和双流报告均分别列出LOS、MIX及CPU、UE。定位误差使用观测SNR **−20:10:40 dB**；吞吐量使用 **−20:5:20 dB**，纵轴从各图最低值略向下留白。定位纵轴只标误差和单位。数据链路SNR保持固定，原算法和反馈规则不变。
+
+- [单流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx)
+- [双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
+- [当前数据和复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/upa_snr_revision400_20261025/README.md)
+
+新增8个低SNR配置，复用14个已审计配置，共22个物理配置；单流取同一配对案例的第一流结果并补齐LOS全套实验。报告逐图附数值与解释，单流40幅、双流74幅，共114幅；新图使用新目录避免旧图片缓存。Word按要求生成后不追加检查。以下32位置预实验保留为历史诊断。
+
 ## 2026年10月25日 固定8个协作AP的定位参考数扫描
 
 新增32位置定位预实验：固定协作AP总数B=8、观测SNR30 dB，定位参考AP数R按3、4、5、6、7、8扫描。每个位置使用同一份8 AP观测，参考集合按公开AP顺序逐步嵌套。CPU、UE共享定位前端，分别给出LOS与MIX的线性图、对数图和数值表。
@@ -20,7 +30,7 @@ MIX下R=3至8，空间频率平均定位误差从9.321降至6.525 mm，DFT索引
 
 已完成Docomo结构核对及专项验证、400位置单流正式扫描、400位置单极化双流完整扫描。双流覆盖LOS与MIX以及四类参数，CPU与UE分别说明和出图，主参考是完美CSI直接SVD；普通方法使用带噪观测，400 MHz直接换算。
 
-最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部22幅单流图与70幅双流图、对应数值及解释；Word与Markdown内容一致。
+最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部40幅单流图与74幅双流图、对应数值及解释；Word与Markdown内容一致。
 
 图例统一为全反馈Type-I(UE)、全反馈Type-II(UE)、空间频率和Docomo；CPU对比同步包含Docomo(UE)共享参考，定位误差图不加入无位置输出的方法。名称与参考数据来源见[图例及CPU共享参考说明](docs/图例命名和CPU共享参考.md)，原始仿真数值不变。
 
@@ -57,9 +67,10 @@ CPU与UE分别按同一大纲组织：定位误差与SNR、天线数、AP数；�
 
 ## 数据与复现
 
-- [单流400位置](results/single_stream_V3_full400/README.md)：98,800条记录，19个曲线标签，16个物理配置；原始明细为无损gzip，CPU与UE各11组图。
+- [当前单双流400位置](results/upa_snr_revision400_20261025/README.md)：22个物理配置，定位−20:10:40、吞吐量−20:5:20，LOS与MIX齐全。
+- [历史单流400位置](results/single_stream_V3_full400/README.md)：98,800条记录，19个曲线标签，16个物理配置；原始明细为无损gzip，CPU与UE各11组图。
 - [双流32位置](results/dual_stream_minimal32/README.md)：LOS和混合信道，1,408条记录，576个可实施方法配对，CPU与UE各7组图。
-- [双流400位置](results/dual_stream_full400/README.md)：LOS和MIX，16个参数配置、19个曲线标签；CPU与UE各35组图，实际明细281,600条，展开334,400条。全部样本保留，非正收益单独列出。
+- [历史双流400位置](results/dual_stream_full400/README.md)：LOS和MIX，16个参数配置、19个曲线标签；CPU与UE各35组图，实际明细281,600条，展开334,400条。全部样本保留，非正收益单独列出。
 - [Docomo检查](results/docomo_validation/README.md)：48项专项检查、701项协议检查及42项UPA/POS回归。
 - [双流单元检查](results/dual_stream_unit/README.md)：54项检查。
 - [运行和有效载荷格式](README_单流任务二.md)，[CPU说明](docs/CPU说明.md)，[UE说明](docs/UE说明.md)。

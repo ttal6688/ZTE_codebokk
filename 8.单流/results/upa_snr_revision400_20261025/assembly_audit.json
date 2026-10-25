@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "positions": 400,
+  "physical_cases": 22,
+  "physical_records": 387200,
+  "summary_rows": 1100,
+  "old_single_overlap_records": 61600,
+  "maximum_old_single_throughput_difference_Mbps": 1.000444171950221e-11,
+  "CPU_UE_separate": true,
+  "LOS_MIX_separate": true,
+  "all_groups_400_distinct_positions": true,
+  "same_spatial_prefix_both_streams": true,
+  "ideal_SNR_invariant": true,
+  "LOS_K_invariant": true,
+  "diagnostic_overlap_records": 24000,
+  "maximum_diagnostic_position_error_difference_m": 5.1514348342607263e-14
+}

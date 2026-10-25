@@ -1,0 +1,102 @@
+{
+  "status": "passed",
+  "lossless": true,
+  "files": [
+    {
+      "file": "cases/snr_-20/dual_stream_trials.csv.gz",
+      "raw_sha256": "bb4abd360706b8ee0b6254795965b7a8b8e9fd618d311065c4cae91902a7993a",
+      "gzip_sha256": "69619d45677079ce0640f82a45f1090076bd61ef070072578745d9594707975a",
+      "bytes": 7806009
+    },
+    {
+      "file": "cases/snr_-20/single_dual_pairs.csv.gz",
+      "raw_sha256": "fdb2021928eec2b547a542b6581db92c9d44fedf8ed8a7ea7a6f30ceb87b7299",
+      "gzip_sha256": "6892b56cf9f9be0ed320cd5dfd199f40de4e293fae49de99d7960a19fe25db21",
+      "bytes": 343505
+    },
+    {
+      "file": "cases/snr_-15/dual_stream_trials.csv.gz",
+      "raw_sha256": "03bdee831bf1854e077207bf72e9097761a6f40d27d3b0b59ba4afb03a2c6404",
+      "gzip_sha256": "c5673913cee330722b402c965dc0b96012985381c139506fa8cc8f9c6af726c0",
+      "bytes": 6914019
+    },
+    {
+      "file": "cases/snr_-15/single_dual_pairs.csv.gz",
+      "raw_sha256": "01c4c36edae4d90df87a274ce6cb72d454a23efb5b31d72f751076203a8d6133",
+      "gzip_sha256": "c9c8e51307de3625670116ff5f8e911511fced886c7dad56fa9bfeca014a64d0",
+      "bytes": 337834
+    },
+    {
+      "file": "cases/snr_-10/dual_stream_trials.csv.gz",
+      "raw_sha256": "6f8da9394d283452b2ae62b92f9cb981bae89365e5edfd776f4f96de512d8afc",
+      "gzip_sha256": "ab6906d1b7f7ac87b27f137255e6353f99d86612750175463e5f14ee0c74bdea",
+      "bytes": 6577056
+    },
+    {
+      "file": "cases/snr_-10/single_dual_pairs.csv.gz",
+      "raw_sha256": "0a154c81ff6ec9166d07b032c76933e462d572cb306ca72cfd2e0d5ce95a9da7",
+      "gzip_sha256": "c20741175c4ee885a3dea53fde1cda6aad1f00d008aba115c27e1789c34b0967",
+      "bytes": 336352
+    },
+    {
+      "file": "cases/snr_-05/dual_stream_trials.csv.gz",
+      "raw_sha256": "df14e3261e3703b7afaea6572876bb0db2e7b389026f21aa65c071675a7a0a29",
+      "gzip_sha256": "e84df0c083b1eb2280383de265eb97f8ac7fd72258fa8ffef5921db96dadeead",
+      "bytes": 6415276
+    },
+    {
+      "file": "cases/snr_-05/single_dual_pairs.csv.gz",
+      "raw_sha256": "dbbeab9ab6b280bb58e2524dd5a29a6fdd5ca04377584b519dd454ac6acfa9ae",
+      "gzip_sha256": "de6db17376f401aaff98d06d890203653e5201b7407245c2fc1baaaeac05621f",
+      "bytes": 336398
+    },
+    {
+      "file": "cases/snr_+00/dual_stream_trials.csv.gz",
+      "raw_sha256": "c5e0e60ce1f444b07e18172a9e86115a55c486a371584323f8bd3d667de15c4d",
+      "gzip_sha256": "1cd6d5b511b01b42130b21854712b1be33eb8b820f2cf76eb0e4cdda0d0a6b82",
+      "bytes": 6288133
+    },
+    {
+      "file": "cases/snr_+00/single_dual_pairs.csv.gz",
+      "raw_sha256": "fbfa236d7b21b567276bef3ea729c4d790649613c3cc85198c085c839506e4d0",
+      "gzip_sha256": "6fc464698f60350944f103306007828739ac430f47cadca5940b1b7b1edf02dc",
+      "bytes": 336652
+    },
+    {
+      "file": "cases/snr_+05/dual_stream_trials.csv.gz",
+      "raw_sha256": "1f19879df890f96e7e0ce3d235eee7fcb0db176f6831a18a7b24610251fdb2cb",
+      "gzip_sha256": "8aa29bc561ae7ab9e995fd040ef22e729e6b80fbebe2ad0d2e340b3a7d39b681",
+      "bytes": 6217294
+    },
+    {
+      "file": "cases/snr_+05/single_dual_pairs.csv.gz",
+      "raw_sha256": "e54a443f06e69d4808aa13a7d3a5dc0e862a13e1a61ee537d204316aad5fbef0",
+      "gzip_sha256": "c8d01955a0f098a4abf79db8331706ca4f1063990a3c0ab127271baf0149ea56",
+      "bytes": 336722
+    },
+    {
+      "file": "cases/snr_+10/dual_stream_trials.csv.gz",
+      "raw_sha256": "22659f436f70ef0a851f1d069f052dfa8474654befd8c863090ab74e6135c9c7",
+      "gzip_sha256": "0e9f231bbf9d0e27ac6db235b1973830f63f57b9930cfcbdf8c7fc676d1340f2",
+      "bytes": 6160886
+    },
+    {
+      "file": "cases/snr_+10/single_dual_pairs.csv.gz",
+      "raw_sha256": "1079858465a81e96732f9f8602f7b8e8c838ca2bb4fcec7273e784f1d64ed4fb",
+      "gzip_sha256": "445b9fafa03d94f19a10b41b1494427ae290f9ccb9faddb9fb2c079e240e12d9",
+      "bytes": 336601
+    },
+    {
+      "file": "cases/snr_+15/dual_stream_trials.csv.gz",
+      "raw_sha256": "8e8c421b4a469364ea93afaf3bb0db2c4ce58f3b23209ea3125be8df428050f5",
+      "gzip_sha256": "e344c37c9b8525062f5f391c51c74d7ceff666e8cbff6a170690ec467f00f9fc",
+      "bytes": 6115496
+    },
+    {
+      "file": "cases/snr_+15/single_dual_pairs.csv.gz",
+      "raw_sha256": "076a90ce84c1ef5cec66fd3c30d7c4413d99ba41689e54f6926541949ba91b15",
+      "gzip_sha256": "e5a39d6356223e4040961fbc7f1617970e58779ca041f17dd625fb680bf71d53",
+      "bytes": 336237
+    }
+  ]
+}
