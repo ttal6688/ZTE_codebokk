@@ -1,0 +1,50 @@
+[
+  {
+    "channel_model": "LOS",
+    "method": "HAQSE",
+    "mean_R3_m": 0.0019814738840498,
+    "mean_R8_m": 0.0013983470385551,
+    "mean_reduction_percent": 29.428944291856457,
+    "R8_better_than_R3_fraction": 0.6875
+  },
+  {
+    "channel_model": "LOS",
+    "method": "DFT_INDEX",
+    "mean_R3_m": 0.201228735901366,
+    "mean_R8_m": 0.110661363680305,
+    "mean_reduction_percent": 45.007176442957615,
+    "R8_better_than_R3_fraction": 0.8125
+  },
+  {
+    "channel_model": "LOS",
+    "method": "POS",
+    "mean_R3_m": 0.0042784060892629,
+    "mean_R8_m": 0.0042057330799792,
+    "mean_reduction_percent": 1.6986000806721127,
+    "R8_better_than_R3_fraction": 0.40625
+  },
+  {
+    "channel_model": "MIX",
+    "method": "HAQSE",
+    "mean_R3_m": 0.0093205244622684,
+    "mean_R8_m": 0.0065245166171101,
+    "mean_reduction_percent": 29.99839608250775,
+    "R8_better_than_R3_fraction": 0.53125
+  },
+  {
+    "channel_model": "MIX",
+    "method": "DFT_INDEX",
+    "mean_R3_m": 0.205844044739387,
+    "mean_R8_m": 0.111406748416183,
+    "mean_reduction_percent": 45.878080389825335,
+    "R8_better_than_R3_fraction": 0.8125
+  },
+  {
+    "channel_model": "MIX",
+    "method": "POS",
+    "mean_R3_m": 0.0104086562493842,
+    "mean_R8_m": 0.0080705726850687,
+    "mean_reduction_percent": 22.462876170531874,
+    "R8_better_than_R3_fraction": 0.46875
+  }
+]

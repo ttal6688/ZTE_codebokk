@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "positions": 32,
+  "physical_localization_records": 1152,
+  "AP_estimate_records": 512,
+  "B_fixed": 8,
+  "R_values": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "all_groups_have_all_positions": true,
+  "all_samples_retained": true,
+  "maximum_recovered_position_error_m": 1.1368683772161603e-13,
+  "maximum_reported_distance_error_m": 1.2519152381429421e-13,
+  "maximum_relative_condition_error": 4.455050662093469e-15,
+  "all_summary_statistics_recomputed": true,
+  "integer_feedback_lengths_checked": true,
+  "observations_reused_across_R": true,
+  "previous_R3_overlap_records": 192,
+  "maximum_previous_R3_error_m": 0.0,
+  "full_precoder_protocol_extended": false
+}

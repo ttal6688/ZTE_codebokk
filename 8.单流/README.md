@@ -1,5 +1,15 @@
 # UPA单极化单流与双流实验
 
+## 2026年10月25日 固定8个协作AP的定位参考数扫描
+
+新增32位置定位预实验：固定协作AP总数B=8、观测SNR30 dB，定位参考AP数R按3、4、5、6、7、8扫描。每个位置使用同一份8 AP观测，参考集合按公开AP顺序逐步嵌套。CPU、UE共享定位前端，分别给出LOS与MIX的线性图、对数图和数值表。
+
+[定位参考数扫描MD报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%9B%BA%E5%AE%9A8AP%E5%AE%9A%E4%BD%8D%E5%8F%82%E8%80%83%E6%95%B0%E6%89%AB%E6%8F%8F%E9%A2%84%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) · [Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%9B%BA%E5%AE%9A8AP%E5%AE%9A%E4%BD%8D%E5%8F%82%E8%80%83%E6%95%B0%E6%89%AB%E6%8F%8F%E9%A2%84%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) · [数据及复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/results/reference_ap_pilot32_20261025/README.md)
+
+MIX下R=3至8，空间频率平均定位误差从9.321降至6.525 mm，DFT索引从205.844降至111.407 mm，位置反馈从10.409降至8.071 mm。部分中间点有回升，不能宣称每增加一个AP必然改善。位置反馈仍只量化一次坐标，13/14/9 bit预算保持不变；R表示UE使用的定位参考数，不是发送R份位置。
+
+本次1152条物理定位记录全部保留，R=3与上次32位置、30 dB数据逐条一致。该实验只扫描定位前端，不把原R=3完整预编码协议改为R=8，也不覆盖原400位置正式结果。共10组图，Word按要求未追加检查。
+
 ## 2026年10月25日 低至高观测SNR预实验
 
 新增32位置单流范围诊断：CSI观测SNR为−20、−10、0、10、20、30、40 dB，数据链路参考SNR仍为10 dB。LOS与MIX、CPU与UE分别给出定位误差和吞吐量，另有同算法无观测噪声对照，共10幅图。主扫描8512条，对照704条；这是预实验，原400位置单双流正式报告保持不变。

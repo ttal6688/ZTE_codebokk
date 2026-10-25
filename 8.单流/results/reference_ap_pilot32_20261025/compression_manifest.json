@@ -1,0 +1,18 @@
+[
+  {
+    "source": "localization_trials.csv",
+    "compressed": "localization_trials.csv.gz",
+    "source_bytes": 423868,
+    "source_SHA256": "184236f405d35bddbdaba4860dc62154a87627beb7df4f0a27e03d77b82a7cb5",
+    "compressed_bytes": 81864,
+    "compressed_SHA256": "2d1e2908a2de22b967d495726fd0e82d33159cc4bbacdceae75ce4db2ea621e7"
+  },
+  {
+    "source": "ap_estimates.csv",
+    "compressed": "ap_estimates.csv.gz",
+    "source_bytes": 48964,
+    "source_SHA256": "fba307a5ccfd8fd9de5d674689141f32ec7fdd7f21cb35ebb4264d0baa5ca3ec",
+    "compressed_bytes": 17935,
+    "compressed_SHA256": "52c572e4e753e8b8b93cc66808ee5b1498a57de7391a419006dd3e59b0e06d50"
+  }
+]
