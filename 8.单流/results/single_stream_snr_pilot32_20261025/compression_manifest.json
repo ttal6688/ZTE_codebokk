@@ -1,0 +1,26 @@
+[
+  {
+    "source": "single_stream_trials.csv",
+    "compressed": "single_stream_trials.csv.gz",
+    "source_bytes": 10790251,
+    "source_SHA256": "365bd41855b8b00c80bf931c9e9da303e09da2c0498ffac8504ee6a9b70e5906",
+    "compressed_bytes": 1471801,
+    "compressed_SHA256": "4bdf6c4bf3f017f047d7417b5301d706c4d3fd8e8e98bf4101b5e77ece4d4a10"
+  },
+  {
+    "source": "paired_CSI.csv",
+    "compressed": "paired_CSI.csv.gz",
+    "source_bytes": 367669,
+    "source_SHA256": "0ed50a798aa9ff14c5ed13b95c7c12c0737780533fd20d470ea1d7d07385a876",
+    "compressed_bytes": 72453,
+    "compressed_SHA256": "630daa71a6a08d1b8532797c0622b32f5a842bbfb2f0099c60357e991977371e"
+  },
+  {
+    "source": "noisefree_control_trials.csv",
+    "compressed": "noisefree_control_trials.csv.gz",
+    "source_bytes": 855170,
+    "source_SHA256": "a721763d76129131e9295d50720e7d854a1f7dc4ec3ccf3c068255957537d849",
+    "compressed_bytes": 171318,
+    "compressed_SHA256": "1704c1f17cb30b932a0d91836b31d26d934fbb76e85d4c6b1368708514d5fbb8"
+  }
+]

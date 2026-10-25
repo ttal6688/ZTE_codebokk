@@ -1,5 +1,13 @@
 # 中兴任务二仿真材料
 
+## 2026年10月25日 低至高观测SNR预实验
+
+新增32位置单流范围诊断：CSI观测SNR为−20、−10、0、10、20、30、40 dB，数据链路参考SNR仍为10 dB。LOS与MIX、CPU与UE分别给出定位误差和吞吐量，另有同算法无观测噪声对照，共10幅图。主扫描8512条，对照704条；这是预实验，原400位置单双流正式报告保持不变。
+
+[预实验MD报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81%E4%BD%8E%E8%87%B3%E9%AB%98%E8%A7%82%E6%B5%8BSNR%E9%A2%84%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md) · [预实验Word报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81%E4%BD%8E%E8%87%B3%E9%AB%98%E8%A7%82%E6%B5%8BSNR%E9%A2%84%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx) · [数据及复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/results/single_stream_snr_pilot32_20261025/README.md)
+
+已看到低SNR退化与高SNR平台。以MIX位置反馈为例，−20至40 dB平均定位误差由约2.897 m降到0.01010 m，CPU吞吐量由2078.64升到3190.33 Mbps。纯LOS的无噪声连续定位约0.443 mm、坐标解码后约4.178 mm；MIX的连续定位无噪声残差约8.981 mm。UE吞吐量比CPU更早进入平台。不能据此要求全部曲线逐点单调。
+
 ## 当前UPA单极化单双流实验
 
 第8目录已完成UPA单极化400位置单流正式扫描，以及400位置双流完整扫描，CPU与UE分别说明和出图。双流覆盖LOS与混合信道、观测SNR、UPA规模、AP数与K因子，并保留负收益样本。Docomo采用已核对论文结构的适配实现。入口见[当前首页](8.单流/README.md)、[单流正式报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%B5%81400%E4%BD%8D%E7%BD%AE%E6%AD%A3%E5%BC%8F%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)和[双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.%E5%8D%95%E6%B5%81/docs/UPA%E5%8D%95%E6%9E%81%E5%8C%96%E5%8F%8C%E6%B5%81400%E4%BD%8D%E7%BD%AE%E5%AE%8C%E6%95%B4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)，均附Word版本；[32位置最小验证](8.单流/docs/UPA单极化双流扩展验证报告.md)保留为前期记录。主参考为完美CSI直接SVD，400 MHz直接换算。

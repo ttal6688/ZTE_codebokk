@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "main_records": 8512,
+  "noisefree_control_records": 704,
+  "positions": 32,
+  "observation_SNRs": [
+    -20,
+    -10,
+    0,
+    10,
+    20,
+    30,
+    40
+  ],
+  "independent_true_channel_rate_checks": 9216,
+  "maximum_rate_error_Mbps": 5.156834959052503e-10,
+  "maximum_received_power_error": 4.163780431554187e-12,
+  "maximum_noisefree_CPU_or_UE_coefficient_error": 1.8646005345094258e-11,
+  "old_full400_overlap_records": 1248,
+  "maximum_old_full400_overlap_error_Mbps": 0.0,
+  "perfect_control_SNR_spread_Mbps": 0.0,
+  "SVD_SNR_spread_Mbps": 0.0,
+  "independent_noise_repetitions_per_position": 1,
+  "all_samples_retained": true
+}

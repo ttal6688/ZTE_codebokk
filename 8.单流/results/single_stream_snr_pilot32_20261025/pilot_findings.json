@@ -1,0 +1,24 @@
+[
+  {
+    "model": "LOS",
+    "position_at_minus20_m": 1.2386230242761456,
+    "position_at40_m": 0.0041883286416797,
+    "position_noisefree_m": 0.0041775514207996,
+    "raw_position_noisefree_m": 0.0004425896989867,
+    "CPU_rate_minus20": 2665.2427364765,
+    "CPU_rate40": 3387.15970360037,
+    "UE_rate_minus20": 2954.07187885262,
+    "UE_rate40": 3388.3797437883
+  },
+  {
+    "model": "MIX",
+    "position_at_minus20_m": 2.897271972924244,
+    "position_at40_m": 0.0100991413221233,
+    "position_noisefree_m": 0.0100689848631921,
+    "raw_position_noisefree_m": 0.0089805502407851,
+    "CPU_rate_minus20": 2078.6439272672,
+    "CPU_rate40": 3190.32741776895,
+    "UE_rate_minus20": 2313.54812359219,
+    "UE_rate40": 3331.43096482965
+  }
+]

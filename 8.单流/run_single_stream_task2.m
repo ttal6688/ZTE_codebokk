@@ -4,20 +4,29 @@ root=fileparts(mfilename('fullpath'));dep=fullfile(root,'6.位置反馈方案');
 addpath(root,dep,fullfile(dep,'lib'));maxNumCompThreads(1);
 p=inputParser;addParameter(p,'Mode','smoke',@(x)ismember(x,{'smoke','verify','full'}));
 addParameter(p,'OutputDir','');addParameter(p,'Samples',[],@(x)isempty(x)||(isscalar(x)&&x>=1&&x<=400));
+addParameter(p,'SampleIds',[],@(x)isempty(x)||(isnumeric(x)&&isvector(x)&&all(isfinite(x)&x==fix(x)&x>=1&x<=400)&&numel(unique(x))==numel(x)));
+addParameter(p,'ObservationSNRs',[],@(x)isempty(x)||(isnumeric(x)&&isvector(x)&&all(isfinite(x))&&numel(unique(x))==numel(x)));
 addParameter(p,'MakeFigures',true,@islogical);addParameter(p,'ChannelModels',{});addParameter(p,'IncludeCSIPairs',[]);parse(p,varargin{:});opt=p.Results;
 [net0,sim,bank]=upa.load_inputs();sim.bandwidth_Hz=400e6;
 sim.rho_data=10^(sim.reference_data_SNR_dB/10)/sim.reference_power;assert(sim.UE_phase_bits==4&&sim.frequency_bits_per_dimension==14);
 if isempty(opt.OutputDir),out=fullfile(root,'results',['single_stream_UPA_V2_' opt.Mode]);else,out=char(opt.OutputDir);end
 assert(~exist(fullfile(out,'single_stream_trials.csv'),'file')&&~exist(fullfile(out,'single_stream_trials.csv.gz'),'file'),'sstr:ExistingResults','Use a new OutputDir');
 if ~exist(out,'dir'),mkdir(out);end
-if isempty(opt.Samples)
+assert(isempty(opt.SampleIds)||isempty(opt.Samples),'Use SampleIds or Samples, not both');
+if ~isempty(opt.SampleIds),sampleIds=opt.SampleIds(:).';elseif isempty(opt.Samples)
  if strcmp(opt.Mode,'full'),sampleIds=1:400;elseif strcmp(opt.Mode,'verify'),sampleIds=[399 400];else,sampleIds=1:4;end
 else,sampleIds=1:round(opt.Samples);end
 models=opt.ChannelModels;if isempty(models),if strcmp(opt.Mode,'verify'),models={'LOS','MIX'};else,models={'MIX'};end,end
 assert(iscell(models)&&all(ismember(models,{'LOS','MIX'})));
 includePairs=opt.IncludeCSIPairs;if isempty(includePairs),includePairs=~strcmp(opt.Mode,'full');end
 assert(islogical(includePairs)&&isscalar(includePairs));
-settings=make_settings(opt.Mode);rows=cell(0,1);started=tic;replays=0;maxReplay=0;
+settings=make_settings(opt.Mode);
+% An explicit SNR list selects only this scan; default published runs are unchanged.
+if ~isempty(opt.ObservationSNRs)
+ settings=struct('curve',{},'xvalue',{},'Nant',{},'B',{},'SNRdB',{},'KdB',{});
+ for x=opt.ObservationSNRs(:).',settings(end+1)=item('SNR',x,1024,8,x,10);end %#ok<AGROW>
+end
+rows=cell(0,1);started=tic;replays=0;maxReplay=0;
 for si=1:numel(settings)
  q=settings(si);
  if si>1
@@ -73,6 +82,7 @@ contract=struct('version','UPA_SINGLE_PROTOCOL_V3','task','UPA单极化单流','
  'POS_ROI_lo',[19 19 -1],'POS_ROI_hi',[31 31 6],'POS_allocation','frozen public relative-phase sensitivity, no position-adaptive header', ...
  'payload_accounting','MSB-first packed integer payload; method/config/AP order public; transport headers/FEC excluded for all methods', ...
  'reference_AP_ids',net0.reference3,'sample_ids',sampleIds,'settings',settings,'channel_models',{models}, ...
+ 'explicit_SNR_scan',~isempty(opt.ObservationSNRs), ...
  'bandwidth_Hz',sim.bandwidth_Hz,'rho_data',sim.rho_data,'reference_data_SNR_dB',sim.reference_data_SNR_dB, ...
  'reference_power',sim.reference_power,'timing_note','decoder_time measures decoder only; UE shared frontend timed per family and repeated, not standalone method complexity', 'bandwidth_model','narrowband SE times 400 MHz; no OFDM or bandwidth-dependent thermal noise', ...
  'CPU_cost','R and geometry-message dimension fixed; observations scale with N, model4xBN and work scale with B,N; pilot symbols not modeled', ...
