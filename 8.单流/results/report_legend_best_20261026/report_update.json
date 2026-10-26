@@ -1,0 +1,17 @@
+{
+  "reports": [
+    {
+      "report": "UPA单流400位置正式实验报告",
+      "image_references": 48,
+      "replaced_embedded_image_parts": 48
+    },
+    {
+      "report": "UPA单极化双流400位置完整实验报告",
+      "image_references": 82,
+      "replaced_embedded_image_parts": 82
+    }
+  ],
+  "Word_inspected": false,
+  "document_XML_preserved": true,
+  "simulation_rerun": false
+}

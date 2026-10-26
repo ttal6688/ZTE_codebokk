@@ -1,5 +1,11 @@
 # 中兴任务二仿真材料
 
+## 2026年10月26日 全部最新图例统一best自动定位
+
+最新单流、双流报告的全部现有图例统一为`Location='best'`：先确定18 pt最终字号，再重新计算位置，后续不覆盖`Position`。覆盖正文、CPU、UE、LOS、MIX及补充实验；无图例的图不新增图例。124个独立图文件、130处报告插图引用使用`legend_best_v3`新路径，数据和坐标轴保持不变。Word仅同步替换图片，按要求不追加检查。
+
+[单流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx) · [双流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx) · [更新范围和复现说明](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/report_legend_best_20261026/README.md)
+
 ## 2026年10月26日 百分比图例收紧
 
 单流CPU、单流UE、双流CPU、双流UE四张百分比图改为按文字自动适配图例宽高，删除固定宽度造成的左右空白，保留18 pt字号。仅定位图例到曲线间空白区域；曲线、数值、坐标轴和其他实验图不变。MD使用`compact_legend_v2/legend_font18_v1`新版图片，Word仅替换对应四张内嵌图，按要求不追加Word检查。

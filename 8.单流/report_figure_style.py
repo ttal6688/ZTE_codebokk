@@ -9,5 +9,6 @@ def version_legend_images(content):
     def replace(match):
         path=PurePosixPath(match.group(2))
         if path.parent.name==VERSION:return match.group(0)
-        return match.group(1)+str(path.parent/VERSION/path.name)+match.group(3)
+        parent=path.parent.parent if re.fullmatch(r'legend_(?:font\d+|best)_v\d+',path.parent.name) else path.parent
+        return match.group(1)+str(parent/VERSION/path.name)+match.group(3)
     return re.sub(r'(!\[[^\]]*\]\()([^\n)]+\.png)(\))',replace,content)

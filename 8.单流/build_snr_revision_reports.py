@@ -84,7 +84,7 @@ def main_experiments(ns,branch,s):
     lines += ['**相对全反馈Type-I的反馈开销百分比**',
         '保留上图绝对bit开销，再将同一协作AP数、同一流数下全反馈Type-I的完整有效载荷定义为100%。百分比=本方法反馈bit÷对应Type-I反馈bit×100%，节省比例=100%减去开销占比。大于100%表示开销高于Type-I，全部保留。CPU的Type-I仍为UE共享参考。',
         matrix(percentages,UE,'feedback_percentage',2,branch),
-        f'![{branch}{stream}相对Type-I反馈开销百分比](../results/feedback_percentage_20261026/figures/{stream_path}/{branch}/compact_legend_v2/反馈开销占比_AP数.png)',
+        f'![{branch}{stream}相对Type-I反馈开销百分比](../results/feedback_percentage_20261026/figures/{stream_path}/{branch}/反馈开销占比_AP数.png)',
         f'结果：B=8时，本组Type-I为{pos.Type_I_bits:.0f} bit，位置反馈为{pos.feedback_bits:.0f} bit，占基准的{pos.feedback_percentage:.2f}%，即节省{pos.saving_percentage:.2f}%。该图仅对原有开销作归一化，不新增仿真或宽带假设；单流与双流分别使用各自Type-I基准。']
     return lines
 

@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "path": "report_figure_style.json",
+      "sha256_LF": "b90f919fff6a8fe2fc3e73b8b2f7116365fb3c726a313185d220d1fbf3b42fe0"
+    },
+    {
+      "path": "save_report_figure.m",
+      "sha256_LF": "cec7dd594471374480b9dcf14e1eec897eef443af84684a85a3833ccca2bb0fa"
+    },
+    {
+      "path": "report_figure_style.py",
+      "sha256_LF": "ad5e7fbf3ec9c2bfb66eab9bcb5d2b5f3a618cd291fcbfb4e85e4066e25aaca9"
+    },
+    {
+      "path": "plot_feedback_percentage.m",
+      "sha256_LF": "0efe9dcbe4e0c24d67e92efe79246e9563d370f3e9b64a472ddbf3da6fea8737"
+    },
+    {
+      "path": "build_snr_revision_reports.py",
+      "sha256_LF": "140b3540727430c8eafb0c8af1ec23acbc845431a5bfd930bb28c8ca81141663"
+    },
+    {
+      "path": "update_report_best.py",
+      "sha256_LF": "8264fee78ec5c075e6c4ee24e770b31ba02796b4df3f4dbac6ab4ea357d73711"
+    },
+    {
+      "path": "update_report_best_figures.m",
+      "sha256_LF": "107178dc5e6f96f3af32e1c1183bf0a651cf6be0768291ade770dcf8c17adbb5"
+    }
+  ]
+}

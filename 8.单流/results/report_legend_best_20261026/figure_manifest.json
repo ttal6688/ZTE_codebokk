@@ -1,0 +1,1039 @@
+{
+  "style": {
+    "legend_font_size_pt": 18,
+    "legend_location": "best",
+    "image_version": "legend_best_v3",
+    "resolution_dpi": 180
+  },
+  "reports": [
+    {
+      "title": "UPA单流400位置正式实验报告",
+      "references": [
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/比特数_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/比特数_AP数.png"
+        },
+        {
+          "old": "../results/feedback_percentage_20261026/figures/single/CPU/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+          "new": "../results/feedback_percentage_20261026/figures/single/CPU/legend_best_v3/反馈开销占比_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/比特数_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/比特数_AP数.png"
+        },
+        {
+          "old": "../results/feedback_percentage_20261026/figures/single/UE/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+          "new": "../results/feedback_percentage_20261026/figures/single/UE/legend_best_v3/反馈开销占比_AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/CPU/legend_font18_v1/LOS_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/CPU/legend_best_v3/LOS_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/CPU/legend_font18_v1/MIX_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/CPU/legend_best_v3/MIX_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/UE/legend_font18_v1/LOS_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/UE/legend_best_v3/LOS_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/UE/legend_font18_v1/MIX_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/UE/legend_best_v3/MIX_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_font18_v1/LOS_坐标量化前后_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_best_v3/LOS_坐标量化前后_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_font18_v1/MIX_坐标量化前后_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_best_v3/MIX_坐标量化前后_反馈AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_POS量化前后_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_POS量化前后_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_POS越界比例.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_POS越界比例.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_POS量化前后_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_POS量化前后_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_POS越界比例.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_POS越界比例.png"
+        },
+        {
+          "old": "../results/single_stream_V3_full400/CPU/legend_font18_v1/CPU_固定坐标bit分配.png",
+          "new": "../results/single_stream_V3_full400/CPU/legend_best_v3/CPU_固定坐标bit分配.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_POS量化前后_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_POS量化前后_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_POS越界比例.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_POS越界比例.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_POS量化前后_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_POS量化前后_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_POS越界比例.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_POS越界比例.png"
+        },
+        {
+          "old": "../results/single_stream_V3_full400/UE/legend_font18_v1/UE_固定坐标bit分配.png",
+          "new": "../results/single_stream_V3_full400/UE/legend_best_v3/UE_固定坐标bit分配.png"
+        }
+      ]
+    },
+    {
+      "title": "UPA单极化双流400位置完整实验报告",
+      "references": [
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/比特数_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/比特数_AP数.png"
+        },
+        {
+          "old": "../results/feedback_percentage_20261026/figures/dual/CPU/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+          "new": "../results/feedback_percentage_20261026/figures/dual/CPU/legend_best_v3/反馈开销占比_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_定位误差_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_定位误差_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_定位误差_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_定位误差_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_定位误差_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_定位误差_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/比特数_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/比特数_AP数.png"
+        },
+        {
+          "old": "../results/feedback_percentage_20261026/figures/dual/UE/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+          "new": "../results/feedback_percentage_20261026/figures/dual/UE/legend_best_v3/反馈开销占比_AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/CPU/legend_font18_v1/LOS_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/CPU/legend_best_v3/LOS_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/CPU/legend_font18_v1/MIX_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/CPU/legend_best_v3/MIX_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/UE/legend_font18_v1/LOS_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/UE/legend_best_v3/LOS_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/UE/legend_font18_v1/MIX_定位误差_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/UE/legend_best_v3/MIX_定位误差_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_font18_v1/LOS_坐标量化前后_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_best_v3/LOS_坐标量化前后_反馈AP数.png"
+        },
+        {
+          "old": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_font18_v1/MIX_坐标量化前后_反馈AP数.png",
+          "new": "../results/reference_ap_full400_20261025/figures/diagnostics/legend_best_v3/MIX_坐标量化前后_反馈AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_默认单双流.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_默认单双流.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_默认增量CDF.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_默认增量CDF.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_默认单双流.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_默认单双流.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_默认增量CDF.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_默认增量CDF.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_默认单双流.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_默认单双流.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_默认增量CDF.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_默认增量CDF.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_频谱效率_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_频谱效率_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_SNR.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_SNR.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_天线数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_天线数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_AP数.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_AP数.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_莱斯因子.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_莱斯因子.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_默认单双流.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_默认单双流.png"
+        },
+        {
+          "old": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_默认增量CDF.png",
+          "new": "../results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_默认增量CDF.png"
+        }
+      ]
+    }
+  ],
+  "unique_figures": 124,
+  "figures": [
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/比特数_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/比特数_AP数.png"
+    },
+    {
+      "source": "results/feedback_percentage_20261026/figures/single/CPU/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+      "target": "results/feedback_percentage_20261026/figures/single/CPU/legend_best_v3/反馈开销占比_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/比特数_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/比特数_AP数.png"
+    },
+    {
+      "source": "results/feedback_percentage_20261026/figures/single/UE/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+      "target": "results/feedback_percentage_20261026/figures/single/UE/legend_best_v3/反馈开销占比_AP数.png"
+    },
+    {
+      "source": "results/reference_ap_full400_20261025/figures/CPU/legend_font18_v1/LOS_定位误差_反馈AP数.png",
+      "target": "results/reference_ap_full400_20261025/figures/CPU/legend_best_v3/LOS_定位误差_反馈AP数.png"
+    },
+    {
+      "source": "results/reference_ap_full400_20261025/figures/CPU/legend_font18_v1/MIX_定位误差_反馈AP数.png",
+      "target": "results/reference_ap_full400_20261025/figures/CPU/legend_best_v3/MIX_定位误差_反馈AP数.png"
+    },
+    {
+      "source": "results/reference_ap_full400_20261025/figures/UE/legend_font18_v1/LOS_定位误差_反馈AP数.png",
+      "target": "results/reference_ap_full400_20261025/figures/UE/legend_best_v3/LOS_定位误差_反馈AP数.png"
+    },
+    {
+      "source": "results/reference_ap_full400_20261025/figures/UE/legend_font18_v1/MIX_定位误差_反馈AP数.png",
+      "target": "results/reference_ap_full400_20261025/figures/UE/legend_best_v3/MIX_定位误差_反馈AP数.png"
+    },
+    {
+      "source": "results/reference_ap_full400_20261025/figures/diagnostics/legend_font18_v1/LOS_坐标量化前后_反馈AP数.png",
+      "target": "results/reference_ap_full400_20261025/figures/diagnostics/legend_best_v3/LOS_坐标量化前后_反馈AP数.png"
+    },
+    {
+      "source": "results/reference_ap_full400_20261025/figures/diagnostics/legend_font18_v1/MIX_坐标量化前后_反馈AP数.png",
+      "target": "results/reference_ap_full400_20261025/figures/diagnostics/legend_best_v3/MIX_坐标量化前后_反馈AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_POS量化前后_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_POS量化前后_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/LOS_POS越界比例.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/LOS_POS越界比例.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_POS量化前后_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_POS量化前后_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_font18_v1/MIX_POS越界比例.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/CPU/legend_best_v3/MIX_POS越界比例.png"
+    },
+    {
+      "source": "results/single_stream_V3_full400/CPU/legend_font18_v1/CPU_固定坐标bit分配.png",
+      "target": "results/single_stream_V3_full400/CPU/legend_best_v3/CPU_固定坐标bit分配.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_POS量化前后_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_POS量化前后_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/LOS_POS越界比例.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/LOS_POS越界比例.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_POS量化前后_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_POS量化前后_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/single/UE/legend_font18_v1/MIX_POS越界比例.png",
+      "target": "results/upa_snr_revision400_20261025/figures/single/UE/legend_best_v3/MIX_POS越界比例.png"
+    },
+    {
+      "source": "results/single_stream_V3_full400/UE/legend_font18_v1/UE_固定坐标bit分配.png",
+      "target": "results/single_stream_V3_full400/UE/legend_best_v3/UE_固定坐标bit分配.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/比特数_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/比特数_AP数.png"
+    },
+    {
+      "source": "results/feedback_percentage_20261026/figures/dual/CPU/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+      "target": "results/feedback_percentage_20261026/figures/dual/CPU/legend_best_v3/反馈开销占比_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_定位误差_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_定位误差_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_定位误差_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_定位误差_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_定位误差_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_定位误差_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/比特数_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/比特数_AP数.png"
+    },
+    {
+      "source": "results/feedback_percentage_20261026/figures/dual/UE/compact_legend_v2/legend_font18_v1/反馈开销占比_AP数.png",
+      "target": "results/feedback_percentage_20261026/figures/dual/UE/legend_best_v3/反馈开销占比_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_吞吐量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_吞吐量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_单双流增量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_单双流增量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_第二模式_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_第二模式_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_默认单双流.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_默认单双流.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/LOS_默认增量CDF.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/LOS_默认增量CDF.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_吞吐量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_吞吐量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_单双流增量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_单双流增量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_第二模式_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_第二模式_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_默认单双流.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_默认单双流.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_font18_v1/MIX_默认增量CDF.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/CPU/legend_best_v3/MIX_默认增量CDF.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_吞吐量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_吞吐量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_单双流增量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_单双流增量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_第二模式_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_第二模式_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_默认单双流.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_默认单双流.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/LOS_默认增量CDF.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/LOS_默认增量CDF.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_频谱效率_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_频谱效率_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_SNR.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_SNR.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_天线数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_天线数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_吞吐量_AP数.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_吞吐量_AP数.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_单双流增量_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_单双流增量_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_第二模式_莱斯因子.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_第二模式_莱斯因子.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_默认单双流.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_默认单双流.png"
+    },
+    {
+      "source": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_font18_v1/MIX_默认增量CDF.png",
+      "target": "results/upa_snr_revision400_20261025/figures/dual/UE/legend_best_v3/MIX_默认增量CDF.png"
+    }
+  ]
+}
