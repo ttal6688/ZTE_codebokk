@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "path": "prepare_feedback_percentage.py",
+      "sha256_LF": "89ed92ee9e77b407bbad78e033bd440fd261ed32fd5489bfb3a29ed1f2cc25c5"
+    },
+    {
+      "path": "plot_feedback_percentage.m",
+      "sha256_LF": "64ed9cbf0d50b1d751e24836f153a0f398688c7a4685f3a66d9b98fac6956057"
+    },
+    {
+      "path": "build_snr_revision_reports.py",
+      "sha256_LF": "140b3540727430c8eafb0c8af1ec23acbc845431a5bfd930bb28c8ca81141663"
+    },
+    {
+      "path": "plot_snr_revision400.m",
+      "sha256_LF": "e6bb0731e5e3de7cf16df935aad6b94e859668998ae07fd9107be1a8d0ae4c96"
+    },
+    {
+      "path": "report_figure_style.json",
+      "sha256_LF": "ea8353dd3d1c0b3bff0d7126289c3bd85318bc2b4814e7f659a47e7f70938b38"
+    },
+    {
+      "path": "save_report_figure.m",
+      "sha256_LF": "1f91f2c39a3a0aab8057658dfa8af043c90c4b710435c9d79815251f52ceb318"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "report": "UPA单流400位置正式实验报告",
+      "new_figures": 2,
+      "total_figure_references": 48,
+      "new_plot_immediately_after_original_bit_plot": true,
+      "all_previous_report_content_preserved": true
+    },
+    {
+      "report": "UPA单极化双流400位置完整实验报告",
+      "new_figures": 2,
+      "total_figure_references": 82,
+      "new_plot_immediately_after_original_bit_plot": true,
+      "all_previous_report_content_preserved": true
+    }
+  ],
+  "original_images_and_data_preserved": true,
+  "Word_inspected": false
+}

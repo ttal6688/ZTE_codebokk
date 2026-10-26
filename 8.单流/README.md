@@ -1,12 +1,20 @@
 # UPA单极化单流与双流实验
 
+## 2026年10月26日 四组反馈开销增加百分比图
+
+单流CPU、单流UE、双流CPU、双流UE各在原bit开销图后增加一张百分比图，原图与结果保留。同AP数、同流数的全反馈Type-I定义为100%，纵轴表示开销占比，节省比例另用100%减去占比计算。图例18 pt，AP横轴仅显示整数5至9。
+
+[单流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx) · [双流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
+
+[四张新图、百分比表及计算口径](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/feedback_percentage_20261026/README.md)。B=8时位置反馈在单流CPU、单流UE、双流CPU、双流UE中分别占Type-I的25.71%、45.71%、21.43%、54.76%。不重跑仿真，不引入宽带假设。Word按要求生成后不追加检查。
+
 ## 2026年10月26日 最新报告图例统一放大
 
 最新单流、双流正式报告的所有现有图例统一调为 **18 pt**，包括CPU、UE、LOS、MIX、正文及全部补充实验。仅调整图例字号；曲线数值、坐标轴、实验结论和原图保留。MD全部引用`legend_font18_v1`新版本图片，Word同步生成，按要求不追加检查。
 
 [单流最新MD](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx) · [双流最新MD](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
 
-[字体更新范围和图形核对记录](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/report_legend18_20261026/README.md)。两份报告共126处插图引用，对应120个独立图文件。
+[字体更新范围和图形核对记录](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/report_legend18_20261026/README.md)。当前两份报告共130处插图引用，对应124个独立图文件，新增四幅百分比图沿用18 pt图例。
 
 ## 2026年10月25日 定位参考AP数400位置补充实验
 
@@ -18,7 +26,7 @@
 
 [独立数据、消息及复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/reference_ap_full400_20261025/README.md)
 
-定位前端在单双流、CPU与UE间共用，不将重复展示当作独立样本。新实验含14,400条物理定位记录、6,400条AP估计记录及6组PNG/FIG，R=3与原400位置基线对齐。单流报告现46幅插图，双流80幅，其中6幅由两份报告共用。位置反馈仍只量化一次坐标并发送36 bit；本诊断不扩展原完整预编码协议或覆盖原吞吐量结果。Word同步生成，按要求不追加检查。
+定位前端在单双流、CPU与UE间共用，不将重复展示当作独立样本。新实验含14,400条物理定位记录、6,400条AP估计记录及6组PNG/FIG，R=3与原400位置基线对齐。单流报告现48幅插图，双流82幅，其中6幅由两份报告共用。位置反馈仍只量化一次坐标并发送36 bit；本诊断不扩展原完整预编码协议或覆盖原吞吐量结果。Word同步生成，按要求不追加检查。
 
 ## 2026年10月25日 正式实验SNR更新及单流LOS补齐
 
@@ -28,7 +36,7 @@
 - [双流完整报告 最新版](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
 - [当前数据和复现入口](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/upa_snr_revision400_20261025/README.md)
 
-新增8个低SNR配置，复用14个已审计配置，共22个物理配置；单流取同一配对案例的第一流结果并补齐LOS全套实验。报告逐图附数值与解释，单流46幅、双流80幅，共126幅插图；新图使用新目录避免旧图片缓存。Word按要求生成后不追加检查。以下32位置预实验保留为历史诊断。
+新增8个低SNR配置，复用14个已审计配置，共22个物理配置；单流取同一配对案例的第一流结果并补齐LOS全套实验。报告逐图附数值与解释，单流48幅、双流82幅，共130幅插图；新图使用新目录避免旧图片缓存。Word按要求生成后不追加检查。以下32位置预实验保留为历史诊断。
 
 ## 2026年10月25日 固定8个协作AP的定位参考数扫描
 
@@ -50,7 +58,7 @@ MIX下R=3至8，空间频率平均定位误差从9.321降至6.525 mm，DFT索引
 
 已完成Docomo结构核对及专项验证、400位置单流正式扫描、400位置单极化双流完整扫描。双流覆盖LOS与MIX以及四类参数，CPU与UE分别说明和出图，主参考是完美CSI直接SVD；普通方法使用带噪观测，400 MHz直接换算。
 
-最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部46幅单流图与80幅双流图、对应数值及解释；Word与Markdown内容一致。
+最新单流与双流统一在Git分支feat/upa-single-dual-complete-20261024维护，后续修改继续使用该分支，见[维护约定](docs/当前维护分支.md)。两份报告逐实验附齐全部48幅单流图与82幅双流图、对应数值及解释；Word与Markdown内容一致。
 
 图例统一为全反馈Type-I(UE)、全反馈Type-II(UE)、空间频率和Docomo；CPU对比同步包含Docomo(UE)共享参考，定位误差图不加入无位置输出的方法。名称与参考数据来源见[图例及CPU共享参考说明](docs/图例命名和CPU共享参考.md)，原始仿真数值不变。
 

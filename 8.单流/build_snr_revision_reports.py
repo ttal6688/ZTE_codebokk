@@ -77,6 +77,15 @@ def main_experiments(ns,branch,s):
     lines += [f'### {chapter}.3 比特数与AP数目','横轴为协作AP数，纵轴为每次更新反馈有效载荷（bit）。长度规则不依赖信道类型，LOS与MIX相同；表内保留5至10 AP，图中仅显示整数5至9。',
         matrix(t,UE,'mean_feedback_bits',0,branch),image(ns,branch,'比特数_AP数',f'{branch}{stream}反馈比特数与AP数'),
         '结果：CPU三种几何方法始终为84、42、36 bit。CPU图中的Type-I、Type-II和Docomo为完整UE消息的共享参考；不能将其计为CPU独立算法。UE几何方案还包含4(B−1) bit第一相位。'+('双流UE再增加4(B−1) bit第二相位，CPU不增加反馈。' if ns==2 else '空间消息固定三个参考AP，所以CPU几何开销不随协作AP数增加。')]
+    percentages=pd.read_csv(ROOT/'results/feedback_percentage_20261026/feedback_percentage.csv')
+    percentages=percentages[percentages.stream_count.eq(ns)&percentages.branch.eq(branch)]
+    stream_path='single' if ns==1 else 'dual'
+    pos=percentages[percentages.method.eq('POS_R3')&percentages.B.eq(8)].iloc[0]
+    lines += ['**相对全反馈Type-I的反馈开销百分比**',
+        '保留上图绝对bit开销，再将同一协作AP数、同一流数下全反馈Type-I的完整有效载荷定义为100%。百分比=本方法反馈bit÷对应Type-I反馈bit×100%，节省比例=100%减去开销占比。大于100%表示开销高于Type-I，全部保留。CPU的Type-I仍为UE共享参考。',
+        matrix(percentages,UE,'feedback_percentage',2,branch),
+        f'![{branch}{stream}相对Type-I反馈开销百分比](../results/feedback_percentage_20261026/figures/{stream_path}/{branch}/反馈开销占比_AP数.png)',
+        f'结果：B=8时，本组Type-I为{pos.Type_I_bits:.0f} bit，位置反馈为{pos.feedback_bits:.0f} bit，占基准的{pos.feedback_percentage:.2f}%，即节省{pos.saving_percentage:.2f}%。该图仅对原有开销作归一化，不新增仿真或宽带假设；单流与双流分别使用各自Type-I基准。']
     return lines
 
 def supplements(ns,s,p,diag):

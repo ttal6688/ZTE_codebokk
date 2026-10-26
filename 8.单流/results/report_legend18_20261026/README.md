@@ -1,6 +1,6 @@
 # 最新单双流报告的图例字号更新
 
-2026年10月26日。当前单流46处及双流80处插图引用，共126处，对应120个独立图文件；其中固定8个协作AP的6幅定位参考数补充图由两份报告共用。本次将所有现有legend统一调为18 pt，不给原本无图例的图新增图例。
+2026年10月26日。本轮字号更新时的单流46处及双流80处插图引用，共126处，对应120个独立图文件；其中固定8个协作AP的6幅定位参考数补充图由两份报告共用。本次将所有现有legend统一调为18 pt，不给原本无图例的图新增图例。
 
 - [单流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx)
 - [双流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
@@ -26,3 +26,6 @@ python 8.单流/build_word_reports.py UPA单流400位置正式实验报告.md UP
 ```
 
 本目录仅保存本次样式更新清单与核对记录。实验数据仍分别位于upa_snr_revision400_20261025和reference_ap_full400_20261025，原32位置预实验报告不属于本次最新正式报告的修改范围。
+
+
+后续在四组bit开销实验后各增加一张[相对Type-I的百分比图](../feedback_percentage_20261026/README.md)，不改变本目录原图和数值。两份正式报告现在分别48处、82处插图引用，新增四图也采用18 pt图例。

@@ -64,6 +64,7 @@ for ns=1:2
   render(q,methods(2:end),'mean_feedback_bits','每次更新反馈有效载荷（bit）',"AP数",out,'比特数_AP数',branch,ns,false,false);
  end
 end
+if exist(fullfile(root,'results','feedback_percentage_20261026','feedback_percentage.csv'),'file'),plot_feedback_percentage;end
 end
 function render(T,methods,field,yt,curve,out,name,branch,ns,logY,adaptive)
 f=figure('Visible','off','Color','w','Position',[100 100 1120 760]);ax=axes(f);hold(ax,'on');values=[];

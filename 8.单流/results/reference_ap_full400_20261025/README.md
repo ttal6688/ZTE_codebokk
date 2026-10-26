@@ -39,3 +39,6 @@ python 8.单流/build_word_reports.py UPA单流400位置正式实验报告.md UP
 ```
 
 需要重新仿真时给run_reference_ap_full400指定新的OutputDir；既有结果不静默覆盖。原32位置预实验保留。两份Word沿用既有样式，按用户要求不追加检查。
+
+
+后续在四组bit开销实验后各增加一张[相对Type-I的百分比图](../feedback_percentage_20261026/README.md)，不改变本目录原图和数值。两份正式报告现在分别48处、82处插图引用，新增四图也采用18 pt图例。
