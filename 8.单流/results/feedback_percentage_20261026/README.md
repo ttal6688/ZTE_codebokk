@@ -1,6 +1,6 @@
 # 四组反馈开销百分比图
 
-2026年10月26日最新图例更新：与单流、双流报告的其他图一致，四张图在确定18 pt最终字号后重新执行`Location='best'`，后续不覆盖`Position`，宽高按文字自动适配。数值、曲线和坐标轴保持不变。最新图片位于各CPU或UE目录的`legend_best_v3`内，MD引用及Word内嵌图已同步，未追加Word检查。此前compact_legend_v2仅为历史版本。
+2026年10月26日最新图例更新：仅这四张百分比图手动指定图例位置，放在100%基准线与Type-II曲线之间的空白区域。字号仍为18 pt，宽高按文字自动适配；绘图脚本检查图例及其留白与插值后的全部曲线不相交。数值、曲线和坐标轴不变，其他图片保持best现状。最新图片位于各CPU或UE目录的`legend_manual_v4`内，MD引用及Word内嵌图同步，未追加Word检查。此前legend_best_v3和compact_legend_v2保留为历史版本。
 
 2026年10月26日。单流CPU、单流UE、双流CPU、双流UE各新增一张百分比图，在两份正式报告中紧接各自原bit开销图展示。原bit图、数值及其他实验保留。
 
@@ -18,19 +18,19 @@
 
 仅对已审计的400位置AP扫描开销进行归一化，不重新仿真，不引入宽带分频反馈假设。LOS与MIX的消息长度逐项相同，因此统一用MIX记录作图。横轴显示整数5、6、7、8、9，原始数据和报告表保留5至10。
 
-feedback_percentage.csv保存四组实验、六种方法、六个AP点，共144条归一化记录，同时保留原bit、对应Type-I基准、开销占比和节省比例。calculation_audit.json记录源文件SHA256、同信道开销检查及整数消息长度公式核对。figure_audit.json检查四张FIG曲线数据、100%基准、整数AP横轴及18 pt图例。
+feedback_percentage.csv保存四组实验、六种方法、六个AP点，共144条归一化记录，同时保留原bit、对应Type-I基准、开销占比和节省比例。calculation_audit.json记录源文件SHA256、同信道开销检查及整数消息长度公式核对。figure_audit.json检查四张FIG曲线数据、100%基准、整数AP横轴、18 pt字号及图例不遮挡曲线。
 
-figures/single/CPU、single/UE、dual/CPU、dual/UE中的legend_best_v3目录各有最新PNG和可编辑FIG，可直接用于PPT；旧版图保留。报告现在分别有单流48处、双流82处插图引用，其中固定8 AP参考数实验的6幅在两份报告共用。Word仅替换对应图片，按用户要求不追加检查。
+figures/single/CPU、single/UE、dual/CPU、dual/UE中的legend_manual_v4目录各有最新PNG和可编辑FIG，可直接用于PPT；旧版图保留。报告现在分别有单流48处、双流82处插图引用，其中固定8 AP参考数实验的6幅在两份报告共用。Word仅替换四张百分比图，按用户要求不追加检查。
 
-[下载四张best自动图例版PNG图片压缩包](反馈开销百分比四图_PPT用_best自动图例版.zip)，包内按单流CPU、单流UE、双流CPU、双流UE命名，附计算口径。原压缩包保留为历史版本。
+[下载四张手动避让版PNG图片压缩包](反馈开销百分比四图_PPT用_手动避让版.zip)，包内按单流CPU、单流UE、双流CPU、双流UE命名，附计算口径。原压缩包保留为历史版本。
 
-![单流CPU最新百分比图](figures/single/CPU/legend_best_v3/反馈开销占比_AP数.png)
+![单流CPU最新百分比图](figures/single/CPU/legend_manual_v4/反馈开销占比_AP数.png)
 
-![单流UE最新百分比图](figures/single/UE/legend_best_v3/反馈开销占比_AP数.png)
+![单流UE最新百分比图](figures/single/UE/legend_manual_v4/反馈开销占比_AP数.png)
 
-![双流CPU最新百分比图](figures/dual/CPU/legend_best_v3/反馈开销占比_AP数.png)
+![双流CPU最新百分比图](figures/dual/CPU/legend_manual_v4/反馈开销占比_AP数.png)
 
-![双流UE最新百分比图](figures/dual/UE/legend_best_v3/反馈开销占比_AP数.png)
+![双流UE最新百分比图](figures/dual/UE/legend_manual_v4/反馈开销占比_AP数.png)
 
 ```text
 python 8.单流/prepare_feedback_percentage.py

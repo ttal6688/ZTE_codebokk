@@ -1,0 +1,16 @@
+{
+  "figure_version": "legend_manual_v4",
+  "reports": [
+    {
+      "report": "UPA单流400位置正式实验报告",
+      "updated_percentage_images": 2
+    },
+    {
+      "report": "UPA单极化双流400位置完整实验报告",
+      "updated_percentage_images": 2
+    }
+  ],
+  "only_percentage_figure_media_replaced": true,
+  "simulation_rerun": false,
+  "Word_inspected": false
+}

@@ -6,8 +6,8 @@ import json
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / 'results/feedback_percentage_20261026'
-VERSION = 'compact_legend_v2'
-STYLE_VERSION = 'legend_font18_v1'
+VERSION = 'legend_manual_v4'
+OLD_VERSION = 'legend_best_v3'
 NAME = '反馈开销占比_AP数.png'
 REPORTS = {
     'single': 'UPA单流400位置正式实验报告',
@@ -23,8 +23,8 @@ def update():
         replacements = {}
         for branch in ('CPU', 'UE'):
             base = f'../results/{OUT.name}/figures/{stream}/{branch}/'
-            old = base + STYLE_VERSION + '/' + NAME
-            new = base + VERSION + '/' + STYLE_VERSION + '/' + NAME
+            old = base + OLD_VERSION + '/' + NAME
+            new = base + VERSION + '/' + NAME
             assert content.count(old) == 1, f'Expected one old image reference: {old}'
             content = content.replace(old, new)
             old_bytes = (md.parent / old).read_bytes()
@@ -50,17 +50,17 @@ def update():
         md.write_text(content, encoding='utf-8')
         records.append({'report': title, 'updated_percentage_images': replaced})
 
-    archive = OUT / '反馈开销百分比四图_PPT用_紧凑图例版.zip'
+    archive = OUT / '反馈开销百分比四图_PPT用_手动避让版.zip'
     with ZipFile(archive, 'w', compression=ZIP_DEFLATED) as target:
         for stream, label in [('single', '单流'), ('dual', '双流')]:
             for branch in ('CPU', 'UE'):
-                png = OUT / 'figures' / stream / branch / VERSION / STYLE_VERSION / NAME
+                png = OUT / 'figures' / stream / branch / VERSION / NAME
                 target.write(png, f'{label}_{branch}_反馈开销百分比.png')
         target.write(OUT / 'README.md', '计算口径与图例更新说明.md')
 
     manifest = json.loads((OUT / 'source_SHA256.json').read_text(encoding='utf-8'))
     paths = [entry['path'] for entry in manifest['files']]
-    paths.append(Path(__file__).name)
+    paths = list(dict.fromkeys(paths + [Path(__file__).name, 'report_figure_style.py']))
     manifest['files'] = [dict(path=path, sha256_LF=sha256(
         (ROOT / path).read_text(encoding='utf-8').replace('\r\n', '\n').encode('utf-8')
     ).hexdigest()) for path in paths]
@@ -69,7 +69,7 @@ def update():
     audit = dict(figure_version=VERSION, reports=records,
                  only_percentage_figure_media_replaced=True,
                  simulation_rerun=False, Word_inspected=False)
-    (OUT / 'compact_legend_update.json').write_text(
+    (OUT / 'manual_legend_update.json').write_text(
         json.dumps(audit, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print('Updated four MD image references, four Word image parts and PPT image archive.')
 

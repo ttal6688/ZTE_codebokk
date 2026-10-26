@@ -1,5 +1,11 @@
 # UPA单极化单流与双流实验
 
+## 2026年10月26日 仅四张百分比图手动避让曲线
+
+仅调整单流CPU、单流UE、双流CPU、双流UE四张百分比图：图例手动放在曲线间空白区域，保留18 pt字号和自动紧凑宽高，检查图例与曲线之间留有间距。四图使用`legend_manual_v4`新路径，MD、Word及PPT图片包同步；其他图片、数据和坐标轴不变，Word按要求不追加检查。
+
+[单流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx) · [双流最新报告](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx) · [四张最新图及图片包](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/feedback_percentage_20261026/README.md)
+
 ## 2026年10月26日 全部最新图例统一best自动定位
 
 最新单流、双流报告的全部现有图例统一为`Location='best'`：先确定18 pt最终字号，再重新计算位置，后续不覆盖`Position`。覆盖正文、CPU、UE、LOS、MIX及补充实验；无图例的图不新增图例。124个独立图文件、130处报告插图引用使用`legend_best_v3`新路径，数据和坐标轴保持不变。Word仅同步替换图片，按要求不追加检查。

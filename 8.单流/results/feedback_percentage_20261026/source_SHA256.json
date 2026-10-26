@@ -6,11 +6,11 @@
     },
     {
       "path": "plot_feedback_percentage.m",
-      "sha256_LF": "c728923c055fa01b3bf653d17cc5906625d92ac8d93710a8d75d316ba2b50f0d"
+      "sha256_LF": "ba2d2eee8bd2a1939f7eca190f618f7fac9f689689be706cf4b9dd3a619498ea"
     },
     {
       "path": "build_snr_revision_reports.py",
-      "sha256_LF": "4a38b75d15c4fe934f551cc384fa427ebe29a9f2a8c089922638d9595b89c9ea"
+      "sha256_LF": "140b3540727430c8eafb0c8af1ec23acbc845431a5bfd930bb28c8ca81141663"
     },
     {
       "path": "plot_snr_revision400.m",
@@ -18,15 +18,19 @@
     },
     {
       "path": "report_figure_style.json",
-      "sha256_LF": "ea8353dd3d1c0b3bff0d7126289c3bd85318bc2b4814e7f659a47e7f70938b38"
+      "sha256_LF": "30a0676cc912975ed5446bd911706dc37085d7992b21186a824d177458a20026"
     },
     {
       "path": "save_report_figure.m",
-      "sha256_LF": "1f91f2c39a3a0aab8057658dfa8af043c90c4b710435c9d79815251f52ceb318"
+      "sha256_LF": "cec7dd594471374480b9dcf14e1eec897eef443af84684a85a3833ccca2bb0fa"
     },
     {
       "path": "update_feedback_percentage_legend.py",
-      "sha256_LF": "b1114e4e3a080341a8ad289b772c4ba36e5e797e11aa42a9f48476e8ddaacc48"
+      "sha256_LF": "4793168b167a3ce0e983be4ac8c69c602a9a17464e305c2353b7795c51b7d906"
+    },
+    {
+      "path": "report_figure_style.py",
+      "sha256_LF": "8ef0b6437bc4ffe34c2dac7a3ab1d2e2dfd34b9eb9c45880ec5618575dd8d828"
     }
   ]
 }
