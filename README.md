@@ -1,5 +1,13 @@
 # 中兴任务二仿真材料
 
+## 2026年10月26日 最新报告图例统一放大
+
+最新单流、双流正式报告的所有现有图例统一调为 **18 pt**，包括CPU、UE、LOS、MIX、正文及全部补充实验。仅调整图例字号；曲线数值、坐标轴、实验结论和原图保留。MD全部引用`legend_font18_v1`新版本图片，Word同步生成，按要求不追加检查。
+
+[单流最新MD](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.md) · [单流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单流400位置正式实验报告.docx) · [双流最新MD](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.md) · [双流Word](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/docs/UPA单极化双流400位置完整实验报告.docx)
+
+[字体更新范围和图形核对记录](https://github.com/ttal6688/ZTE_codebokk/blob/feat/upa-single-dual-complete-20261024/8.单流/results/report_legend18_20261026/README.md)。两份报告共126处插图引用，对应120个独立图文件。
+
 ## 2026年10月25日 定位参考AP数400位置补充实验
 
 固定协作AP总数B=8，将定位参考／反馈AP数R从3扫到8；400位置、LOS与MIX分别统计。新实验已放在单流和双流正式报告“4 额外补充”的第一项4.1，按CPU与UE列图表。**原固定R=3、改变协作AP总数的正文实验及图片、数据完整保留。**

@@ -44,5 +44,5 @@ set(ax,'YScale','log','FontSize',16,'LineWidth',1.1);xticks(ax,3:8);xtickformat(
 xlabel(ax,'定位参考／反馈AP数（协作AP数固定为8）');ylabel(ax,'定位误差（m）');grid(ax,'on');box(ax,'on');
 end
 function saveplot(f,out,name)
-exportgraphics(f,fullfile(out,[name '.png']),'Resolution',180);savefig(f,fullfile(out,[name '.fig']));close(f);
+save_report_figure(f,out,name);
 end

@@ -5,6 +5,7 @@ import pandas as pd
 from report_experiments import GEO, UE, REFERENCE_NOTE, display_panel, matrix, method_name, table
 from prepare_snr_revision400 import OUT, LOCATION_SNRS, RATE_SNRS
 from report_reference_ap_full400 import reference_ap_supplement
+from report_figure_style import version_legend_images
 
 ROOT=Path(__file__).resolve().parent
 TITLES={1:'UPA单流400位置正式实验报告',2:'UPA单极化双流400位置完整实验报告'}
@@ -141,7 +142,7 @@ def build(stream_counts=(1,2)):
             f'原单流MIX重叠配置共核对{a["old_single_overlap_records"]:,}条，最大吞吐量差{a["maximum_old_single_throughput_difference_Mbps"]:.3g} Mbps。坐标诊断与消息解码核对{a["diagnostic_overlap_records"]:,}条，最大误差差值{a["maximum_diagnostic_position_error_difference_m"]:.3g} m。SVD随观测SNR不变、纯LOS随K不变及全部曲线组400位置均通过检查。',
             '[数据、配置来源及运行命令](../results/'+OUT.name+'/README.md)。原400位置数据、原小样本SNR预实验和固定8 AP参考数预实验继续保留；本次正式报告替换原报告同名入口，所有新图使用独立版本路径避免缓存。',
             '位置反馈的完整通信协议仍固定三个定位参考AP；固定B=8、R=3至8的400位置定位诊断列为本报告补充第一个实验，独立保存数据，不覆盖原协作AP数扫描。观测SNR提高不能消除离散反馈和模型误差，双流也不保证每个位置或每个低SNR配置都比单流更好。Word与Markdown由同一内容生成；按用户要求Word不追加检查。']
-        content='\n\n'.join(lines)+'\n'
+        content=version_legend_images('\n\n'.join(lines)+'\n')
         for link in re.findall(r'!\[[^\]]*\]\(([^)]+)\)',content):assert (ROOT/'docs'/link).resolve().exists(),link
         (ROOT/'docs'/f'{title}.md').write_text(content,encoding='utf-8')
         print(title,content.count('!['),'figures')

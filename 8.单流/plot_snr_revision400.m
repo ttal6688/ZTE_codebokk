@@ -90,7 +90,7 @@ legend(ax,'Location','best','FontSize',12);
 saveplot(f,out,name);
 end
 function saveplot(f,out,name)
-exportgraphics(f,fullfile(out,[name '.png']),'Resolution',180);savefig(f,fullfile(out,[name '.fig']));close(f);
+save_report_figure(f,out,name);
 end
 function T=panel(S,branch)
 T=S(S.branch==branch,:);

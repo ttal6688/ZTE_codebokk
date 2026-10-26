@@ -1,0 +1,41 @@
+{
+  "files": [
+    {
+      "path": "report_figure_style.json",
+      "sha256_LF": "ea8353dd3d1c0b3bff0d7126289c3bd85318bc2b4814e7f659a47e7f70938b38"
+    },
+    {
+      "path": "report_figure_style.py",
+      "sha256_LF": "46acf72e91bcbf9e16d3b6da35cf9e56a5d1e3a01bbc14e7d4a8572775e1633c"
+    },
+    {
+      "path": "save_report_figure.m",
+      "sha256_LF": "1f91f2c39a3a0aab8057658dfa8af043c90c4b710435c9d79815251f52ceb318"
+    },
+    {
+      "path": "prepare_report_legend_manifest.py",
+      "sha256_LF": "5025a59554ae760cabd3312a9843a121050e9ebcd672714d589ac125ddbbe0ee"
+    },
+    {
+      "path": "update_report_legend_figures.m",
+      "sha256_LF": "b6d36d846103ae2694f1548764a0c77251b5e48b18f60368f5a687d6c9b4152e"
+    },
+    {
+      "path": "build_snr_revision_reports.py",
+      "sha256_LF": "bb0b4e9413898e91789eb67ccdc309cae0388ec114d6e2251351402a27cf3bed"
+    },
+    {
+      "path": "plot_snr_revision400.m",
+      "sha256_LF": "e4b6d2d5c7ebc61f938386c20ed5a8da715a0a4f30f022bebf564da8c82205f3"
+    },
+    {
+      "path": "plot_reference_ap_full400.m",
+      "sha256_LF": "8960186074b4df55440f838e401f07a2cf7a05adc48b556f04967eee20964d67"
+    },
+    {
+      "path": "plot_single_stream_task2.m",
+      "sha256_LF": "b3ac8aace0b482f29575030a9f2385d66debdeb74512b9ec5ae0788593eb2849"
+    }
+  ],
+  "normalization": "CRLF to LF"
+}

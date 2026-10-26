@@ -127,7 +127,7 @@ xlabel(ax,x);ylabel(ax,y);grid(ax,'on');box(ax,'on');set(ax,'FontSize',16,'LineW
 if strcmp(x,'协作AP数'),xlim(ax,[5 9]);xticks(ax,5:9);xtickformat(ax,'%d');end
 end
 function saveplot(f,out,name)
-exportgraphics(f,fullfile(out,[name '.png']),'Resolution',180);savefig(f,fullfile(out,[name '.fig']));close(f);
+save_report_figure(f,out,name);
 if endsWith(name,'_AP数')
  versionDir=fullfile(out,'ap_ticks_5_to_9_v1');if ~exist(versionDir,'dir'),mkdir(versionDir);end
  copyfile(fullfile(out,[name '.png']),fullfile(versionDir,[name '.png']));
